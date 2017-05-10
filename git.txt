@@ -27,7 +27,7 @@ git checkout 8976ad45 			//przejście na inny commit po hashu, np. cofnięcie si
 git checkout master				//przejście do główniej lini
 
 git diff						//pokazuje różnicę miedzy ostatnimi commitami
-git diff a45fa5568  cd452fd34	//pokazuje różnicę miedzy róznymi commitami określonymi za pomocą hash-ów
+git diff a45fa5568a  cd452fd34d	//pokazuje różnicę miedzy róznymi commitami określonymi za pomocą hash-ów
 
 touch text.txt					//tworzy pusty plik text.txt
 
@@ -56,4 +56,4 @@ git commit --amend -m 'Fixed'	//poprawia ostatni commit jeżeli np. źle napisa�
 					/*.txt wszystkie pliki tekstowego
 					!/robots.txt z wykluczeniem pliku tekstowego robots.txt
 					!.gitkeep plik tworzony sztucznie w każdym katalogu, pozwala zachować katalogi bez rejestrowania zmian w w tych katalogach
-	
+SmartGit						//graficzna nakładka na Git-a	
