@@ -4,12 +4,12 @@ GIT
 2.	Wejdź do katalogu projektu, który będzie zmieniany i śledzony
 3.	git init 					//inicjuje śledzenie katalogu powstanie plik .git
 	git status 					//pokazuje zmiany w katalogu
-4.	git add. lub git add -A		//dodaje wszystkie pliki do stadge area, schowka który można zapisać commitem
+4.	git add . lub git add -A		//dodaje wszystkie pliki do stadge area, schowka który można zapisać commitem
 5.	git commit -m 'Komentarz pomagający rozpoznać dodane zmiany' 	//zapisuje zmiany w repozytorium
 6. 	git log lub git status 		//możesz sprawdzić czy zostały zapisane zmiany
 
 Kroki 4 i 5 można zastąpić jednym poleceniem:
-git commit -a -m 'Tekst komentarza'
+git commit -a -m 'Tekst komentarza np. Initial commit'
 
 git log -p 			//wyświetli co się zmieniło
 git log -2 			//wyświetli dwa ostatnie commity
@@ -19,6 +19,7 @@ git log -oneline	//wyświetla commity w jednej lini (czytelne przedstawienie his
 
 git config --global user.name "Daniel"				//Wprowadzenie nazwy użytkownika
 git config --global user.email "daniel@gmail.com"	//Wprowadzenie emailu
+git config --global core.editor nano				//Zmiana domyślnego edytora tekstowego
 .gitconfig											//plik konfiguracyjny GIT
 
 git rm --cached readme.txt		//wykasowanie śledzenia pliku (jest to odwrotna funkcja do add)
@@ -27,3 +28,32 @@ git checkout master				//przejście do główniej lini
 
 git diff						//pokazuje różnicę miedzy ostatnimi commitami
 git diff a45fa5568  cd452fd34	//pokazuje różnicę miedzy róznymi commitami określonymi za pomocą hash-ów
+
+touch text.txt					//tworzy pusty plik text.txt
+
+git branch						//wyświetla gałęzie w projekcie
+git branch drugaGalaz			//tworzy drugą gałąź w projekcie
+git checkout drugaGalaz			//przełącza się na drugą gałąź
+
+git merge drugaGalaz			//połączenie drugiej gałęzi z master
+git log --oneline --graph		//wyświetlenie commitów w formie graficznej
+
+git branch -d drugaGalaz		//wykasowanie drugiej gałęzi
+
+git checkout -b Variant1		//utworzenie nowej gałęzi Variant1 z automatycznym przełączeniem się na tę gałąź
+
+git reset --hard HEAD~1			//usunięcie commita, ale zmiany w pliku zostaną
+git rebase master				//przesunięcie gałęzi do góry(przez dodanie), najpierw przejdź na drugaGalaz, a później zrób rebase master. Teraz commit będzie zawierać wszystkie zmiany od master i z drugaGalaz. Kolejny krok to połączenie drugaGalaz z master (git checkout master i później git merge drugaGalaz a na koniec usunąć drugaGalaz git branch -d drugaGalaz)
+
+git reset						//resetuje git add . (git status - wyświetli na czerwono, czyli że nie dodane do schowka)
+git commit --amend -m 'Fixed'	//poprawia ostatni commit jeżeli np. źle napisałeś komentarz do commita lub coś niewielkiego poprawiłeś szybko w plikach. Jeżeli jest na twoim komputerze to możesz śmiało zmieniać, ale jeżeli było opublikowane dla innych to musisz pamiętać że inni mogą już z tego korzystać.
+
+.gitignore		//plik w którym zapisujemy pomijane pliki lub katalogi 
+					*~ oznacza wszystkie pliki z ~
+					.idea oznacza ukryty katalog .idea
+					/log/* oznacza wszystkie pliki w katalogu log
+					/inc/*-local.php wszystkie pliki w katalogu inc z końcówką -local.php
+					/*.txt wszystkie pliki tekstowego
+					!/robots.txt z wykluczeniem pliku tekstowego robots.txt
+					!.gitkeep plik tworzony sztucznie w każdym katalogu, pozwala zachować katalogi bez rejestrowania zmian w w tych katalogach
+	
