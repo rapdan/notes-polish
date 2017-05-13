@@ -56,4 +56,50 @@ git commit --amend -m 'Fixed'	//poprawia ostatni commit jeżeli np. źle napisa�
 					/*.txt wszystkie pliki tekstowego
 					!/robots.txt z wykluczeniem pliku tekstowego robots.txt
 					!.gitkeep plik tworzony sztucznie w każdym katalogu, pozwala zachować katalogi bez rejestrowania zmian w w tych katalogach
-SmartGit						//graficzna nakładka na Git-a	
+
+SmartGit						//graficzna nakładka na Git-a
+
+git init --bare main			//inicjuje tzw. gołe repozytorium, będą chronione tylko zmiany
+git remote add origin ../main	//podłączenie zdalnego repozytorium 'origin'- dowolna nazwa, ale najczęściej używana jest origin
+git remote						//tworzy spis wspolnych repozytoriów
+git config --local --list		//tworzy listę configuracyjną
+
+git push -u origin master		//przesłanie zmian z lokalnego komputera (master) np.repo1 na zdalne repozytorium (origin) i powiązanie dwóch repozytoriów
+
+git clone main repo2			//klonowanie repozytorium main do repo2
+
+git push origin master			//przesłanie zmian z lokalnego komputera (master) na zdalne repozytorium (origin)
+git pull origin master			//pobranie zmian ze zdalnego komputera (origin) do lokalnego repozytorium (master) np. repo2
+
+git fetch origin				//pobranie zmian ze zdalnego komputera (origin) do lokalnego repozytorium (master) np. repo2 ale bez połączenia (są dwie gałęzie)
+git merge origin/master			//połączenie tych dwóch gałęzi
+
+ls ~/.shh						//sprawdza czy posiadamy jakieś klucze prywatne i publiczne. jeżeli nie posiadamy to wygeneruj za pomocą polecenia:
+ssh-keygen -t rsa -C "wio@gmail.com"	//generowanie klucza prywatnego i publicznego do podłączenia się np. z githab-em
+
+PRACA ze zdalnym repozytoriem
+1. git pull origin master
+2. zmiana plików
+3. git commit -a -m 'komentarz'
+4. git git push origin master
+
+git checkout -b test-ranch origin/test-banch	//przerzucenie gałęzi jakiegoś użytkownika na serwer
+
+git tag ver1.0					//dodanie tagu do ostatniego commit-a (użyj "" jeżeli masz spacje)
+git tag							//odczyt ostatniego taga z commitów
+Możesz używać tagów zamiast hashów danego commita 
+git push origin master --tags
+git pull origin master --tags	//aby zapisać tagi na zdalnym serwerze musisz użyć --tags
+
+git diff v1.0 v1.1				//wyswietla różnicę w wersjach zapisanych tagami
+
+git stash						//zachowanie zmian które nie są zacommitiowane  w tymczasowym schowku 
+git stash list					//wylistowanie schowka
+git stash apply					//przywrócenie schowka
+git stash drop					//usunięcie ostatniego schowka
+
+git bisect start				//wyszukiwanie błędów w wersjach
+git bisect bad					//ukazanie commita, z błędem w programie
+git bisect good v1				//ukazanie commita z tagiem v1 dobrego, czyli takiego w którym wszystko działa
+Później git podzieli na połowę całą gałąź commitów aby optymalnie wyszukać gdzie zaczał się błąd (za każdym razem dzieli na pół) Musimy za każdym razem określać że commit działa dobrze lub źle za pomocą git bisect good lub bad
+git bisect reset				//powrót pozycji HEAD-a na początek, to samo można uzyskać przez git checkout master
