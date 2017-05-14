@@ -1,0 +1,63 @@
+SELECT * FROM table; --tekst komentarza		--wielkość liter nie gra roli
+											 /* komentarze w nowych db */
+
+CREATE TABLE test(a INTEGER, b TEXT);		--tworzenie tablicy
+
+INSERT INTO test VALUES (1,'a');			--wprowadzanie danych do tablicy
+DROP TABLE test;							--usunięcie tablicy test
+DROP TABLE IF EXISTS test;					--usunięcie tablicy test 
+
+INSERT INTO test (a,b,c) SELECT id, name, description FROM baza2	--wprowadzenie danych do bazy test z innej bazy danych (baza2)
+
+DELETE FROM test WHERE a=3;					--usunięcie wiersza w którym a=3
+SELECT * FROM test WHERE a=1;
+DELETE * FROM test WHERE a=1;				--najlepiej sprawdzić co będzie usunięte przez SELECT, a później zastąpić SELECT poleceniem DELETE
+
+NULL to brak znaczenia
+SELECT * FROM test WHERE a=NULL;			--nie wyświetli nic
+SELECT * FROM test WHERE a IS NULL;			--teraz wyświetli
+
+CREATE TABLE test (
+	a INTEGER NOT NULL,
+	b TEXT NOT NULL,
+	c TEXT
+);												--tworzenie tablicy 
+INSERT INTO test VALUES (1, 'this', 'that');	--wstawienie wartości
+INSERT INTO test (b,c) VALUES ('two','three');	--wyświetli błąd bo a nie może być NULL
+
+CREATE TABLE test (a TEXT UNIQUE, b TEXT, c TEXT DEFAULT 'panda');	--a powinno być unikalne, c domyślnie 'panda'
+
+ALTER TABLE test ADD d TEXT DEFAULT 'panda';	--dodanie dodatkowej kolumny d z domyślną wartością, bez tej wartości dodane zostaną NULL
+
+CREATE TABLE test(	id INTEGER PRIMARY KEY,	a INTEGER,	b TEXT);								-- PRIMARY KEY - automatycznie przypisuje kolejny numer
+
+SELECT Name, Continent, Population FROM Country WHERE Population<100000 OR Population IS NULL ORDER BY Population DESC 
+--Wypisze z tabeli Country trzy kolumny Name, Continent, Population w których populacja jest mniejsza od 100000 lub IS NULL w porządku od największej do najniższej i na końcu NULL
+
+SELECT Name, Continent, Population FROM Country WHERE Name LIKE '%island%' ORDER BY Name		--Wypisze kraje które w nazwie mają island w porządku alfabetycznym
+
+LIKE '_a%'									--pierwszy znak dowolny, drugi litera a, końcówka dowolna
+WHERE Continent IN ('Europe','Asia')		--słowo IN oznacza zawiera
+
+SELECT DISTINCT Continent FROM Country;		--DISTINCT eliminuje powtarzające się wpisy, zostanie wyświetlonych 7 kontynentów, a nie 239 (gdyby nie było polecenia DISTINCT)
+
+SELECT * FROM booltest;
+SELECT 
+	CASE WHEN a THEN 'true' ELSE 'false' END AS boolA,
+	CASE WHEN b THEN 'true' ELSE 'false' END AS boolB
+	FROM booltest;							-- jeżeli a jest true to boolA przyjmie wartość true i tak samo z wartością boolB zależną od wartości b
+
+JOIN 					--łączenie różnych tablic
+SELECT l.description AS left, r.description AS right
+  FROM left AS l		--l.description odnosi się do tablicy left
+  JOIN right AS r		--r.description odnosi się do tablicy right
+	ON l.id = r.id		--dodatkowy warunek jeżeli id w tablicach jednakowy
+	
+LEFT JOIN right AS r	--zostanie włączona cała lewa do wyświetlonych wyników. To tzw. zewnetrzne łączenie?
+
+SELECT c.name AS Cust, i.name AS Item, s.price AS Price		--mamy trzy tablice: Cust, Item, Prise (Klienci, Towary i Sprzedaż)
+	FROM customer AS c										--c odnosi się do customer
+	JOIN sale AS s ON s.customer_id=c.id					--połączenie tablic Sprzedaż z Klientami
+	JOIN item AS i ON s.item_id=i.id						--połączenie tablicy Sprzedaży z Towarami
+	ORDER BY Cust, Item;									--Porządkowanie alfabetyczne Klientów i Towarów
+	

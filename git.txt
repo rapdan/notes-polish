@@ -2,20 +2,20 @@ GIT
 
 1.	Ściągnij GIT i zainstaluj
 2.	Wejdź do katalogu projektu, który będzie zmieniany i śledzony
-3.	git init 					//inicjuje śledzenie katalogu powstanie plik .git
-	git status 					//pokazuje zmiany w katalogu
-4.	git add . lub git add -A		//dodaje wszystkie pliki do stadge area, schowka który można zapisać commitem
+3.	git init 														//inicjuje śledzenie katalogu powstanie plik .git
+	git status 														//pokazuje zmiany w katalogu
+4.	git add . lub git add -A										//dodaje wszystkie pliki do stadge area, schowka który można zapisać commitem
 5.	git commit -m 'Komentarz pomagający rozpoznać dodane zmiany' 	//zapisuje zmiany w repozytorium
-6. 	git log lub git status 		//możesz sprawdzić czy zostały zapisane zmiany
+6. 	git log lub git status 											//możesz sprawdzić czy zostały zapisane zmiany
 
 Kroki 4 i 5 można zastąpić jednym poleceniem:
 git commit -a -m 'Tekst komentarza np. Initial commit'
 
-git log -p 			//wyświetli co się zmieniło
-git log -2 			//wyświetli dwa ostatnie commity
-git log -oneline	//wyświetla commity w jednej lini (czytelne przedstawienie historii zmian)
+git log -p 						//wyświetli co się zmieniło
+git log -2 						//wyświetli dwa ostatnie commity
+git log -oneline				//wyświetla commity w jednej lini (czytelne przedstawienie historii zmian)
 
-.gitignore	//tworzymy taki plik jeżeli chcemy ignorować jakieś pliki lub katalogi. Musisz w .gitignore zapisać pliki i katalogi które mają być ignorowane.
+.gitignore						//tworzymy taki plik jeżeli chcemy ignorować jakieś pliki lub katalogi. Musisz w .gitignore zapisać pliki i katalogi które mają być ignorowane.
 
 git config --global user.name "Daniel"				//Wprowadzenie nazwy użytkownika
 git config --global user.email "daniel@gmail.com"	//Wprowadzenie emailu
@@ -81,7 +81,7 @@ PRACA ze zdalnym repozytoriem
 1. git pull origin master
 2. zmiana plików
 3. git commit -a -m 'komentarz'
-4. git git push origin master
+4. git push origin master
 
 git checkout -b test-ranch origin/test-banch	//przerzucenie gałęzi jakiegoś użytkownika na serwer
 
@@ -93,7 +93,7 @@ git pull origin master --tags	//aby zapisać tagi na zdalnym serwerze musisz uż
 
 git diff v1.0 v1.1				//wyswietla różnicę w wersjach zapisanych tagami
 
-git stash						//zachowanie zmian które nie są zacommitiowane  w tymczasowym schowku 
+git stash						//zachowanie zmian które nie są zacommitowane  w tymczasowym schowku 
 git stash list					//wylistowanie schowka
 git stash apply					//przywrócenie schowka
 git stash drop					//usunięcie ostatniego schowka

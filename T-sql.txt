@@ -1,0 +1,141 @@
+USE ShopDB									--Podłączenie się do bazy ShopDB
+
+SELECT * FROM Sales.CreditCard
+WHERE ExpYear = 2005 OR ExpYear = 2006;		--Wyświetli karty z 2005 oraz 2006
+
+SELECT * FROM Sales.CreditCard
+WHERE ExpYear BETWEEN 2005 AND 2007;		--Wyświetli karty z między latami 2005 - 2007
+
+SELECT * FROM Sales.CreditCard
+WHERE ExpYear = 2005 AND CardType='Vista';	--Logiczne AND
+
+SELECT * FROM Sales.CreditCard
+WHERE NOT ExpYear = 2005; 					--Logiczne NOT wyświetli wszystkie oprócz z 2005 roku
+
+SELECT * FROM Sales.CreditCard
+WHERE CardType LIKE 'Dis%';					--Znak % zastępuje dowolne inne znaki, wyświetli karty zaczynające się od 'Dis'
+
+SELECT * FROM Sales.CreditCard
+WHERE CardType = 'Dis%';					--Nic nie wyświetli gdzyż nie ma kart 'Dis%'
+
+SELECT * FROM Sales.CreditCard
+WHERE CardType LIKE 'Vis_a';				--Wyświetli karty 'Vista' symbol _ zastępuje dowolną literę
+
+SELECT * FROM Sales.CreditCard
+WHERE CardType LIKE 'Vis_';					--Nic nie wyświetli gdzyż nie ma kart Vist
+
+SELECT * FROM Sales.CreditCard 
+WHERE ExpMonth IN (1, 5, 11);				--IN czyli zawiera
+
+ORDER BY ASC								--sortowanie w odwrotnym porządku niż DSC (domyślne)
+
+SELECT SalesOrderID, SUM(OrderQty)			--Agregowana funkcja SUM, czyli proces łączenia elementów
+  FROM Sales.SalesOrderDetail				--Wyświetli kolumne bez nazwy (No column name)
+  WHERE SalesOrderID IN (43, 44, 45)		-- SUM (OrderQty) AS Total - Wyświetli jako kolumnę Total
+  GROUP BY SalesOrderID;
+  
+SELECT COUNT(*) AS Emp
+FROM HumanResurce							--COUNT zlicza  wiersze w tablicy
+
+SELECT ProductID AS Product, COUNT(*) AS [Count] 
+  FROM Sales.SalesOrderDetail
+  GROUP BY ProductID;						--grupowanie i podliczenie ilości sprzedanych produktów
+
+SELECT ProductID AS Product, COUNT(*) AS [Count] 
+  FROM Sales.SalesOrderDetail
+  GROUP BY ProductID						--HAVING używamy z GROUP BY, jest analogiczny do WHERE
+  HAVING COUNT (*) > 300;					--Umożliwia filtrowanie sprzedanych produktów
+  
+UPDATE MyFriends
+	SET Ntel='098****'						--Zmienic nr telefonu
+	WHERE FstName = 'Max';					--kogo imię Max (u wszystkich Max-ów)
+	
+DELETE MyFriends
+ WHERE FstName = 'TestName';				--Usunięcie wszystkich Testowych Friends
+
+DELETE MyFriends;							--Usunięcie wszystkich danych z tablicy (tablica będzie pusta)
+
+TRUNCATE TABLE MyFriends;					--Lepiej używać TRUNCATE, szybsza niż DELETE
+
+----------------------------------------------------------------------------------------
+--		PODSTAWY DLL (język opisujący bazy danych)
+----------------------------------------------------------------------------------------
+
+CREATE 										--tworzenie
+ALTER										--zmiana
+DROP										--usunięcie
+
+DROP DATABASE ShopDB;						--usunięcie  bazy ShopDB
+-----------------------------------------------------------------------------------------
+--		Tworzenie nowej Bazy danych
+-----------------------------------------------------------------------------------------
+CREATE DATABASE ShopDB						--tworzenie nowej bazy ShopDB
+ON
+( 	NAME = 'ShopDB',
+	FILENAME = 'D:\ShopDB.mdf',
+	SIZE = 10MB,
+	MAXSIZE = 100MB,
+	FILEGROWTH = 10MB
+)
+LOG ON
+(	NAME = 'LogShopDB',
+	FILENAME = 'D:\LogShopDB.ldf',
+	SIZE = 5MB,
+	MAXSIZE = 50MB,
+	FILEGROWTH = 5MB
+)
+COLLATE Cyrillic_General_CI_AS				--określenie domyślnego kodowania bazy danych
+-----------------------------------------------------------------------------------------
+--		Zmiana ustawień Bazy danych
+-----------------------------------------------------------------------------------------
+
+EXEC sp_helpdb ShopDB						--wyświetla dokładne informacje o bazie ShopDB
+
+ALTER DATABASE ShopDB						--zmiana rozmiaru bazy na 100MB
+MODIFY FILE
+(NAME = 'ShopDB',
+SIZE = 100MB)
+GO
+-----------------------------------------------------------------------------------------
+--		DLL dla Tablic
+-----------------------------------------------------------------------------------------
+ DROP TABLE Customers;						--usunięcie tablicy Customers, najpierw podłacz się: USE ShopDB
+ 
+ CREATE TABLE Customers
+(	CustomerNo INT IDENTITY(1,2) NOT NULL,	--tworzy kolumnę do identyfikacji (seed=1 początkowa wartość, step=2 zwiększane o 2)
+	CustomerName VARCHAR(25) NOT NULL,
+	Adress1 VARCHAR(25) NOT NULL,
+	Adress2 VARCHAR(25) NOT NULL DEFAULT 'Unknown',		--domyślna wartość dla drugiego wiersza adresu
+	City VARCHAR(15) NOT NULL,
+	Phone char(10) NOT NULL,
+	DateInSystem SMALLDATETIME NOT NULL
+);
+WITH (DATA_COMPRESSION = ROW);							--dodatkowa funkcja kompresująca dane, ale nie obsługiwana przez SQL Express
+
+INSERT INTO Customers									--Wstawianie danych do tablicy
+(CustomerName, Adress1, City, Phone, DateInSystem)
+VALUES
+('Jeremy','Listowa 2', 'Krakow' '3245544', GETDATE())	--GETDATE pozwala wczytać aktualną datę z systemu
+GO
+
+ALTER TABLE Customers						--ALTER TABLE zmienia tablicę
+ADD NewField INT NULL						--ADD doda kolumnę NewField bez wartości (NULL), nie można dodawać NOT NULL. Można określić wartość DEFAULT 'Unknown'
+
+ALTER TABLE Customers						--ALTER TABLE zmienia tablicę
+DROP COLUMNS NewField						--Usuwa kolumnę NewField
+
+
+CREATE TABLE Customers
+(	CustomerNo INT NOT NULL,	
+	CustomerName VARCHAR(25) NOT NULL,
+	Adress1 VARCHAR(25) NOT NULL,
+	City VARCHAR(15) NOT NULL,
+	Contact VARCHAR(25) NOT NULL,
+	Phone char(10),
+	PRIMARY KEY (CustomerNo, CustomerName)	--określamy wspólny klucz porządkowy
+);
+
+-- Dodanie ograniczeń do PRIMARY KEY na kolumnie CustomerNo
+ALTER TABLE Customers
+ADD CONSTRAINT PK_Customers
+PRIMARY KEY (CustomerNo)
