@@ -29,23 +29,23 @@ CREATE TABLE test (a TEXT UNIQUE, b TEXT, c TEXT DEFAULT 'panda');	--a powinno b
 
 ALTER TABLE test ADD d TEXT DEFAULT 'panda';	--dodanie dodatkowej kolumny d z domyślną wartością, bez tej wartości dodane zostaną NULL
 
-CREATE TABLE test(	id INTEGER PRIMARY KEY,	a INTEGER,	b TEXT);								-- PRIMARY KEY - automatycznie przypisuje kolejny numer
+CREATE TABLE test(	id INTEGER PRIMARY KEY,	a INTEGER,	b TEXT);	-- PRIMARY KEY - automatycznie przypisuje kolejny numer
 
 SELECT Name, Continent, Population FROM Country WHERE Population<100000 OR Population IS NULL ORDER BY Population DESC 
 --Wypisze z tabeli Country trzy kolumny Name, Continent, Population w których populacja jest mniejsza od 100000 lub IS NULL w porządku od największej do najniższej i na końcu NULL
 
 SELECT Name, Continent, Population FROM Country WHERE Name LIKE '%island%' ORDER BY Name		--Wypisze kraje które w nazwie mają island w porządku alfabetycznym
 
-LIKE '_a%'									--pierwszy znak dowolny, drugi litera a, końcówka dowolna
-WHERE Continent IN ('Europe','Asia')		--słowo IN oznacza zawiera
+LIKE '_a%'										--pierwszy znak dowolny, drugi litera a, końcówka dowolna
+WHERE Continent IN ('Europe','Asia')			--słowo IN oznacza zawiera
 
-SELECT DISTINCT Continent FROM Country;		--DISTINCT eliminuje powtarzające się wpisy, zostanie wyświetlonych 7 kontynentów, a nie 239 (gdyby nie było polecenia DISTINCT)
+SELECT DISTINCT Continent FROM Country;			--DISTINCT eliminuje powtarzające się wpisy, zostanie wyświetlonych 7 kontynentów, a nie 239 (gdyby nie było polecenia DISTINCT)
 
 SELECT * FROM booltest;
 SELECT 
 	CASE WHEN a THEN 'true' ELSE 'false' END AS boolA,
 	CASE WHEN b THEN 'true' ELSE 'false' END AS boolB
-	FROM booltest;							-- jeżeli a jest true to boolA przyjmie wartość true i tak samo z wartością boolB zależną od wartości b
+	FROM booltest;								-- jeżeli a jest true to boolA przyjmie wartość true i tak samo z wartością boolB zależną od wartości b
 
 JOIN 					--łączenie różnych tablic
 SELECT l.description AS left, r.description AS right
