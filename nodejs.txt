@@ -1,0 +1,17 @@
+nodejs.org	//pobierz najnowszą wersję razem z source
+npm init	//tworzy nowy projekt node.js w twoim nowo-utworzonym katalogu
+npmjs.org	//strona z modułami dostarczana przez publiczność. Tysiące modułów, oprócz tych które wchodzą w standardowy pakiet nodejs
+npm install --save express	//instalacja modułu ze strony npmjs.org (save - musisz dodać aby zapisać, a nie tylko zainstalować)
+
+var http = require('http'),
+	express = require('express'); 	//podłączenie modółów: http i express
+
+	var app = express();			//tworzenie nowej app na podstawie express
+
+http.createServer(app).listen(3000);	//uruchomienie servera na porcie 3000 (localhost:3000)
+
+sudo npm install -g express			//instalacja express w trybie golobalnego modułu
+
+npm prune							//usuwa wszystkie moduły których nie używamy w aplikacji
+npm update							//aktualizuje moduły, * w package.json oznacza że do najnowszej wersji
+
