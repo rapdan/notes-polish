@@ -136,6 +136,48 @@ CREATE TABLE Customers
 );
 
 -- Dodanie ograniczeń do PRIMARY KEY na kolumnie CustomerNo
-ALTER TABLE Customers
-ADD CONSTRAINT PK_Customers
-PRIMARY KEY (CustomerNo)
+ALTER TABLE Customers							--ALTER zmienia tablice
+ADD CONSTRAINT PK_Customers						--dodanie ograniczeń z nazwą PK_Customers, aby później można było sie odwołać do tej zmiany
+PRIMARY KEY (CustomerNo)						
+--Dodanie ograniczeń zewnętrnego klucza
+FOREIGN KEY	REFERENCES Customers(CustomerNo)	--Dodanie danych nastąpi tylko gdy w zewnętrznej tablicy Customers jest już dodany klient (CustomerNo)
+
+ALTER TABLE Orders
+ADD CONSTRAINT FK_CustomerCustomerNo
+FOREIGN KEY(CustomerNo) REFERENCES Customers(CustomerNo);
+DROP TABLE Customers;							--Nie można usunąć tablicy która jest związana z podporządkowaną jej tablicą
+DELETE Customers WHERE CustomerName ='Piotr';	--oraz nie można usunąć klienta jeżeli ma on dokonany zakup (Orders)
+
+ALTER TABLE Orders
+DROP CONSTRAINT FK_CustomerCustomerNo;	--Usunięcie powiązania tablic, właśnie dlatego wcześniej dodawaliśmy nazwę FK_CustomerCustomerNo
+
+ALTER TABLE Orders
+ADD CONSTRAINT FK_CustomerCustomerNo	--dodanie ograniczeń
+FOREIGN KEY (CustomerNo) REFERENCES Customers(CustomerNo)
+	ON DELETE CASCADE;					--mówi że przy usunęciu rodzicielskie tablicy należy usunąć linki do dziecięcych tablic. Zostanie usunięty Klient i Zamówienia których dokonał.
+	
+--Jeżeli chcsz przywrócić klienta musisz zmienić klucz IDENTITY na numer który miał klient, bo klucz jest automatycznie zwiększany.
+DBCC CHECKIDENT("Customers", RESEED, 0); --Ustawienie IDENTITY=0 Później można dodać klienta przez INSER INTO ...
+
+ALTER TABLE Orders
+ADD CONSTRAINT FK_CustomerCustomerNo	--dodanie ograniczeń
+FOREIGN KEY (CustomerNo) REFERENCES Customers(CustomerNo)
+	ON DELETE SET NULL;					--Przy wykasowaniu Klienta , Zamówienie zostanie zachowane ale CustomerNo w Orders zostanie zmienione na NULL, gdyż nie ma takiego klienta w Customers
+	ON DELETE SET DEFAULT				--Wartość domyślna którą wprowadzono przy tworzeniu tablicy Orders (Może wskazywać na jakiegoś domyślnego klienta)
+	
+	ON DELETE NO ACTION							--zakazuje wyknania UPDATE, DELETE! nie ma potrzeby wpisywania tej instrukcji bo jest ona domyślną.
+	
+CREATE TABLE Customers
+( 	CustomerNo INT IDENTITY NOT NULL,
+	CustomerName VARCHAR(25) NOT NULL,
+	Phone char(10) UNIQUE CHECK (Phone LIKE '([0-9][0-9][0-9])[0-9][0-9][0-9][0-9][0-9]')	--char(10) bo jest 10 znaków, oprócz cyfr są 2 nawiasy. Wartość w komórce powinna być unikalna
+)
+
+NOCHECK CONSTRAINT CN_Customers			--odłączenie ograniczeń wczesniej nałożonych na jakąś komórkę tablicy
+CHECK CONSTRAINT CN_Customers			--włączenie ograniczeń
+
+	
+
+
+ 
+
