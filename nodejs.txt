@@ -4,7 +4,7 @@ npmjs.org	//strona z modułami dostarczana przez publiczność. Tysiące moduł�
 npm install --save express	//instalacja modułu ze strony npmjs.org (save - musisz dodać aby zapisać, a nie tylko zainstalować)
 
 var http = require('http'),
-	express = require('express'); 	//podłączenie modółów: http i express
+	express = require('express'); 	//podłączenie modułów: http i express
 
 	var app = express();			//tworzenie nowej app na podstawie express
 
