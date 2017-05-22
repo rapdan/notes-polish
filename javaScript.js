@@ -257,6 +257,25 @@ function addH1 (tekst){
 }
 addH1("jajaj");
 
+//-------------------------------
+// Prosty sposób dodawania HTML-u
+var pkt = document.getElementsByTagName("h3"); 			//Rozpoznanie miejsca wstawienia po tagu
+console.log(pkt);										//Tablica
+pkt[0].innerHTML = "Tratatata";							//Wstawienie 
+var pkt2 = document.getElementsByClassName("social");	//Rozpoznanie miejsca wstawienia po class
+pkt2[0].innerHTML = "Nowe dane";						//Dodanie tekstu
+var pkt3 = document.getElementById("hh");				//Rozpoznanie po id, nie zwraca tablicy tylko element
+pkt3.innerHTML = "Najnowszy wpis";						//Wstawienie tekstu
+
+//--------------------------------
+// Alert Prompt Confirm
+
+alert("Zamknij to okno!");								//Wyskakujące okno
+var imie = prompt("Podaj swoje imie: ");				//Okno do wpisania danych
+console.log(imie);
+var man = confirm("Czy jesteś mężczyzną? ");			//Okno wyboru "tak" lun "nie"
+console.log(man);
+
 //-----------------------------------------------------------------------------------
 //  Kalkulator
 
@@ -312,6 +331,16 @@ console.log(firstDog.Speak);
 console.dir(firstDog);
 
 //---------------------------------------------------------------------------------------
+// Call oraz Apply (Call przekazuje argumenty z innego objektu, Apply przekazuje tablicę)
+var speak = function(what){
+    console.log(what);
+    console.log(this.love); 
+}
+var saySomething = {normal:"miau", love:"brrbrr"}
+//speak.call(saySomething, saySomething.normal); 	//call
+speak.apply(saySomething, ['Kukuryku']);			//aply
+
+//---------------------------------------------------------------------------------------
 // Arguments.length oraz Arguments[i]
 var plus = function(){
     var sum = 0;
@@ -322,3 +351,53 @@ var plus = function(){
 }
 
 //---------------------------------------------------------------------------------------
+// Ćwiczenie: dodanie ikon i linków do mediów społecznościowych za pomoca javaScript
+
+var socialMedia = {
+    facebook : 'http://facebook.com/100art',
+    twiter : 'http://twitter.com/100art',
+    flickr : 'http://flickr.com/100art',
+    youtube: 'http://youtube.com/100art'
+};
+
+var social = function(){
+    var output ='<ul>',
+    myList = document.querySelectorAll('.social');  //wybór wszystkich selektorów class=social w index.html
+    for(var key in arguments[0]){
+        output += '<li><a href="' + socialMedia[key] + '">' +
+        '<img src="images/' + key + '.png" alt="icon for ' + key + '">' +   //icony w /images są typu .png
+        '</a></li>';
+    }
+    output += '</ul>';
+    for(var i = myList.length-1; i>=0; i--){    //pętla przelatująca po wszystkich miejscach z class=social
+        myList[i].innerHTML = output;           //i dodająca wygenerowany kod HTML
+    };
+}(socialMedia);
+
+ //------------------------------------------------------------------------------------
+ //-- Anonimowe zamknięcia
+ (function(){
+    console.log("foo");
+})();		//funkcja bez nazwy, która sama siebie zapuszcza
+
+//--------------------------------------------------------------------------------------
+// Scope - zakres widzialności 
+// Pamiętaj żeby zawsze najpierw deklarować zmienne i funkcje
+
+//--------------------------------------------------------------------------------------
+// Przekazywanie argumentów
+var ray =(function(){
+    var DEFAULTS = {
+        say : 'Hello'
+    }
+    return{
+        speak : function(){
+            var myArguments = arguments[0] || ''; //argumenty można odfiltrować po indeksie
+            var statement = myArguments.say || DEFAULTS.say;
+            console.log(statement);
+        }
+    };
+})();           // ray.speak({ say : 'Waawh' }) - najlepiej przekazywać przez arguments
+
+//----------------------------------------------------------------------------------------
+//
