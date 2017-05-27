@@ -258,6 +258,29 @@ function addH1 (tekst){
 addH1("jajaj");
 
 //-------------------------------
+var ptk = document.getElementById("ii");				//Rozpoznanie miejsca (po id="ii")w którym chcemy dodać element
+var tekst = document.createTextNode("Moj nowy tekst.");	//Tworzenie tekstu
+var h = document.createElement("h2");					//Tworzenie elementu h2
+h.appendChild(tekst);									//Przypisanie h2 utworzongo wcześniej tekstu
+function spr(){
+    ptk.appendChild(h);									//Przypisanie całej gałezi do DOM
+}
+function rem1(){
+    ptk.removeChild(h);									//Wykasowanie elementu h2 utworzonego wcześniej
+}
+function rep(){
+    ptk.replaceChild(document.getElementById("ii");		//Zamiana elementów HTML
+}
+/* To jest w HTML-u:
+	<div id="blk">
+        <h3 id="ii">To jest naglowek</h3>
+    </div>
+    <button onclick="spr()" >Dodaj</button>
+    <button onclick="rem1()" >Remove</button>
+    <button onclick="rep()" >Zamiana</button>
+*/
+
+//-------------------------------
 // Prosty sposób dodawania HTML-u
 var pkt = document.getElementsByTagName("h3"); 			//Rozpoznanie miejsca wstawienia po tagu
 console.log(pkt);										//Tablica
@@ -276,6 +299,15 @@ console.log(imie);
 var man = confirm("Czy jesteś mężczyzną? ");			//Okno wyboru "tak" lun "nie"
 console.log(man);
 
+//--------------------------------
+// Zmiana od przycisku button
+
+<button onclick="change()" >Clik me!</button>			//Wstaw na stronie button z funkcją
+//-------												//Wstaw w pliku js funkcje zmieniającą HTML
+function change(){
+    var pkt3 = document.getElementById("hh");
+    pkt3.innerHTML = "Najnowszy wpis";
+}
 //-----------------------------------------------------------------------------------
 //  Kalkulator
 
@@ -301,6 +333,38 @@ console.log("Mul " + calc.mul(a,b));
 console.log("Div " + calc.div(a,b));
 
 //------------------------------------------------------------------------------------
+// Kalkulator na stronie
+
+/* To jest w index.tml
+	<form id="forms">
+       x: <input type="tekst" name="first"></input>
+       y: <input type="tekst" name="second"></input>
+       result: <input type="tekst" name="result"></input>
+    </form>
+     </br>
+     <button onclick="sum()" >Suma</button>
+     <button onclick="odej()" >Odejowanie</button>
+     <button onclick="mul()" >Mnożenie</button>
+     <button onclick="div()" >Dzielenie</button>
+*/
+var result = document.getElementById('forms');								//Odnośnik do id="forms"
+function sum(){																//suma
+    result[2].value = Number(result[0].value) +  Number(result[1].value);
+};
+function odej(){															//odejmowanie
+    result[2].value = Number(result[0].value) -  Number(result[1].value);
+};
+function mul(){																//mnożenie
+    result[2].value = Number(result[0].value) *  Number(result[1].value);
+};
+function div(){																//dzielenie
+     result[2].value = Number(result[0].value) / Number(result[1].value);
+    console.log( result[2].value);
+    if(result[2].value === 'Infinity'){										//w przypadku dzielenia przez 0
+       alert("You can't divine by zero!!!");
+        result[2].value = "ERROR!!!";
+       }
+};
 // Konstruktor
 
 var Dog = function (){
@@ -400,4 +464,120 @@ var ray =(function(){
 })();           // ray.speak({ say : 'Waawh' }) - najlepiej przekazywać przez arguments
 
 //----------------------------------------------------------------------------------------
-//
+// Funkcje warunkowe if, switch, while, do while, for, for of, for in
+
+//-----------IF
+var a = 23;
+if (a == 23){
+	document.write("Wartość a = 23");
+}else{
+	document.write("Wartość a nie równa 23");
+}
+//------------------------------------------
+//------------switch
+var i = 25;
+switch(i){
+	case 23:
+		document.write("i=23");
+		break;
+	case 24:
+		document.write("i=24");
+		break;
+	default:
+		document.write("Nie równa 23 oraz nie równa 24");
+}
+//-----------------------------------------
+//-----------while
+var a = 100;
+var b = 1000;
+while (a<b){
+	a++;
+	document.write(a);
+	document.write("</br>");
+}
+
+//-----------------------------------------
+//----------do while
+var a = 100;
+var b = 1000;
+do{
+	a++;
+	document.write(a);
+	document.write("</br>");
+}while (a<b);
+
+//-----------------------------------------
+//----------for
+var arr = [23, 45, 63, 45];
+for (var i=0;i<arr.length; i++){
+	document.write(arr[i] + " ");
+}
+
+//------------------------------------------
+//----------break
+var a = 10;
+var b = 100;
+for (a; a<b; a++){
+	document.write(a + "</br>");
+	if (a==40){					//przerwanie wykonywania operacji gdy a==40
+		break;
+	};
+};
+//-------------------------------------------
+//----------continue
+var a = 0;
+var b = 100;
+while ( a<b ){
+	document.write(a + "</br>");
+    a++;
+	if (a%3 === 0){				//gdy reszta z dzielenia przez 3 jest równa 0
+		a++;					//dodaje bez wyświetlenia a
+		continue;				//kontynuacja pętli
+	};
+};
+//--------------------------------------------
+//------------for of oraz in
+var arr = [ 23, 54, 98, 50, 198];
+for (var a of arr){
+	document.write(a + " ");	//wypisze kolejne liczby 23 54 98...
+}
+
+var arr = [ 23, 54, 98, 50, 198];
+for (var a in arr){
+	document.write(a + " ");	//wypisze indexy 0 1 2 3 4
+}
+
+var arr = [ 23, 54, 98, 50, 198];
+for (var a in arr){
+	document.write( arr[a] + " ");	//wypisze wartości 
+}
+
+//-------------------------------------------------
+//-----------funkcja sortująca
+function sorting(arr){
+    for (var a = 0; a < arr.length; a++){		//pobranie pierwszej danej
+        for(var b=a+1; b < arr.length; b++){	//pobranie następnej danej z tablicy arr
+            if(arr[a]>arr[b]){					// porównanie
+                var save = arr[a];				//zamiana miejscami
+                arr[a] = arr[b];
+                arr[b] = save;
+            };
+        };
+    };
+    document.write(arr);
+};
+var k = [ 23, 54, 98, 50, 198, 11, 12, 43, 56, 1, 5, 4];
+sorting(k);
+
+//---------------------------------------------------
+//--------Funkcje matematyczne
+Math.PI				//zwraca liczbę 3.14...
+Math.round()		//zaokrągla
+Math.sqrt()			//pierwiastek
+Math.max()			//wybranie największej wartości
+Math.random()		//losowa wartość
+
+var t = new Date();
+document.write(t.getFullYear); 	//wypisze aktualny rok np.2017
+document.write(t.getDate()); 	//wypisze aktualny dzień miesiąca np. 25
+
