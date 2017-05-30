@@ -581,3 +581,91 @@ var t = new Date();
 document.write(t.getFullYear); 	//wypisze aktualny rok np.2017
 document.write(t.getDate()); 	//wypisze aktualny dzień miesiąca np. 25
 
+//----------------------------------------------------
+//-------Funkcje predefiniowane
+parseInt('2345');	//próbuje (najczęściej łańcuch znaków)zamienić na liczbę całkowitą
+parseInt('abc345');	//NaN
+parseInt('2dbd45');	//2
+parseInt('FF',16);	//255, parsuje w systemie szestnastkowym
+parseInt('0377',8);	//255, parsowanie w systemie ósemkowym
+parseInt('0x377');	//887, jeżeli drugi argument nie podany patrzy na początek (0-ósemkowy, 0x-szestnastkowy)
+
+parseFloat('2.45');		//2.45, oczekuje ułamków
+parseFloat('a2.4');		//NaN
+parseFloat('245');		//245
+parseFloat('2.4a01');	//2.4
+parseFloat('234e-2');	//2.34
+parseFloat('245e2');	//24500
+
+isNaN(NaN);					//true, można sprawdzić czy wartośc wejściowa jest liczbą
+isNaN(123);					//false
+isNaN(1.23);				//false
+isNaN(parseInt('a123'));	//true
+NaN===NaN					//zawsze false!
+
+isFinite(Infinity);			//false, sprawdza czy liczba jest różna od Infinity oraz NaN
+isFinite(-Infinity);		//false
+isFinite(123);				//true
+isFinite(1e308);			//true
+isFinite(1.8e308);			//false, największa liczba w javaScript 1.7976931...e308
+
+var url = 'http://www.packtpub.com/scr ipt.php?q=this and that';
+encodeURI(url);				//zwróci "http://www.packtpub.com/scr%20ipt.php?q=this%20and%20that"
+encodeURIComponent(url);	//zwróci "http%3A%2F%2Fwww.packtpub.com%2Fscr%20ipt.php%3Fq%3Dthis%20and%20that"
+//Te fukcje stosujemy gdy chcemy mieć pewność że adresy URI i URL zostaną zapisane poprawnie
+//Odwrotne działanie mają decodeURI() i decodeURIComponent()
+
+eval('var ii=123;');		//funkcja eval pobiera łańcuch znaków i uruchamia go jako kod JAVASCRIPTU
+							// ii zwróci 123
+							
+alert("hallo!");			// wyświetla okno dialogowe, zastosowanie tylko w przeglądarkach, blokuje wykonanie kodu do kliknięcia OK
+
+//----------------------------------------------------------------------------
+//--			Funkcje anonimowe
+//----------------------------------------------------------------------------
+
+function wywolaj_i_dodaj(a,b){
+	return a() + b();				//nawiasy powodują uruchomienie funkcji
+}
+function jeden(){					//zdefiniowanie dwóch funkcji dla podstawienia pod a i b
+	return 1;
+}
+function dwa(){
+	return 2;
+}
+wywolaj_i_dodaj(jeden,dwa);			//wynik=3, wywołanie funkcji i podanie innych funkcji jako parametrów.
+
+// To samo można uzyskać przez funkcje anonimowe:
+function wywolaj_i_dodaj(function(){return 1;}, function(){return 2;});
+
+//------------------------------------
+//			Funkcje callback
+//------------------------------------
+
+function pomnozRazyDwa(a,b,c,callback){		//definicja funkcji pomnozRazyDwa z callback
+	var i, ar[];
+	for(i=0; i<3; i++){
+		ar[i]= callback(arguments[i] * 2);
+	}
+	return ar;
+}
+
+myArr = pomnozRazyDwa(1,2,3,dodajJeden);	//[3, 5, 7] do funkcji została przekazana jako parametr funkcja dodajJeden
+myArr = pomnozRazyDwa(1,2,3,function(a){return a + 1}); 	//zamiast funkcji dodajJeden można wykorzystać funkcję anonimową
+
+//----------------------------------------------
+//			Funkcje samowyzwalające
+//----------------------------------------------
+
+(function(imie){alert('Cześć ' + imie + '!');})('Darek');	//Aby samowyzwolić funkcje trzeba użyć dwóch par nawiasów. W drugiej parze umieszczamy parametry
+
+//---------------------------------------------------
+//			Funkcje wewnętrzne (prywatne)
+//---------------------------------------------------
+
+function a(param) {
+	function b(theinput) {				//wewnątrz funkcji a zdefiniowano funkcję b. Funkcja b nie jest dostępna poza funkcją a.
+		return theinput * 2;
+	};
+	return 'Wynik wynosi ' + b(param);
+};
