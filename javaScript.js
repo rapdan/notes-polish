@@ -84,13 +84,30 @@ var person = {
 person.name; // “Alex”
 person.age; // 25
 
+//-------------------Metody w Objektach
+var ilona = {						//przykład objectu ilona
+    name: 'Ilona',
+    lastName: 'Kowalska',
+    birthYear: 1980,
+    maried: false,
+    job: 'teacher',
+    calculateAge: function(){		//metoda dodająca element age
+        this.age = 2017 - this.birthYear;
+    }
+};
+
+console.log(ilona);             	//Object bez wywołania metody calculateAge
+Ilona.calculateAge();
+console.log(ilona);             	//Object z 'age' obliczonym automatycznie po wywołaiu metody calculateAge
+
+
 //--------------------Prototypy
 var Human = {
 type : “Human”,
 head : 1,
 legs : 2,
-bad-thing : 22, // błąd, bo jest znak -
-“good-thing” : 23, // ok gdyż w cudzysłowach
+bad-thing : 22, 	// błąd, bo jest znak -
+“good-thing” : 23, 	// ok gdyż w cudzysłowach
 “:;;:” : 24 // ok
 };
 var Megahuman = Object.create(Human); //tworzenie Megahuman na podstawie prototypu
@@ -103,9 +120,9 @@ legs : 2
 };
 var Megahuman = Object.create(Human);
 Megahuman.head = 2;
-Megahuman.head; // 2 Megahuman ma teraz 2 głowy
-delete Megahuman.head; //usunięcie tej właściwości
-Megahuman.head; // 1 Ma jedna głowę bo dziedziczy właściwość od Human
+Megahuman.head; 		// 2 Megahuman ma teraz 2 głowy
+delete Megahuman.head; 	//usunięcie tej właściwości
+Megahuman.head; 		// 1 Ma jedna głowę bo dziedziczy właściwość od Human
 
 //--------------------Tworzenie Funkcji
 var average = function (x, y) {
@@ -238,6 +255,18 @@ addImage(1,"tendal.jpg");
 addImage(5,"tendal2.jpg");
 
 //-----------------------------------------------------------------------------------
+// Zmiany na stronie HTML
+//-----------------------------------------------------------------------------------
+
+document.querySelector('#idSelektor1').textContent = "text do wypisania na stronie"; 	//prosta i krótka metoda wstawienia tekstu
+document.querySelector('#idSelektor2').innerHTML = '<em>' + zmienna1 + '</em>'; 		//metoda wstawienia HTML kodu na stronie
+var x = document.querySelector('#idSelektor3').textContent;								//odczyt tekstu ze strony HTML po id
+document.querySelector('.classSelector1').style.display = 'none';						//zmiana stylów CSS po class-ie (display: 'none')
+document.querySelector('.classSelector2').classList.remove('active');					//usunięcia ze strony HTML class = 'active';
+document.querySelector('.classSelector3').classList.add('active');						//dodanie do classSelector3 dodatkowo class = 'active';
+document.querySelector('.classSelector4').classList.toggle('active', i < 10);			//dodanie class = 'active' jeżeli gdy i<10, a jeśli i>=10 to usunięcie 'active'
+
+----------------------------------------------------------
 
 function addText (tekst){
     
@@ -299,11 +328,12 @@ console.log(imie);
 var man = confirm("Czy jesteś mężczyzną? ");			//Okno wyboru "tak" lun "nie"
 console.log(man);
 
-//--------------------------------
-// Zmiana od przycisku button
+//-----------------------------------------------------------------------------------
+// Zmiana kodu HTML zależna od naciśnięcia na button
 
-<button onclick="change()" >Clik me!</button>			//Wstaw na stronie button z funkcją
-//-------												//Wstaw w pliku js funkcje zmieniającą HTML
+<button onclick = "change()">Clik me!</button>			//1. Wstaw na stronie button z funkcją
+
+//-------												//2. Wstaw w pliku js funkcje zmieniającą HTML
 function change(){
     var pkt3 = document.getElementById("hh");
     pkt3.innerHTML = "Najnowszy wpis";
@@ -367,6 +397,12 @@ function div(){																//dzielenie
 };
 // Konstruktor
 
+var Person = function(name, yearOfBirth, job){
+	this.name = name;
+	this.yearOfBirth = yearOfBirth;
+	this.job = job;
+}
+
 var Dog = function (){
 	var name, breed;
 }
@@ -376,7 +412,7 @@ firstDog.breed = "Dobername";
 console.log(firstDog.name);			// daje Tommy
 console.dir(firstDog);				// daje Dog
 
-//--------------------------------------------------------------------------------------
+//-----------------------------------------------------
 // Prototype. Expanding functionality through Prototype
 var Speak = function(){
     var saySomthing;
@@ -394,6 +430,21 @@ console.log(firstDog.name);
 console.log(firstDog.Speak);
 console.dir(firstDog);
 
+//-----------------------------------------------------
+//		Tworzenie prototypów
+
+var Person = function(name, yearOfBirth, job){
+    this.name = name;
+    this.yearOfBirth = yearOfBirth;
+    this.job = job;
+}
+Person.prototype.calculateAge = function(){			//tworzenie prototype calculateAge
+    console.log(2017 - this.yearOfBirth);
+}
+Person.prototype.lastName = "Kowalsky";				//tworzenie prototype lastName
+var john = new Person ( 'John', 1980, 'techer');
+var maria = new Person ( 'Maria', 1988, 'designer');
+
 //---------------------------------------------------------------------------------------
 // Call oraz Apply (Call przekazuje argumenty z innego objektu, Apply przekazuje tablicę)
 var speak = function(what){
@@ -408,7 +459,7 @@ speak.apply(saySomething, ['Kukuryku']);			//aply
 // Arguments.length oraz Arguments[i]
 var plus = function(){
     var sum = 0;
-    for (var i=arguments.length-1; i>=0; i--){	// zlicza ilość argumentów
+    for (var i=arguments.length-1; i>=0; i--){	// zlicza ilość argumentów, jeżeli nie wiesz ile ich masz.
         sum += arguments[i];					//sumuje wartości argumentów
     }
     return sum;			//teraz możesz sumować dowolną ilość argumentów np. plus(3,4,2,5,7,9,11)
@@ -576,6 +627,7 @@ Math.round()		//zaokrągla
 Math.sqrt()			//pierwiastek
 Math.max()			//wybranie największej wartości
 Math.random()		//losowa wartość
+Math.floor(Math.random() * 6) + 1;	//imituje rzuty kostką, zwraca wartości od 0 do 5 i dodaje 1.
 
 var t = new Date();
 document.write(t.getFullYear); 	//wypisze aktualny rok np.2017
@@ -654,6 +706,56 @@ myArr = pomnozRazyDwa(1,2,3,dodajJeden);	//[3, 5, 7] do funkcji została przekaz
 myArr = pomnozRazyDwa(1,2,3,function(a){return a + 1}); 	//zamiast funkcji dodajJeden można wykorzystać funkcję anonimową
 
 //----------------------------------------------
+// Dobre praktyki tworzenia małych funkcji
+//----------------------------------------------
+var years = [1990, 1980, 2006, 1987, 1999];
+
+function arrayCalc (arr, fn) {				//głowna funkcja wykorzystująca małe funkcje (fn)
+    var arrRes = [];
+    for (var i = 0; i < arr.length; i++){
+        arrRes.push(fn(arr[i]));
+    }
+    return arrRes;
+}
+function calculateAge (el){					//tworzenie małych prostych funkcji
+    return 2017 - el;
+}
+function isFullAge (el){					//tworzenie małych prostych funkcji
+    return el >= 18;
+}
+var ages = arrayCalc (years, calculateAge);
+var fullAge = arrayCalc (ages, isFullAge);
+console.log(ages);
+console.log(fullAge);
+
+//--------------------------------------------------
+// Funkcje zwracające funkcje
+//--------------------------------------------------
+
+function interviewQuestion (job){
+    if (job === 'designer'){
+        return function(name){					//zwraca funkcję
+            console.log(name + ' Can you please explain what UX design is?');
+        }
+    } else if (job === 'teacher'){
+        return function(name){					//zwraca funkcję
+            console.log(name + ' What subject do you teach?');
+        }        
+    }else{
+        return function(name){					//zwraca funkcję
+            console.log('Hello ' + name + ' What are you doing?');
+            }
+    }
+}
+interviewQuestion('designer')('Mark');			//wywołanie funkcji
+interviewQuestion('designer')('Wiola');
+interviewQuestion('')('Mark');
+interviewQuestion('teacher')('John');
+
+var teacherQuestion = interviewQuestion('teacher');
+teacherQuestion('Darek');
+
+//----------------------------------------------
 //			Funkcje samowyzwalające
 //----------------------------------------------
 
@@ -669,3 +771,28 @@ function a(param) {
 	};
 	return 'Wynik wynosi ' + b(param);
 };
+
+//------------------------------------------------------
+// Metody push, unshift, pop
+john.push('Smith');							//dodaje do tablicy na końcu jeszcze jedną wartość
+john.unshift('Mr.');						//dodaje do tablicy na początku 
+john.pop();									//usuwa ostatnią wartość z tablicy
+john.shift();								//usuwa pierwszą wartość z tablicy
+john.indexOf('Smith');						//zwraca index w tablicy pod którym jest dana wartość (Smith)
+
+if(john.indexOf('teacher') === -1){			//przykład sprawdzenia czy w tablicy jest słowo 'teacher'. Jeżeli elementu nie ma w tablicy to zwraca -1
+	console.log("Jonh is NOT a teacher");
+}
+
+//---------------------------------------------------------------------------
+// 		Events EventListener nasłuchiwanie wydarzeń
+//---------------------------------------------------------------------------
+
+document.querySelector('.btn-1').addEventListener('click', function(){	//wywołanie funkcji anonimowej w odpowiedzi na zdarzenie click
+	//do something
+});
+document.querySelector('.btn-2').style.display = 'block';				//zmiana stylów CSS na wyświetlanie blokowe
+document.querySelector('.btn-2').src = 'obrazek-' + numer + '.png';		//zmiana obrazka na stronie, numer - trick dla zmiany obrazków
+
+
+

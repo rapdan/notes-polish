@@ -15,3 +15,55 @@ sudo npm install -g express			//instalacja express w trybie golobalnego modułu
 npm prune							//usuwa wszystkie moduły których nie używamy w aplikacji
 npm update							//aktualizuje moduły, * w package.json oznacza że do najnowszej wersji
 
+---------------------------------------------------------------------------------------------------------
+
+1. zainstaluj nodejs
+2. npm 							//instaluje pakiety
+3. npm install -g bower			//menadżer bibliotek
+4. npm install -g yo			//yoman generuje szablony projektów
+5. npm install -g grunt-cli		// automatyzuje minifikację, łaczenie plików, wstrzykiwanie zależności, uruchamianie testów
+
+//-------------------
+//   	BOWER
+//-------------------
+bower help
+bower search				//wyszukuje pakiety np. bower search angular
+bower install angular		//instaluje biblioteki w bower_components
+bower init					//tworzy projekt z zależnościami. Zostanie utworzony plik bower.json
+
+Później można utworzyć repozytoria i klon projektu:
+git init
+.gitiore					//w tym pliku określ katalog bower_components jako pomijany przy komitowaniu
+git add -A
+git commit -A -m "Startowy commit"
+git clone test test2		// klonowanie projektu (wcześniej wyjdź z tego katalogu)
+Zostanie utworzony katalog test2 z plikami projektu, ale bez komponentówn (bower_components).
+Ktoś komu zostanie przesłany projekt bez komponetów może samodzielnie ściągnąć te komponenty wpisując:
+bower install				// musi jednak posiadać plik bower.json
+
+
+//-------------------
+//   	YOMAN
+//-------------------
+npm install -g yo		//instalacja yoman, generuje szablony projektów
+W katalogu projektu np.test uruchamiamy konsolę i wpisujemy komendę: yo
+szukamy potrzebnego dla nas generatora (jest ich tysiące) yoman.io w zakładce discovering generators są opisy
+możemy wybrac np. angular, ionic i zainstalować.
+generator przeprowadzi nas przez serię pytań
+
+Do pliku bower.json dopisane zostaną zależności
+Zostanie utworzony też plik package.json Pliki wykonawcze będą ściągnięte i zapisane w katalogu node_modules (npm install)
+
+//-------------------
+//   	GRUNT
+//-------------------
+npm install -g grunt-cli		//instalacja grunt-a
+grunt serv						//uruchamia generacje tasków
+grunt							//wygenerowanie gotowej aplikacji w katalogu dist
+
+Później też mozna wykonać git commit i klonowanie (patrz yoman)
+z test2 instalacja pakietów wygląda następująco:
+npm install
+bower install
+grunt serve
+
