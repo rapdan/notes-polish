@@ -61,9 +61,41 @@ npm install -g grunt-cli		//instalacja grunt-a
 grunt serv						//uruchamia generacje tasków
 grunt							//wygenerowanie gotowej aplikacji w katalogu dist
 
-Później też mozna wykonać git commit i klonowanie (patrz yoman)
-z test2 instalacja pakietów wygląda następująco:
+//Później też mozna wykonać git commit i klonowanie (patrz yoman)
+//z test2 instalacja pakietów wygląda następująco:
 npm install
 bower install
 grunt serve
+
+//-------------------
+//   	GULPJS
+//-------------------
+npm install gulp-cli -g				//instalacja gulpa
+npm init							//najpierw przejdź do katalogu projektu, init tworzy package.json
+npm install gulp --save-dev			//instalacja w projekcie, w node_modules pojawi się paczka: gulp
+									//następnie tworzysz strukturę katalogów np. app, dist w app index.html, katalog css i katalog scss
+									
+		//w katalogu glównym projektu (tam gdzie znajduje się package.json) tworzysz plik gulpfile.js
+		//W gulpfile.js zapisujesz taski czyli czynności do wykonania
+var gulp = require('gulp');			//podłaczenie bibliotek gulp-a
+
+gulp.task('task-name', function(){	//ogólna wzór wykonania tasku, czyli jakiegoś zadania
+	//do something
+});
+gulp task-name;						//wywołanie funkcji, zadania z konsoli
+//----------------------------- przykład z sass-em konwertowanym do css
+1. W katalogu scss stwórz plik: styles.scss
+2. zainstaluj plugin do obsługi plików scss
+npm install gulp-sass --save-dev	//w node_modules pojawi sie paczka: gulp-sass
+3. W pliku gulpfile.js dopisujesz:
+var sass = require('gulp-sass');
+gulp.task('sass', function(){
+	return gulp.src('app/scss/styles.scss')
+		.pipe(sass())
+		.pipe(gulp.dest('app/css'))
+});
+
+
+
+
 

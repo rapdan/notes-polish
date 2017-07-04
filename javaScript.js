@@ -22,6 +22,7 @@ parseInt(“18”); // 18
 parseInt(“19kdjas”); // 19 konwertuje na liczbe INT dopóki nie spotka znaku który nie jest cyfra
 parseInt(“74.54”); // 74
 parseFloat(“74.54”); // 74.54 konwertuje na liczbe float
+zmienna1.toFixed(2);	//zaokrąglenie do dwóch miejsc po przecinku
 
 //--------------------Przeksztalcenia na inne systemy zapisu np. szestnastkowy:
 parseInt(num, base)
@@ -266,6 +267,10 @@ document.querySelector('.classSelector2').classList.remove('active');					//usun
 document.querySelector('.classSelector3').classList.add('active');						//dodanie do classSelector3 dodatkowo class = 'active';
 document.querySelector('.classSelector4').classList.toggle('active', i < 10);			//dodanie class = 'active' jeżeli gdy i<10, a jeśli i>=10 to usunięcie 'active'
 
+// <div id="one">one</div>
+var d1 = document.getElementById('one');
+d1.insertAdjacentHTML('afterend', '<div id="two">two</div>');							//dodanie tekstu w html-u, afterend, beforend...
+																						// dodanie div-a <div id="one">one</div><div id="two">two</div>
 ----------------------------------------------------------
 
 function addText (tekst){
@@ -432,7 +437,7 @@ console.dir(firstDog);
 
 //-----------------------------------------------------
 //		Tworzenie prototypów
-
+//-----------------------------------------------------
 var Person = function(name, yearOfBirth, job){
     this.name = name;
     this.yearOfBirth = yearOfBirth;
@@ -447,6 +452,7 @@ var maria = new Person ( 'Maria', 1988, 'designer');
 
 //---------------------------------------------------------------------------------------
 // Call oraz Apply (Call przekazuje argumenty z innego objektu, Apply przekazuje tablicę)
+//---------------------------------------------------------------------------------------
 var speak = function(what){
     console.log(what);
     console.log(this.love); 
@@ -456,7 +462,8 @@ var saySomething = {normal:"miau", love:"brrbrr"}
 speak.apply(saySomething, ['Kukuryku']);			//aply
 
 //---------------------------------------------------------------------------------------
-// Arguments.length oraz Arguments[i]
+// 			Arguments.length oraz Arguments[i]
+//---------------------------------------------------------------------------------------
 var plus = function(){
     var sum = 0;
     for (var i=arguments.length-1; i>=0; i--){	// zlicza ilość argumentów, jeżeli nie wiesz ile ich masz.
@@ -467,7 +474,7 @@ var plus = function(){
 
 //---------------------------------------------------------------------------------------
 // Ćwiczenie: dodanie ikon i linków do mediów społecznościowych za pomoca javaScript
-
+//---------------------------------------------------------------------------------------
 var socialMedia = {
     facebook : 'http://facebook.com/100art',
     twiter : 'http://twitter.com/100art',
@@ -491,16 +498,19 @@ var social = function(){
 
  //------------------------------------------------------------------------------------
  //-- Anonimowe zamknięcia
+ //------------------------------------------------------------------------------------
  (function(){
     console.log("foo");
 })();		//funkcja bez nazwy, która sama siebie zapuszcza
 
-//--------------------------------------------------------------------------------------
+//------------------------------------------------------------------
 // Scope - zakres widzialności 
 // Pamiętaj żeby zawsze najpierw deklarować zmienne i funkcje
+//------------------------------------------------------------------
 
-//--------------------------------------------------------------------------------------
+//--------------------------------------------------------
 // Przekazywanie argumentów
+//--------------------------------------------------------
 var ray =(function(){
     var DEFAULTS = {
         say : 'Hello'
@@ -794,5 +804,54 @@ document.querySelector('.btn-1').addEventListener('click', function(){	//wywoła
 document.querySelector('.btn-2').style.display = 'block';				//zmiana stylów CSS na wyświetlanie blokowe
 document.querySelector('.btn-2').src = 'obrazek-' + numer + '.png';		//zmiana obrazka na stronie, numer - trick dla zmiany obrazków
 
+//---------------------------------------------------------------------------
+// 		Events EventListener nasłuchiwanie wydarzeń click i keypress
+//---------------------------------------------------------------------------
 
+var obslugaZdarzen = function() {
+	console.log('It works');
+}
+document.querySelector('.classaZhtml').addEventListener('click', obslugaZdarzen);	//obsługa cliku myszką
+document.addEventListener('keypress', function(event){								//obsługa klawisza ENTER kod 13
+	if (event.keyCode === 13 || event.which === 13){
+		obslugaZdarzen();
+	}
+});
+
+
+//---------------------------------------------------
+// Lista najczęściej używanych funkcji 
+//---------------------------------------------------
+
+// Array
+//some() i every() — asercje dotyczące elementów tablicy;
+var ages = [3, 10, 18, 20];
+function checkAdult(age) {						//sprawdza czy ktoś ma 18 lat
+    return age >= 18;
+}
+function myFunction() {
+    document.getElementById("demo").innerHTML = ages.some(checkAdult);	//zwróci true
+}
+//join() i concat() — przekształcenie w łańcuch tekstowy;
+//pop(), push(), shift() i unshift() — działanie na stosach i kolejkach;
+//map() — mapowanie dla elementów tablicy;
+//filter() — wykonywanie zapytań na elementach tablicy;
+//sort() — zmiana kolejności elementów;
+//reduce() i reduceRight() — obliczenia;
+//slice() — kopiowanie;
+//splice() — usuwanie;
+//indexOf() — wyszukiwanie wartości w tablicy;
+//reverse() — odwracanie kolejności;
+//operator in — iterowanie elementów tablicy;
+
+//Math
+//random() — zwracanie losowej liczby rzeczywistej mniejszej niż jeden
+
+//String
+//substr() i substring() — wyodrębnianie fragmentu łańcucha;
+//length — długość łańcucha tekstu;
+//indexOf() — indeks wartości w łańcuchu;
+//split() — przekształcanie łańcucha w tablicę.
+
+//Ponadto w Node.js do dyspozycji mamy metody setInterval(), setTimeout(), forEach() oraz console.
 
