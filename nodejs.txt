@@ -96,6 +96,14 @@ gulp.task('sass', function(){
 });
 
 
+npm search mobile app	//wszyszukiwanie pakietów npm lub patrz nipstr.com
+npm ls --depth=0		//wyświetlenie zainstalowanych pakietów, można też depth=1
+npm ls -g --depth=0		//wyświetlenie globalnych pakietów
 
+npm help run			//pomoc dla komendy run
+npm docs express		//dokumentacja dla express
+npm repo express		//repozytoria dla express
+package.json			//zawiera strony projektu, githuba, issues itp...
 
+npm update express --save	//uaktualnienie paczek patrz package.json
 

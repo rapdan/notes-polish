@@ -1,0 +1,12 @@
+npm -g install cordova ionic	//instalacja bibliotek
+ionic info						//sprawdź czy wszystko jest zainstalowane
+npm install -g bower			//package management pomocny do instalacji innych bibliotek
+ionic start myfirstproject		//tworzenie projektu
+								//jest kilka templatek: tabs (domyślny projekt), blank i sideMenu. Przy instalacji można wybrać templatkę.
+ionic start myapp sideMenu		//tworzenie projektu z templatki sideMenu
+ionic start myapp http://codepen.io/ionic/pen/odqCz	//projekt z templatki codepen.io
+cd myfirstproject 				//przejście do utworzonego projektu
+ionic serve						//start i wyświetlenie w domyślnym browserze
+								//Ionic server commands:	r - restart  q - quit
+ionic help serve				//Pomoc dla określonej komendy
+ionic serve --lab				//wyświetla aplikację na różnych urządzeniach w przeglądarce
