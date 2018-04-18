@@ -1,0 +1,372 @@
+#Python 3
+
+
+tekst = "Your text"
+print(tekst.upper())	#Wypisanie dużymi literami
+print(tekst.lower())	#Wypisanie małymi literami
+print(tekst.title())	#Wypisanie każdego wyrazu z dużej litery
+print(tekst.replace("Your", "Twój"))	#Zamiana wyrazów w łancuchu
+print("Możesz podać {}", tekst)			#W miejscu {} zostanie przekazana zmienna
+print("\n Przeskok do następnej lini.")	#\n znak przeskoku do następnej lini
+print(liczba, end = " ")	#bez przeskoku do następnej lini
+print("""
+		Blok tekstu, 
+		sformatowany za pomocą potrójnego cudzysłowu
+""")
+
+
+#Konwersja float, int, str
+rachunek = float(input('Podaj kwotę do zapłaty '))	#konwersja float
+z_napiwkiem_15 = rachunek * 1.15
+z_napiwkiem_20 = rachunek * 1.20
+print("Z napiwkiem 15%: {}".format(z_napiwkiem_15))
+print("Z napiwkiem 20%: {}".format(z_napiwkiem_20))
+
+
+#Generowanie liczb losowych
+import random
+kostka1 = random.randint(1,6)		#generowanie od 1 do 6
+kostka2 = random.randrange(6) + 1	#generowanie od 0 do 5, dlatego dodano 1
+razem = kostka1 + kostka2
+print("Wylosowano kostka1:", kostka1, ", kostka2:", kostka2, ". Razem:", razem )
+
+
+#Instrukcja len (długość wyrażenia)
+word = input("Wprowadź słowo ")
+print("długość słowa", len(word))
+
+
+#Instrukcje warunkowe
+haslo = input("Podaj hasło: ")
+if haslo=="sekret":
+    print("Dostęp udzielony")
+elif haslo=="nie wiem":
+	print("Dostęp prawie udzielony")
+else:
+    print("Odmowa dostępu")
+print("Koniec programu")
+
+word = input("Wprowadź słowo ")		
+if "e" in word:	
+    print("W twoim słowie występuje 'e'")
+else:
+    print("W twoim słowie nie występuje 'e'")
+
+
+#Pętla while
+odpow = ""						#Na marginesie: 0 i "" mają wartości logiczne False
+while odpow != "koniec":		#Pętla będzie wykonywana dopóki nie wprowadzisz słowa: koniec
+    odpow = input("Podaj magiczne słowo: ")
+    if odpow == "noris":
+        print("Dobrze Noris")
+        break					#Wyjście z pętli
+    if odpow == 'dalej':
+        print("podałeś dalej")
+        continue  
+print("No nareszcie!")
+
+
+#Pętla for, i w połączeniu z range
+word = input("Wprowadź słowo ")
+for letter in word:
+    print(letter)
+	
+for i in range(0, 101, 2):	#wypisze od 0 do 100 ze skokiem co 2
+    print(i, end=" ")
+	
+for i in range(22, 0, -1):	#przykład pętli do tyłu od 22 do 1, skok -1
+    print(i, end=" ")
+	
+
+#Dostęp do sekwencji po indeksie
+word = "Kogut"
+print(word[0])		#wyświetli literę K
+print(word[0:4])	#wyświetli Kogu, indeksy mogą być ujemne np.-1
+print(word[:])		#wyświetli Kogut, można pomijać początek i koniec wyrazu
+
+message = input("Wprowadź komunikat: ")
+new_message = ""
+VOWELS = "aąeęioóuy"
+print()
+for letter in message:
+    if letter.lower() not in VOWELS:	#sztuczka pozwala na wyszukanie dużych i małych liter
+        new_message += letter
+        print("Utworzono nowy łańcuch: ", new_message)
+print("\nNowy wyraz bez samogłosek to:", new_message)
+input("\n\nAby zakończyć program, naciśnij klawisz Enter.")
+
+
+
+#Krotki mogą zawierać elementy różnych typów
+krotka =()
+krotka =(12.34, 'maczuga', "krawat", 33, "tablet")
+if not krotka:
+    print("Masz pustą krotkę")
+else:
+    print("Masz elementy w krotce")
+    print(krotka)
+    for item in krotka:
+        print(item, end=", ")
+
+		
+#Lista, listy można edytować, sortować, modyfikować
+inventory = ["miecz", "zbroja", "hełm", "skarb", "moc", "siodło"]
+print("Elementy wyposażenia:")
+for item in inventory:
+   print(item)
+start =0
+finish =2
+print(inventory[start:finish])		#wyświetlanie wycinka listy
+print("Twoje wyposażenie zawiera", len(inventory), "elementy-ów).")	#długość listy len()
+inventory[0] = "maczuga" 			#zmiana wartości w pierwszym elemencie listy (miecz na maczuga)
+inventory[3:5]=["sznur"]			#zamiana dwóch elementów na jeden (sznur), jeden element zostaje skasowany
+del inventory[:2]					#usunięcie dwóch pierwszych elementów z listy, pozostałe elementy mają index od 0
+inventory.append("róg")				#dodawanie do końca listy nowego elementu
+
+element = "sznur"					#usuwanie z listy elementu
+if element in inventory:			#najpierw sprawdzenie czy dany element jest na liście. To bezpieczna metoda użycia .remove()
+	inventory.remove(element)		#usunięcie na podstawie wartości, a nie index-u, usuwany jest pierwszy odnaleziony element
+else:
+	print(score, "nie ma na liście wyników.")
+
+inventory.sort(reverse=True)		#sortowanie wyników od największych
+
+#	append(wartość) 	Dodaje wartość na końcu listy.
+#	sort() 				Sortuje elementy, od najmniejszego do największego. Opcjonalnie
+#						można nadać wartość typu boolean parametrowi reverse. Jeśli
+#						będzie to wartość True, lista zostanie posortowana od największej
+#						do najmniejszej wartości.
+#	reverse()			Odwraca porządek elementów listy.
+#	count(wartość) 		Zwraca liczbę wystąpień argumentu wartość.
+#	index(wartość) 		Zwraca numer pozycji pierwszego wystąpienia argumentu wartość.
+#	insert(i, wartość) 	Wstawia wartość na pozycji i.
+#	pop(i) 				Zwraca wartość zajmującą pozycję i oraz usuwa ją z listy. Przekazanie
+#						numeru pozycji i jest opcjonalne. Jeśli argument i nie zostanie
+#						podany, usuwany i zwracany jest ostatni element listy.
+#	remove(wartość) 	Usuwa z listy pierwsze wystąpienie argumentu wartość.
+
+scores = [("Kasia", 440), ("Adam", 10), ("Zosia", 600)]
+print(scores[2][0])
+scores.append(("Irek", 880))
+
+#Referencje współdzielone
+dany =['kapelusz biały', 'koszula beż', 'klapki']
+molu =dany		#współdzielenie tej samej referencji, modyfikacja molu pociąga zmianę dany
+molu =dany[:]	#utworzenie klona, modyfikacja molu nie pociaga za sobą zmiany dany
+
+#Słowniki - klucz : wartość klucza
+slownik ={'god':'dobry', 'god dag':'dzień dobry', 'ikke':'nie', 'hvite hus':'biały dom'}
+if 'god' in slownik:			#sprawdzanie czy istnieje taki klucz w słowniku, inaczej przy pobieraniu może wyskoczyć błąd
+    print(slownik['god'])		#sprawdzać można tylko klucze, wyszukiwać można tylko po kluczach
+else:
+    print("Nie ma takiego klucza w słowniku")
+
+print(slownik.get("Klucz", "Nie mam pojęcia."))	#Inny sposób pobierania wartości ze słownika, jeżeli nie ma klucza, wyświetli wartość domyślną.
+												#Jeżeli nie podasz wartości domyślnej, przyjmie wartość None
+słownik[klucz] = definicja						#Dodanie nowego elementu do słownika klucz:definicja, sprawdzaj czy nie zostanie nadpisany
+
+#		get(klucz, [wartość_domyślna])	Zwraca wartość klucza. Jeśli klucz nie istnieje, zwracana jest
+#										opcjonalna wartość_domyślna. Jeśli klucz nie istnieje i wartość_
+#										domyślna nie została określona, zwracana jest wartość None.
+#		keys() 							Zwraca widok wszystkich kluczy występujących w słowniku.
+#		values() 						Zwraca widok wszystkich wartości występujących w słowniku.
+#		items() 						Zwraca widok wszystkich elementów słownika. Każdy element to dwuskładnikowa krotka, 
+#										której pierwszym składnikiem jest klucz, a drugim wartość klucza.
+
+
+
+#Funkcje
+def instrukcja():					#definiowanie funkcji
+""" Wyświetla instrukcję gry """	#dokumentacja docstring
+return()							#zwracanie wyników w funkcji
+global value						#całkowity dostęp do zmiennych globalnych w funkcji, lepiej tego nie stosować
+
+instrukcja()						#wywołanie funkcji w programie
+
+def monkey_around(bananas = 100, barrel_of = "tak", uncle = "małpi"): 	#przypisanie argumentów domyślnych w funkcji
+
+
+#Odczytywanie z plików
+print("\nPobieranie zawartości pliku wiersz po wierszu przy użyciu pętli.")
+text_file = open("odczytaj_to.txt", "r")	#najpierw trzeba otworzyć plik z trybem dostępu "r"
+for line in text_file:
+    print(line)
+text_file.close()							#zamknięcie pliku
+
+print(text_file.read(7))					#odczytywnie 7-miu znaków, (odczyt od zapamiętanego poprzedniego miejsca)
+											#jeżeli nie podasz ilości znaków zwróci cały plik. Powrót do poczatku przez .close()
+											#Po końcu pliku odczyty będą puste.
+print(text_file.readline())					#odczyt całej lini z pliku. Następna instrukcja odczyta drugą linię z pliku itd..
+											#powrót do początku pliku też przez .close()
+print(text_file.readline())					#odczyt wszystkich lini z pliku
+text_file.close()							#zamknięcie pliku
+
+
+#	"r" 	Odczyt danych z pliku tekstowego. Jeśli plik nie istnieje, Python zasygnalizuje błąd.
+#	"w" 	Zapis danych do pliku tekstowego. Jeśli plik już istnieje, jego zawartość zostaje zastąpiona przez nowe dane. 
+#			Jeśli nie istnieje, zostaje utworzony.
+#	"a" 	Dopisanie danych na końcu pliku tekstowego. Jeśli plik istnieje, nowe dane
+#			zostają do niego dopisane. Jeśli plik nie istnieje, jest tworzony.
+#	"r+" 	Odczyt i zapis danych z (do) pliku tekstowego. Jeśli plik nie istnieje, Python zasygnalizuje błąd.
+#	"w+" 	Zapis i odczyt danych do (z) pliku tekstowego. Jeśli plik istnieje, jego zawartość
+#			zostanie zastąpiona nowymi danymi. Jeśli nie istnieje, zostanie utworzony.
+#	"a+" 	Dopisywanie i odczyt danych do (z) pliku tekstowego. Jeśli plik istnieje, nowe
+#			dane są dopisywane na jego końcu. Jeśli plik nie istnieje, zostanie utworzony.
+
+print("Utworzenie pliku tekstowego za pomocą metody write().")
+text_file = open("zapisz_to.txt", "w")		#otwarcie pliku do zapisu
+text_file.write("Wiersz 1\n")				#metoda write nie wstawia znaku końca wiersza, musisz sam wstawić \n
+text_file.write("To jest wiersz 2\n")
+text_file.write("Ten tekst tworzy wiersz 3\n")
+text_file.close()	
+
+print("\nUtworzenie pliku tekstowego za pomocą metody writelines().")
+text_file = open("zapisz_to.txt", "w")		#metoda zapisu writelines()
+lines = ["Wiersz 1\n",
+  "To jest wiersz 2\n",
+  "Ten tekst tworzy wiersz 3\n"]
+text_file.writelines(lines)
+text_file.close()
+
+print("\nOdczytanie zawartości nowo utworzonego pliku.")
+text_file = open("zapisz_to.txt", "r")		#odczyt dokładnie taki sam jak zapisano przy pomocy writelines()
+print(text_file.read())
+text_file.close()
+
+#Zapisywanie bardziej złożonych struktur danych
+import pickle, shelve 						#import do marynowania, przechowywania i magazynowania ze swobodnym dostępem
+print("Marynowanie list.")
+variety = ["łagodny", "pikantny", "kwaszony"]
+shape = ["cały", "krojony wzdłuż", "w plasterkach"]
+brand = ["Dawtona", "Klimex", "Vortumnus"]
+f = open("pikle1.dat", "wb")				#otwarcie pliku binarnego, nie może być to .txt
+pickle.dump(variety, f)						#marynowanie listy
+pickle.dump(shape, f)
+pickle.dump(brand, f)
+f.close()
+
+#	"rb" 	Odczyt danych z pliku binarnego. Jeśli plik nie istnieje, Python zasygnalizuje błąd.
+#	"wb" 	Zapis danych do pliku binarnego. Jeśli plik już istnieje, jego zawartość zostaje
+#			zastąpiona przez nowe dane. Jeśli nie istnieje, zostaje utworzony.
+#	"ab" 	Dopisanie danych na końcu pliku binarnego. Jeśli plik istnieje, nowe dane
+#			zostają do niego dopisane. Jeśli plik nie istnieje, jest tworzony.
+#	"rb+" 	Odczyt i zapis danych z (do) pliku binarnego. Jeśli plik nie istnieje, Python
+#			zasygnalizuje błąd.
+#	"wb+" 	Zapis i odczyt danych do (z) pliku binarnego. Jeśli plik istnieje, jego zawartość
+#			zostanie zastąpiona nowymi danymi. Jeśli nie istnieje, zostanie utworzony.
+#	"ab+" 	Dopisywanie i odczyt danych do (z) pliku binarnego. Jeśli plik istnieje, nowe
+#			dane są dopisywane na jego końcu. Jeśli plik nie istnieje, zostanie utworzony.
+
+print("\nOdmarynowanie list.")
+f = open("pikle1.dat", "rb")			#otwarcie pliku do odczytu
+variety = pickle.load(f)
+shape = pickle.load(f)
+brand = pickle.load(f)
+print(variety)
+print(shape)
+print(brand)
+f.close()
+
+#dump(obiekt, plik,[, bin])		Zapisuje zamarynowaną wersję obiektu obiekt do pliku plik. Jeśli
+#								bin ma wartość True, obiekt zostaje zapisany w formacie binarnym.
+#								A jeśli bin ma wartość False, obiekt zostaje zapisany w mniej
+#								wydajnym, ale czytelniejszym dla człowieka formacie binarnym.
+#								Wartość domyślna parametru bin jest równa False.
+#load(plik) 					Odmarynowuje i zwraca kolejny zamarynowany obiekt z pliku plik.
+
+
+print("\nOdkładanie list na półkę.") 	#Jeżeli potrzebujesz swobodny dostęp do zamarynowanych obiektów wykorzystaj shelve
+s = shelve.open("pikle2.dat")
+s["odmiana"] = ["łagodny", "pikantny", "kwaszony"]			#klucz półki może być tylko łańcuchem
+s["kształt"] = ["cały", "krojony wzdłuż", "w plasterkach"]
+s["marka"] = ["Dawtona", "Klimex", "Vortumnus"]
+s.sync()   													# upewnij się, że dane zostały zapisane
+
+print("\nPobieranie list z pliku półki:")	#Pobieranie danych z półki
+print("marka -", s["marka"])
+print("kształt -", s["kształt"])
+print("odmiana -", s["odmiana"])
+s.close()
+
+#Obsługa wyjątków try, except
+try:
+	num = float(input("Wprowadź liczbę: ")) #jeżeli użytkownik wprowadzi tekst zamiast liczby pojawi się wyjątek
+except:
+	print("Wystąpił jakiś błąd!")
+
+try:		#W tej sytuacji funkcja print zostanie wykonana tylko wtedy, kiedy zostanie zgłoszony wyjątek ValueError
+	num = float(input("\nWprowadź liczbę: "))
+except ValueError:
+	print("To nie była liczba!")
+	
+#Lista niektórych wyjątków
+#	IOError 			Zgłaszany w przypadku wystąpienia błędu operacji wejścia-wyjścia,
+#						takiego jak próba otwarcia nieistniejącego pliku w trybie odczytu.
+#	IndexError 			Zgłaszany przy indeksowaniu sekwencji, gdy numer indeksu
+#						wskazuje na nieistniejący element.
+#	KeyError 			Zgłaszany, gdy nie zostanie znaleziony klucz słownika.
+#	NameError 			Zgłaszany, gdy nie zostanie znaleziona nazwa (na przykład zmiennej
+#						lub funkcji).
+#	SyntaxError 		Zgłaszany, gdy zostanie wykryty błąd składni.
+#	TypeError 			Zgłaszany, gdy wbudowana operacja lub funkcja zostanie
+#						zastosowana do obiektu nieodpowiedniego typu.
+#	ValueError 			Zgłaszany, gdy wbudowana operacja lub funkcja otrzyma argument,
+#						który ma właściwy typ, ale nieodpowiednią wartość.
+#	ZeroDivisionError 	Zgłaszany, gdy drugi argument operacji dzielenia lub modulo jest
+#						równy zeru.
+
+# 	Nazwy wyjątków możesz poznać z sesji interaktywnej, symulując błąd
+
+# obsłuż kilka typów wyjątków
+print()
+for value in (None, "Hej!"):
+   try:
+ print("Próba konwersji:", value, "-->", end=" ")
+    print(float(value))
+   except (TypeError, ValueError):	#oddziel różne typy wyjątków przecinkiem
+ print("Wystąpił jakiś błąd!")
+
+print()
+for value in (None, "Hej!"):		#inny sposób wyłapania wyjątków
+   try:
+ print("Próba konwersji:", value, "-->", end=" ")
+    print(float(value))
+   except TypeError:
+ print("Możliwa jest tylko konwersja łańcucha lub liczby!")
+   except ValueError:
+ print("Możliwa jest tylko konwersja łańcucha cyfr!")
+
+# try/except/else
+try:
+    num = float(input("\nWprowadź liczbę: "))
+except ValueError:
+    print("To nie była liczba!")
+else:
+   print("Wprowadziłeś liczbę", num)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
