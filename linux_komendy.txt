@@ -1,0 +1,119 @@
+
+ls		listuje bieżący katalog
+		-a	listuje z ukrytymi plikami
+		-l 	podaje więcej szczegółów
+			- oznacza plik
+			d oznacza katalog
+			l symlink dowiązanie
+		-t	sortuje na podstawie czasu modyfikacji, np. ls -lt
+		--reverse odwraca kolejność sortowania
+		-i	wyświetla węzły (inode) np. ls -li
+man		wyświetlenie pliku, podręcznika pomocy np. man ls
+file	wyświetla krótki opis pliku
+less	przeglądanie plików
+		h	pomocy
+		q	wyjście z less
+pwd		podaje bieżący katalog
+cd .. 	przejście do nadrzędnego katalogu
+		
+.		bierzący katalog
+~		katalog domowy (home)
+
+cp		kopiuje pliki i katalogi
+		-r	rekurencyjne kopiowanie katalogów
+		-i	interaktywne, chroni przed nadpisaniem plików prosi o potwierdzenie
+		-a	kopiuje z wszystkimi atrybutami
+mv		przenosi pliki i katalogi lub zmienia ich nazwy
+		-i	interaktywne, chroni przed nadpisaniem plików prosi o potwierdzenie
+		-u	kopiuje tylko nowsze pliki, albo takie których jeszcze nie ma w miejscu docelowym
+		-v	wyświetla komunikaty podczas przenoszenia
+mkdir	tworzy katalogi
+rm		usuwa pliki lub katalogi
+		najlepiej sprawdzić poleceniem ls przed usunięciem
+		-i	interaktywne, prosi o potwierdzenie przed usunięciem
+		-r	rekurencyjne, niezbędne do usuwania katalogów z plikami lub katalogami
+		-f	force, działa nawet jak plik lub katalog nie istnieje, bez komunikatu zwrotnego
+ln		tworzy dowiązania twarde i symboliczne
+		ln plik link		dowiązanie twarde
+		ln -s element link	dowiązanie symboliczne, element może być plikiem lub katalogiem	
+Wieloznacznik	Pasuje_do
+*				dowolnych znaków
+?				dowolnego pojedynczego znaku
+[znaki]			dowolnego znaku wchodzącego w skład zestawu znaki
+[!znaki]		dowolnego znaku, który nie wchodzi w skład zestawu znaki
+[[:klasa:]]		dowolnego znaku wchodzącego w skład określonej klasy
+				klasa znaków	pasuje do
+				[:alnum:]		dowolnego znaku alfanumerycznego
+				[:alpha:]		dowolnego znaku alfabetycznego
+				[:digit:]		dowolnej liczby
+				[:lower:]		dowolnej małej litery
+				[:upper:]		dowolnej dużej litery
+				
+type	wyświetla typ polecenia np.	type cp daje cp is /bin/cp
+									type type daje type is a shell builtin
+which	określenie lokalizacji pliku wykonywalnego
+help	plik pomocy, opisuje komendę np. help cd
+--help	wiele programów posiada taką opcję pomocy np. mkdir --help
+apropos	przeszukuje strony podręcznika pomocy pod kątem jakiegoś słowa, polecenia
+		man z opcją -k działa tak samo jak apropos
+info	alternatywa dla man, też służy jako pomoc
+README	dokumentacja w katalogu /usr/share/doc Pliki .gz można czytać programem gless (less + gzip)
+alias	tworzy własne nowe polecenie. Najpierw sprawdź nazwę, czy już istnieje np. type test
+		alias foo='cd /usr; ls; cd -'
+unalias	usuwanie własnego polecenia np. unalias foo
+history	wyświetla wszystkie ostatnie polecenia. !5 szybkie powtórzenie 5-go polecenia
+
+>		przekierowania potoków wejścia wyjścia np. ls -l /usr/bin > output.txt (plik jest nadpisywany, nawet przy błędzie)
+>>		przekierowanie potoku, pozwala na dopisywanie treści do wyjścia (w naszym przykładzie do output.txt)
+		ls -l /usr/bin 2> error.txt przekierowanie strumienia błędów do pliku error.txt
+		
+cat		wyświetla pliki, najlepiej niewielkie np. cat output.txt
+		łaczy pliki np. cat movie0*.avi > movie.avi (jeżeli istnieją pliki movie01, movie02, ...)
+
+ZMIENNE ŚRODOWISKOWE		
+PS1: przechowuje aktualny znak zachęty.
+USER: zawiera nazwę aktywnego użytkownika.
+HOSTNAME: przedstawia aktualną nazwę hosta (komputera).
+HOME: określa katalog domowy aktywnego użytkownika.
+SHELL: określa aktywną powłokę, w której działa ten terminal.
+TERM: przedstawia rodzaj terminala, z którego korzystasz.
+PATH: określa zbiór katalogów, które są przeszukiwane pod kątem uruchamianych aplikacji.
+PWD: przedstawia aktualny katalog roboczy użytkownika.
+EDITOR: za pomocą tej zmiennej możesz określić pełną ścieżkę do edytora tekstowego, stosowanego w połączeniu z pewnymi poleceniami, takimi jak crontab -e.
+TZ: przedstawia aktualnie ustawioną strefę czasową.
+HISTSIZE: określa rozmiar bufora historii.
+
+echo $PATH				wyświetlenie zmiennej śrofowiskowej PATH
+export PATH=".:$PATH"	dopisanie "." do zmiennej PATH, przeszukiwanie zacznie się od katalogu roboczego.
+
+.bashrc					plik przechowujący twoje ustawienia np. aliasy, exporty (ustawienia nie będą kasowane przy następnej sesji)
+						Po zapisaniu pliku .bashrc pamiętaj, aby go przeładować, korzystając z operatora kropki (.):. .bashrc
+						
+echo $?		polecenie zwraca kod po wykonaniu operacji (0 -ok, cyfry -błędy) polecenie to należy wywołać natychmiast po wykonaniu oryginalnego polecenia.
+
+locate crc.c					wyszukiwanie wszystkich wersji pliku crc.c
+locate crc.c | xargs ls -la		wyszukanie i wylistowanie wszystkich wersji pliku crc.c
+
+PRZESYŁANIE POTOKU POMIEDZY TERMINALAMI:
+1. W pierwszym terminalu wykonaj polecenie tty. Efekt tego polecenia powinien wyglądać na przykład tak: /dev/pts/16
+2. W drugim terminalu wykonaj polecenie route. Powinieneś zobaczyć efekt działania tego polecenia właśnie w tym terminalu.
+3. Wykonaj ponownie polecenie route, tym razem korzystając ze zmodyfikowanej wersji poprzedniego polecenia: route > /dev/pts/16
+4. Efekt działania polecenia route trafi do wskazanego terminala.
+
+NA SERWERACH CZESTO NIE MA OKIEN, MOŻNA UŻYĆ: Screen
+	Ctrl+A+?: wyświetla listę poleceń i ich skrótów klawiaturowych.
+	Ctrl+A+C: tworzy nowe okno.
+	Ctrl+A+D: likwiduje okno.
+	Ctrl+A+N: przechodzi do następnego okna w sekwencji.
+	Ctrl+A+P: przechodzi do poprzedniego okna w sekwencji.
+	Ctrl+A+#: (# to numer): przechodzi do okna o określonym numerze.
+	Ctrl+A+": przedstawia listę okien; użytkownik może wybrać dowolne okno, wprowadzając numer.
+screen -list: przedstawia listę wszystkich okien.
+screen <aplikacja>: tworzy nowe okno, w którym uruchamia podaną aplikację.
+
+
+
+
+
+
+

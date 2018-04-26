@@ -185,7 +185,7 @@ instrukcja()						#wywołanie funkcji w programie
 
 def monkey_around(bananas = 100, barrel_of = "tak", uncle = "małpi"): 	#przypisanie argumentów domyślnych w funkcji
 
-
+#----------------------------------------------------------
 #Odczytywanie z plików
 print("\nPobieranie zawartości pliku wiersz po wierszu przy użyciu pętli.")
 text_file = open("odczytaj_to.txt", "r")	#najpierw trzeba otworzyć plik z trybem dostępu "r"
@@ -233,6 +233,7 @@ text_file = open("zapisz_to.txt", "r")		#odczyt dokładnie taki sam jak zapisano
 print(text_file.read())
 text_file.close()
 
+#-----------------------------------------------------
 #Zapisywanie bardziej złożonych struktur danych
 import pickle, shelve 						#import do marynowania, przechowywania i magazynowania ze swobodnym dostępem
 print("Marynowanie list.")
@@ -288,6 +289,7 @@ print("kształt -", s["kształt"])
 print("odmiana -", s["odmiana"])
 s.close()
 
+#-----------------------------------------------
 #Obsługa wyjątków try, except
 try:
 	num = float(input("Wprowadź liczbę: ")) #jeżeli użytkownik wprowadzi tekst zamiast liczby pojawi się wyjątek
@@ -344,12 +346,128 @@ except ValueError:
 else:
    print("Wprowadziłeś liczbę", num)
 
+   
+#Wyjście z programu
+import sys		#wcześniej trzeba zaimportować moduł
+sys.exit()		#polecenie wyjścia stosuj jako środka ostatecznego
 
+import sys		#przykład użycia sys.exit(), wyjście nastąpi gdy nie ma file_name
+def open_file(file_name, mode):
+	"""Otwórz plik."""
+try:
+	the_file = open(file_name, mode)
+except IOError as e:
+	print("Nie można otworzyć pliku", file_name, "Program zostanie zakończony.\n", e)
+	input("\n\nAby zakończyć program, naciśnij klawisz Enter.")
+    sys.exit()
+else:
+	return the_file
+# ---------------------------------------------------
+	
+#TWORZENIE KLAS, METOD I OBIEKTÓW
+class Critter(object):		#utworzenie klassy
+	"""Wirtualny pupil"""
+	def __init__(self):		#utworzenie konstruktora
+		print("Urodził się nowy zwierzak!")
+		
+	def talk(self):			#utworzenie metody w klasie Critter
+		print("Cześć!  Jestem egzemplarzem klasy Critter.")
+		
+# część główna  tworząca obiekty na podstawie klasy Critter
+crit1 = Critter()			#utworzenie obiektu crit1
+crit1.talk()				#wywołanie metody 
+crit2 =Critter()			#utworzenie obiektu crit2
 
+#-----------------------------------------------------
 
+class Critter(object):
+	"""Wirtualny pupil"""
+	def __init__(self, name):
+		print("Urodził się nowy zwierzak!")
+		self.name = name
+	def __str__(self):		#__str__tworzy reprezentację obiektów w postaci łańcucha, 
+							#np. print(crit1) nie wyświetli: __main__.Critter object at 0x00A0BA90, tylko to co w rep
+		rep = "Obiekt klasy Critter\n"
+		rep += "name: " + self.name + "\n"
+	return rep
+	def talk(self):
+		print("Cześć! Jestem", self.name, "\n")
+# część główna
+crit1 = Critter("Reksio")	#utworzenie obiektu z atrybutem name i przypisanie do zmiennej crit1
+crit1.talk()
+crit2 = Critter("Pucek")	#utworzenie obiektu z name Pucek
+crit2.talk()
+print("Wyświetlenie obiektu crit1:")
+print(crit1)
+print("Bezpośrednie wyświetlenie wartości atrybutu crit1.name:")
+print(crit1.name)
 
+# --------------------------------------------------
+# Metoda statyczna
 
+class Critter(object):
+	"""Wirtualny pupil"""
+	total = 0				#ta zmienna statyczna jest jak karteczka przypięta do planu(klasy), atrybut klasy, nie obiektów
+	@staticmethod			#dekorator który def status zamienia na metodę statyczną
+	def status():			#metoda statystyczna nie posiada słowa self, który jest koniczny w metodach obiektu
+		print("\nOgólna liczba zwierzaków wynosi", Critter.total)
+	def __init__(self, name):
+		print("Urodził się zwierzak!")
+		self.name = name
+		Critter.total += 1	#Przy tworzeniu nowego obiektu zlicz ilość wyprodukowanych obiektów
+#część główna
+print("Uzyskanie dostępu do atrybutu klasy Critter.total:", end=" ")
+print(Critter.total)
+print("\nTworzenie zwierzaków.")
+crit1 = Critter("zwierzak 1")
+crit2 = Critter("zwierzak 2")
+crit3 = Critter("zwierzak 3")
+Critter.status()
+print("\nUzyskanie dostępu do atrybutu klasy poprzez obiekt:", end= " ")
+print(crit1.total)
 
+# ---------------------------------------------------
+# Publiczne i prywatne metody klas
+# Demonstruje zmienne i metody prywatne
+class Critter(object):
+	"""Wirtualny pupil"""
+	def __init__(self, name, mood):
+		print("Urodził się nowy zwierzak!")
+		self.name = name		# atrybut publiczny
+		self.__mood = mood		# atrybut prywatny Dwa znaki podkreślenia, które rozpoczynają nazwę drugiego atrybutu, stanowią
+								#dla Pythona informację, że jest to atrybut prywatny.
+	def talk(self):
+	print("\nJestem", self.name)
+	print("Czuję się:", self.__mood, "\n")	#dostęp do metody prywatnej przez talk()
+											#gdyby próbować uzyskać dostęp z programu głównego do self.__mood, wyskoczy błąd
+														
+	def __private_method(self):				#metoda prywatna, jednak każda z metod klasy Critter ma do niej dostęp. Dostępu nie mamy
+		print("Metoda prywatna klasy Critter.")	#tylko z programu głównego
+		
+	def public_method(self):				#przykład wykorzystania metody prywatnej w metodzie public_method
+		print("To jest metoda publiczna.")
+		self.__private_method()				#przy pomocy słowa self. Jednak dostęp z programu głównego jest możliwy za pomocą np.:
+											#crit1._Critter__private_method(), ale nie należy tego stosować
+											
+#-------------------------------------------------------
+# Dostęp do właściwości prywatnych
+class Critter(object):
+	"""Wirtualny pupil"""
+	def __init__(self, name)
+		print("Urodził się nowy zwierzak!")
+		self.__name = name
+	@property
+	def name(self):			#Tworzę tę właściwość poprzez napisanie metody zwracającej wartość, do której chcę
+		return self.__name	#zapewnić pośredni dostęp (w tym przypadku wartość prywatnego atrybutu __name), oraz
+							#poprzedzam definicję metody dekoratorem @property. Właściwość ma taką samą nazwę
+							#jak metoda — w tym przypadku name. 
+
+#--------------------------------------------------------
+# Dziedziczenie po klasie bazowej
+class Deck(Hand):			#Klasa Hand nazywa się klasą bazową, ponieważ klasa Deck jest na niej oparta.
+							#Klasa Deck dziedziczy __init__ , __str__ i inne metody z klasy Hand dlatego nie ma konstruktora
+							
+	
 
 
 
