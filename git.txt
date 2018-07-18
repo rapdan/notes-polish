@@ -4,7 +4,7 @@ GIT
 2.	Wejdź do katalogu projektu, który będzie zmieniany i śledzony
 3.	git init 														//inicjuje śledzenie katalogu powstanie plik .git
 	git status 														//pokazuje zmiany w katalogu
-4.	git add . lub git add -A										//dodaje wszystkie pliki do stadge area, schowka który można zapisać commitem
+4.	git add . lub git add -A										//-A dodaje wszystkie pliki do stadge area, schowka który można zapisać commitem
 5.	git commit -m 'Komentarz pomagający rozpoznać dodane zmiany' 	//zapisuje zmiany w repozytorium
 6. 	git log lub git status 											//możesz sprawdzić czy zostały zapisane zmiany
 

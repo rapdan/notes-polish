@@ -1,0 +1,20 @@
+npm install -g ember-cli	//instalacja ember-a, glogalnie
+ember version				//wersja ember
+ember new my-app			//tworzenie nowej aplikacji
+cd my-app					//wejście do projektu
+ember serve					//uruchomienie servera. Sprawdź localhost:4200
+
+
+
+//Dostępne komendy w ember-cli:
+ember addon <addon-name> <options...>
+ember build <options...>
+ember destroy <blueprint> <options...>
+ember generate <blueprint> <options...>
+ember init <glob-pattern>
+ember install <addon-name>
+ember help <komenda>		//plik pomocy danej komendy, domyślnie wszystkie komendy
+
+
+
+
