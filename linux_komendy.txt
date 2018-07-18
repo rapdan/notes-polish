@@ -10,7 +10,7 @@ ls		listuje bieżący katalog
 		-i	wyświetla węzły (inode) np. ls -li
 man		wyświetlenie pliku, podręcznika pomocy np. man ls
 file	wyświetla krótki opis pliku
-less	przeglądanie plików
+less	przeglądanie plików, spacja powoduje przejście dalej
 		h	pomocy
 		q	wyjście z less
 pwd		podaje bieżący katalog
@@ -110,6 +110,97 @@ NA SERWERACH CZESTO NIE MA OKIEN, MOŻNA UŻYĆ: Screen
 	Ctrl+A+": przedstawia listę okien; użytkownik może wybrać dowolne okno, wprowadzając numer.
 screen -list: przedstawia listę wszystkich okien.
 screen <aplikacja>: tworzy nowe okno, w którym uruchamia podaną aplikację.
+
+
+find	znajdowanie plikow i ktalogów np.find -name bash*
+locate	znajdowanie plików i katalogów działa szybciej, wykorzystuje bazę updatedb -i ignorowanie wielkości znaków
+		baza jest odświeżana za pomocą polecenia z cron. Jeśli chcesz możesz poleceniem update zrobić to wcześniej, ale zajmuje trochę czasu
+
+EDYTOR TEKSTOWY VIM
+vim tekstowy.txt	otwarcie lub utworzenie pliku do edycji w vim.
+A		Najpierw informujesz w jakim trybie ma pracować: A=INSERT
+Esc		Wyjście z trybu INSERT
+:w		zapisanie pliku
+:wq		zapisanie pliku i wyjście
+
+dsmeg	podaje informacje o systemie np. dsmeg > tekstowy.txt
+
+grep	wyszukanie na podstawie wzorca np. grep -i network tekstowy.txt  wyszukanie słów network w pliku
+
+zip		archiwizacja plików i katalogów np. zip paczka.zip f1.txt f2.txt f3.txt foo.dat lub zip paczka.zip *.txt *.dat
+unzip	rozpakowanie archiwum. 1.mkdir test 2.cp paczka.zip test 3.cd test 4.unzip paczka.zip
+tar		lepszy dla plików linuksowych np. tar cvzf paczka.tar.gz *.txt (tworzy archiwum gzip) tar xvzf paczka.tar.gz (rozpakowuje archiwum)
+
+stat	wyświetla informacje o pliku np. stat test.txt
+sum		podaje sumę kontrolna pliku np. sum test.txt pierwsza liczba to suma kontrolna, druga liczba bloków
+touch	dotykanie plików. Modyfikuje datę modyfikacji. Jeżeli pliku nie ma to zostanie utworzony. touch plik.txt
+
+POŁĄCZENIA SIECIOWE JAK NAPRAWIAĆ:
+1.	ping google.com	-sprawdź czy jest ping (Ctrl + C zatrzymuje ping)
+2.	route			-znajdź adres twojej bramy sieciowej gateway, na górze, jeżeli polecenie trwa długo to jest problem z połączeniem
+3.	ping dla adresu bramy. Jeżeli czynność się powiedzie to jest problem z dostawcą lub routerem
+4.	ifconfig		-jeżeli ping nie zadziałało to spróbuj uzyskać nazwę interfejsu sieciowego eth0 lub p3p2
+5.	ethtool	eth0	-ostatni wiersz powinien wyglądać: Link detected: yes , jeśli tak nie jest to jest problem z kablem, sprawdź czy diody migają
+6.	ifdown eth0		-jeżeli kabel w porządku 
+7.	ifup eth0		-i spróbuj ponownie ping
+8.	reset routera lub modemu (odczekaj minutę)
+9.	shutdown -h now 	-reset komputera (odczekaj kilka minut)
+10.	problem najprawdopodobniej w sprzęcie, ale spróbuj uruchomić obraz live z USB, upewnij się że ktoś nie wprowadził zmian do serwera DHCP
+
+URUCHOMIENIE SERWERA WWW
+1. 	Najpierw zainstaluj serwer httpd: yum install httpd (w Fedora)
+2. 	Przejdź do katalogu zawierającego pliki konfiguracyjne: cd /etc/httpd/conf
+3. 	Wykonaj kopię zapasową pliku: cp httpd.conf /tmp/httpd.conf.orig. Możesz wybrać inny katalog przeznaczony na kopię zapasową.
+4. 	Zmień plik, korzystając z edytora tekstowego: vi httpd.conf
+5. 	W przedstawionym pliku znajdziesz niemal wszystkie opcje niezbędne do prawidłowego skonfigurowania serwera httpd. Zapoznaj się szczególnie uważnie
+	z pierwszą stroną, która zawiera ustawienia korzenia serwera (ServerRoot).
+6. 	W pliku httpd.conf bardzo często występują ścieżki. Jeśli ścieżka zaczyna się od ukośnika, serwer potraktuje tę ścieżkę dosłownie, czyli jako ścieżkę absolutną.
+	Jeśli jednak skorzystasz ze ścieżki względnej, zostanie ona poprzedzona wartością atrybutu ServerRoot, np.: Include conf.modules.d/*.conf
+7. 	Skoro powyższa ścieżka jest względna i dyrektywa ServerRoot jest ustawiona na wartość /etc/httpd, zostanie dołączony katalog /etc/httpd/conf.modules.d.
+8. 	W drugiej instancji terminala zmień katalog zgodnie z poniższym poleceniem: cd /etc/httpd
+9. 	Zawsze pamiętaj o tym, jak działa atrybut ServerRoot! Zaoszczędzi Ci to wiele czasu. Przeanalizujmy plik httpd.conf jeszcze przez chwilę. Dyrektywa Listen
+	określa port, pod jakim będzie działać serwer WWW. Pozostaw wartość domyślną, czyli 80.
+10. Przewiń plik w dół, aż do dyrektywy ServerName. W tym miejscu możesz określić własną nazwę serwera. Pozostaw ją pustą.
+11. Na koniec omówimy dyrektywę DocumentRoot. Określa ona katalog, z którego będą udostępniane strony internetowe. Domyślnie powinien on mieć wartość
+	/var/www/html.
+12. Spróbujmy uruchomić usługę httpd. Wywołaj polecenie systemctl start httpd.service. Wykonanie tego polecenia powinno zakończyć się powrotem
+	do wiersza poleceń bez żadnego dodatkowego efektu.
+13. Teraz musimy włączyć usługę — w tym celu wykonaj polecenie systemctl enable	httpd.service. Powinieneś otrzymać wiadomość o prawidłowym wykonaniu polecenia.
+14. Przetestujmy nasz serwer: cd /var/www/html
+15. Wykonaj polecenie ls -la. Katalog powinien być pusty. Utwórz plik następującym poleceniem: dmesg > dmesg1.txt
+16. Otwórz przeglądarkę. Najpierw sprawdzimy plik lokalnie — wprowadź adres URL: file:///var/www/html/dmesg1.txt.
+17. Zostanie wyświetlona zawartość pliku. Teraz utwórzmy kolejny plik: echo "To jest nowy plik" > nowyplik.txt
+18. Na pasku adresu URL podstaw swój adres IP w miejsce mojego, a następnie wprowadź do przeglądarki następujący adres: 192.168.1.115:/nowyplik.txt.
+	Zawartość pliku nowyplik.txt powinna ukazać się w przeglądarce.
+
+SPRAWDZAMY PORTY I APLIKACJE
+
+1. 	Otwórz plik /etc/services: more /etc/services.
+2. 	Naciśnij jeden raz klawisz spacja, aby przewinąć stronę w dół. Znajdź ciąg "ftp". Wartość 21 w kolumnie obok oznacza numer portu, z którego korzysta usługa FTP.
+	Ciągi /tcp i /udp oznaczają, że ten port jest dostępny dla obu protokołów.
+3. 	W tym samym pliku powinieneś także odnaleźć usługę telnet (jeśli nie, kilka razy wciśnij Enter). Obok powinieneś ujrzeć wartość 23.
+4. 	Teraz będziemy szukać usługę w nieco inny sposób. Naciśnij kilka razy klawisz Backspace, aby powrócić na górę strony, a następnie wpisz tekst /nameserver.
+5. 	Przekonasz się, że usługa nameserver korzysta z portu 42 i jest ona dostępna zarówno za pomocą protokołu TCP, jak i UDP.
+6. Plik jest całkiem duży — na moim systemie składa się on z 11 tysięcy wierszy, ponieważ jest w nim zdefiniowane niezwykle dużo portów.
+
+Zwyczajowo porty o numerach od 0 do 1023 uznaje się za porty powszechnie znane (ang. well-known ports). Porty od 1024 do 49151 to porty zarejestrowane (ang. registered ports), podczas
+gdy porty prywatne (ang. private) i dynamiczne (ang. dynamic) mają numery od 49152 do 65535. Tworząc różnego rodzaju aplikacje sieciowe lub konfigurując oprogramowanie w jakikolwiek
+sposób związane z portami, należy pamiętać o tej konwencji.
+
+
+ZMIANA WŁAŚCICIELA I GRUPY PLIKU
+
+chown [właściciel][:[grupa]] plik...
+Przykład: root chce skopiować plik do katalogu domowego użytkownika tony, aby tony mógł edytować plik
+sudo cp plik.txt ~tony				#kopiowanie pliku do katalogu domowego tony
+sudo chown tony: ~tony/plik.txt		#zmiana właściciela pliku na tony i zmiana grupy na grupę logowania użytkownika tony
+
+bob			zmiana właściciela pliku na bob
+bob:users	zmienia właściciela pliku na bob i zmienia grup pliku na users
+:admin		zmienia grupę na admins. Właściciel sie nie zmienia
+bob:		zmienia właściciela na bob i zmienia grupę pliku na grupę logowania użytkownika bob.
+
+chgrp	zmiana przypisania do grupy
 
 
 

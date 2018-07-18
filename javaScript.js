@@ -214,8 +214,8 @@ reg.exec(input);	// rezultatem będzie tablica,
 //	--------Metoda: search 
 //	objekt: String		Zwraca: index zgodności / -1 
 //	Opis: Szuka zgodności w stringu
-"ds6374828edejfew8383".search(/\d{2,8}/)	//szuka w stringu cyfr 2 lub więcej do ośmiu zwraca index, tutaj: 2
-"ds6374828edejfew8383".match(/\d{2,8}/)		//szuka w stringu cyfr 2 lub więcej do ośmiu zwraca tablicę, tutaj: '6374828', index:2, input:'ds6374828edejfew8383'
+"ds6374828edejfew8383".search(/\d{2,8}/)	//szuka w stringu cyfr, dwóch lub więcej do ośmiu zwraca index, tutaj: 2
+"ds6374828edejfew8383".match(/\d{2,8}/)		//szuka w stringu cyfr, dwóch lub więcej do ośmiu zwraca tablicę, tutaj: '6374828', index:2, input:'ds6374828edejfew8383'
 
 // 	---------Metoda: replace 
 //	Objekt: String 		Zwraca: String 
@@ -250,7 +250,7 @@ function addImage (times, myImg){
         src.appendChild(img);						// utworzenie węzła w DOM
     }
 }
-addImage(4,"tata.jpg");								//wywołanie kilka razy funkcji z różnymi argumentami
+addImage(4,"tata.jpg");								//wywołanie funkcji z różnymi argumentami
 addImage(3,"tata2.jpg");
 addImage(1,"tendal.jpg");
 addImage(5,"tendal2.jpg");
@@ -262,16 +262,16 @@ addImage(5,"tendal2.jpg");
 document.querySelector('#idSelektor1').textContent = "text do wypisania na stronie"; 	//prosta i krótka metoda wstawienia tekstu
 document.querySelector('#idSelektor2').innerHTML = '<em>' + zmienna1 + '</em>'; 		//metoda wstawienia HTML kodu na stronie
 var x = document.querySelector('#idSelektor3').textContent;								//odczyt tekstu ze strony HTML po id
-document.querySelector('.classSelector1').style.display = 'none';						//zmiana stylów CSS po class-ie (display: 'none')
+document.querySelector('.classSelector1').style.display = 'none';						//zmiana stylów CSS po class-ie (na display: 'none')
 document.querySelector('.classSelector2').classList.remove('active');					//usunięcia ze strony HTML class = 'active';
 document.querySelector('.classSelector3').classList.add('active');						//dodanie do classSelector3 dodatkowo class = 'active';
-document.querySelector('.classSelector4').classList.toggle('active', i < 10);			//dodanie class = 'active' jeżeli gdy i<10, a jeśli i>=10 to usunięcie 'active'
+document.querySelector('.classSelector4').classList.toggle('active', i < 10);			//dodanie class = 'active' gdy i<10, a jeśli i>=10 to usunięcie 'active'
 
 // <div id="one">one</div>
 var d1 = document.getElementById('one');
 d1.insertAdjacentHTML('afterend', '<div id="two">two</div>');							//dodanie tekstu w html-u, afterend, beforend...
 																						// dodanie div-a <div id="one">one</div><div id="two">two</div>
-----------------------------------------------------------
+//----------------------------------------------------------
 
 function addText (tekst){
     
@@ -854,4 +854,68 @@ function myFunction() {
 //split() — przekształcanie łańcucha w tablicę.
 
 //Ponadto w Node.js do dyspozycji mamy metody setInterval(), setTimeout(), forEach() oraz console.
+
+console.log(__filename);	//tylko w node.js wyświetla ścieżkę do pliku
+console.log(__dirname);		//wyświetla ścieżkę do katalogu
+
+//------------------------------------------------------
+// eksport modułów i require
+module.exports = moja_funkcja_zmienna; 		//w osobnym pliku o nazwie np. greetings.js
+var pozdro = require("./greetings.js");		//odwołanie się do modułu w pliku głównym programu
+
+//Przykład
+module.exports = {							//plik greetings.js
+sayHalloInEnglish : function(){
+    return 'Hallo in English';
+},
+sayHalloInSpanish : function(){
+    return 'Hola in Spanish';
+},
+multiPlay : function(x,y){					//mnożenie
+    return `${x} * ${y} = ${x*y}`;
+}
+};
+//------------------------
+var greetings = require("./greetings.js");	//plik index.js
+console.log(greetings.sayHalloInEnglish());	//Hallo in English
+console.log(greetings.sayHalloInSpanish());	//Hola in Spanish
+console.log(Hello.multiPlay(100,12) );		// 100 * 12 = 1200
+
+//-------------------------------------------------------------
+// moduły zdarzeń events
+
+var Events = require('events');				//włączenie modułu events, do rejestrowania zdarzeń
+var myEvent = new events.EventEmitter();	//tworzenie obiektu dla obsługi zdarzeń
+myEvent.on('some_event', function(text){	//określenie funkcji dla zdarzenia some_event
+	console.log(text);
+});
+myEvent.emit();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

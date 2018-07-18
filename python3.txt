@@ -1,21 +1,65 @@
 #Python 3
 
 
-tekst = "Your text"
+tekst, s = "Your text", "Inny dowolny tekst"
 print(tekst.upper())	#Wypisanie dużymi literami
 print(tekst.lower())	#Wypisanie małymi literami
 print(tekst.title())	#Wypisanie każdego wyrazu z dużej litery
-print(tekst.replace("Your", "Twój"))	#Zamiana wyrazów w łancuchu
+print s.capitalize()	#Służy do nadania napisowi formatu jak w zdaniu, to jest zmiany pierwszej litery na dużą, a pozostałych na małe
+print s.center(32,'*')	#Wyśrodkowanie napisu w polu o podanej długości. Domyślnie pole dopełniane jest znakiem spacji
+print s.count('t')		#Oblicza ile razy określony ciąg znaków występuje w napisie
+print find('ka')		#Odnajduje pierwsze wystąpienie określonego ciąg znaków w napisie. 
+						#Jeżeli szukanego ciągu w napisie nie ma, zwracana jest wartość –1
+rfind('napis')			#Odnajduje ostatnie wystąpienie określonego ciąg znaków w napisie
+print s.isdigit()		#Sprawdza, czy napis zawiera tylko cyfry. Np. '18.9'.isdigit() zwraca False, bo jest kropka
+print ' '.join(['ala','ma','kota'])		#Łączy wszystkie elementy sekwencji podanej jako parametr w pojedynczy napis, 
+										#wstawiając pomiędzy nie napis dla którego wywołujemy metodę tutaj:'ala ma kota'
+print s.lower()							#Zamienia wszystkie duże litery w napisie na małe
+print(tekst.replace("Your", "Twój"))	#Zamiana wyrazów w łancuchu 'Your' na 'Twój'
+print s.rjust(50, '*')					#Służy do wyrównania napisu do prawej w polu o podanej długości. Domyślnie pole dopełniane jest znakiem spacji
+'983-343-4567'.split('-') 				#Tworzy listę wyrazów występujących w napisie: ['983','343','4567']
+'  hd tra   '.strip()					#Usuwa spacje przed i po wyrazie lub wyrazach. Tutaj: 'hd tra'
+wiersze.splitlines() 					#Tworzy listę linii występujących w napisie
+s.swapcase() 							#Odwraca wielkość liter w napisie
 print("Możesz podać {}", tekst)			#W miejscu {} zostanie przekazana zmienna
+print "Pierwsza zmienna {}".format(a)	#Dla wersji Python 2.7
 print("\n Przeskok do następnej lini.")	#\n znak przeskoku do następnej lini
-print(liczba, end = " ")	#bez przeskoku do następnej lini
+print(liczba, end = " ")				#bez przeskoku do następnej lini
+print('a', 12, b, sep='|')				#wyświetlenie kilku danych z separatorem  np.|
 print("""
 		Blok tekstu, 
 		sformatowany za pomocą potrójnego cudzysłowu
 """)
+#==================================================================
+#	FORMATOWANIE LICZB
+#==================================================================
+print "%s" % 1			#Litera s oznacza napis (konwertuje każdy typ danych na tekst)
+print "%s" % range(6)	#wyswietli: [0, 1, 2, 3, 4, 5]
+print "%c" % "A"		#Litera c oznacza pojedynczy znak w kodzie ASCII
+print "%c" % 077		#wyświetli: ?
+print "%i" % 0xff		#Litera i oznacza dziesiętną liczbę całkowitą (konwertuje na liczbę całkowitą, tutaj 255)
+print "%i" % 2.2		#wyświetli 2
+print "%x" % 22			#Litera x oznacza szesnastkową liczbę całkowitą. Tutaj wyświetla: 16
+print "%e" % 123		#Litera e oznacza liczbę zmiennopozycyjną w postaci wykładniczej. Tutaj wyświetli: 1.230000e+002
+print "%f" % 123		#Litera f oznacza liczbę zmiennopozycyjną w postaci ułamka dziesiętnego: 123.000000
 
+for x in range(5,100,10):
+	print "Pierwiastkiem %2i jest %5.3f" % (x,x**0.5) # %5.3f oznacza: 5-całkowita długość, 3-ilość miejsc po przecinku
+	
+for x in range (-10,11):
+	print "%+i" % x,		#znak "+" wymusza wyświetlanie znaku liczby, także dla liczb nieujemnych: -10 -9...+9 +10
 
-#Konwersja float, int, str
+for x in range(5,100,10):
+	print "%-3i%#-6o%#-5x" % (x,x,x) 	#znak "-" spowoduje że liczby będą wyrównywane do lewej krawędzi a nie prawej
+
+for x in range(5,100,10):
+	print "%3i %#04o %#04x" % (x,x,x)	#znak 0 spowoduje że pole będzie wypełnione zerami a nie spacjami
+
+	
+
+#==================================================================
+#	KONWERSJA float, int, str
+#==================================================================
 rachunek = float(input('Podaj kwotę do zapłaty '))	#konwersja float
 z_napiwkiem_15 = rachunek * 1.15
 z_napiwkiem_20 = rachunek * 1.20
@@ -23,7 +67,9 @@ print("Z napiwkiem 15%: {}".format(z_napiwkiem_15))
 print("Z napiwkiem 20%: {}".format(z_napiwkiem_20))
 
 
-#Generowanie liczb losowych
+#===================================================================
+#	GENEROWANIE LICZB LOSOWYCH
+#===================================================================
 import random
 kostka1 = random.randint(1,6)		#generowanie od 1 do 6
 kostka2 = random.randrange(6) + 1	#generowanie od 0 do 5, dlatego dodano 1
@@ -31,12 +77,16 @@ razem = kostka1 + kostka2
 print("Wylosowano kostka1:", kostka1, ", kostka2:", kostka2, ". Razem:", razem )
 
 
-#Instrukcja len (długość wyrażenia)
+#===================================================================
+#INSTRUKCJA LEN (długość wyrażenia)
+#===================================================================
 word = input("Wprowadź słowo ")
 print("długość słowa", len(word))
 
 
-#Instrukcje warunkowe
+#===================================================================
+#INSTRUKCJE WARUNKOWE
+#===================================================================
 haslo = input("Podaj hasło: ")
 if haslo=="sekret":
     print("Dostęp udzielony")
@@ -52,8 +102,21 @@ if "e" in word:
 else:
     print("W twoim słowie nie występuje 'e'")
 
+#===================================================================
+# WARTOŚCI bool (True, False piszemy z dużej litery)
+#===================================================================
+bool(0)			#False, gdy wartość = 0
+bool(0.0)		#False, gdy wartość = 0
+bool('')		#False, gdy pusty string
+bool([])		#False, gdy pusta lista
+bool({})		#False, gdy pusty słownik
+bool(None)		#False zawsze gdy None
+#Można przekazać funkcji bool() dowolny obiekt, aby kreślić jego True lub False
 
+
+#===================================================================
 #Pętla while
+#===================================================================
 odpow = ""						#Na marginesie: 0 i "" mają wartości logiczne False
 while odpow != "koniec":		#Pętla będzie wykonywana dopóki nie wprowadzisz słowa: koniec
     odpow = input("Podaj magiczne słowo: ")
@@ -65,8 +128,16 @@ while odpow != "koniec":		#Pętla będzie wykonywana dopóki nie wprowadzisz sł
         continue  
 print("No nareszcie!")
 
+a=4
+while a:
+    a-=1
+    print a,
+else:							#pęta while może zawierać na końcu else:
+    print "koniec"				#wyswietli: 3 2 1 0 koniec
 
-#Pętla for, i w połączeniu z range
+#==================================================================
+#Pętla for, i w połączeniu z range()
+#==================================================================
 word = input("Wprowadź słowo ")
 for letter in word:
     print(letter)
@@ -77,12 +148,27 @@ for i in range(0, 101, 2):	#wypisze od 0 do 100 ze skokiem co 2
 for i in range(22, 0, -1):	#przykład pętli do tyłu od 22 do 1, skok -1
     print(i, end=" ")
 	
-
-#Dostęp do sekwencji po indeksie
+# Program, który wyliczy i wyświetli pierwiastek kwadratowy, dla każdej nieujemnej liczby
+liczby = input("Podaj kilka liczb:")
+for x in liczby:
+    if x&<0: continue		#Pomijanie instrukcji w pętli (dla liczb ujemnych)
+    print "Pierwiastkiem %2i jest %5.3f" % (x,x**0.5)
+	
+#===================================================================
+#	Dostęp do sekwencji po indeksie
+#	Odwołania do elementów listy za pomocą index-u:
+#===================================================================
 word = "Kogut"
 print(word[0])		#wyświetli literę K
-print(word[0:4])	#wyświetli Kogu, indeksy mogą być ujemne np.-1
+print(word[0:4])	#wyświetli Kogu, indeksy mogą być ujemne np.-1 (liczone od końca)
 print(word[:])		#wyświetli Kogut, można pomijać początek i koniec wyrazu
+#	Można stosować zapis: [początek:koniec:krok] np. letters[start:stop:step] domyślnie start=0, stop=koniec listy, step=1
+word = "Jakieś słowo lub słowa"
+letters = list(word)		#utworzenie listy liter
+first=letters[0]			#pierwsza litera "J" ,dodatnie indeksy liczymy od (0) początku w prawo
+last=letters[-1]			#ostatnia litera "a" ,ujemne indeksy liczymy od końca w lewo
+letters[::2]				#każda druga litera
+letters[::-1]				#odwrócenie liter (od końca do początku)
 
 message = input("Wprowadź komunikat: ")
 new_message = ""
@@ -96,65 +182,87 @@ print("\nNowy wyraz bez samogłosek to:", new_message)
 input("\n\nAby zakończyć program, naciśnij klawisz Enter.")
 
 
-
-#Krotki mogą zawierać elementy różnych typów
-krotka =()
-krotka =(12.34, 'maczuga', "krawat", 33, "tablet")
+#=====================================================================
+# KROTKI (tuple) mogą zawierać elementy różnych typów i są niezmienne
+#=====================================================================
+krotka =()					#Pusta krotka
+krotka =(2,)				#Krotka jednoelementowa
+krotka = ('Adam',)			#Aby objekt był krotką musi mieć przynajmniej jeden przecinek, inaczej będzie to typ string
+krotka =(12.34, 'maczuga', "krawat", 33, "tablet", [1,2,3])
 if not krotka:
     print("Masz pustą krotkę")
 else:
     print("Masz elementy w krotce")
     print(krotka)
-    for item in krotka:
-        print(item, end=", ")
-
+    for a in krotka:					#pętla po krotce
+        print(a, end=", ")
 		
-#Lista, listy można edytować, sortować, modyfikować
-inventory = ["miecz", "zbroja", "hełm", "skarb", "moc", "siodło"]
-print("Elementy wyposażenia:")
-for item in inventory:
-   print(item)
-start =0
-finish =2
-print(inventory[start:finish])		#wyświetlanie wycinka listy
-print("Twoje wyposażenie zawiera", len(inventory), "elementy-ów).")	#długość listy len()
-inventory[0] = "maczuga" 			#zmiana wartości w pierwszym elemencie listy (miecz na maczuga)
-inventory[3:5]=["sznur"]			#zamiana dwóch elementów na jeden (sznur), jeden element zostaje skasowany
-del inventory[:2]					#usunięcie dwóch pierwszych elementów z listy, pozostałe elementy mają index od 0
-inventory.append("róg")				#dodawanie do końca listy nowego elementu
+for nr, wartosc in enumerate(lista2): 	#aby poznać numer aktualnego powtórzenia pętli, posługujemy się "funkcją enumerate"
+      print nr,
+      print wartosc
+	  
+lista1 = list(krotka)		#konwersja krotki na listę (polecenie: list())
+krotka2 = tuple(lista2)		#konwersja listy na krotkę (polecenie: tuple())
+str(krotka2)				#konwersja krotki na string lub krócej `krotka2` (za pomocą odwróconych apostrofów)
 
-element = "sznur"					#usuwanie z listy elementu
-if element in inventory:			#najpierw sprawdzenie czy dany element jest na liście. To bezpieczna metoda użycia .remove()
-	inventory.remove(element)		#usunięcie na podstawie wartości, a nie index-u, usuwany jest pierwszy odnaleziony element
+#=============================================================================		
+#LISTY, listy można edytować, sortować, modyfikować (są sekwencjami zmiennymi)
+#=============================================================================
+lista1 = ["miecz", "zbroja", "hełm", "skarb", "moc", "siodło"]
+print("Elementy wyposażenia:")
+for item in lista1:
+   print(item)
+start = 0
+finish = 2
+print(lista1[start:finish])			#wyświetlanie wycinka listy
+print("Twoje wyposażenie zawiera", len(lista1), "elementy-ów).")	#długość listy len()
+lista1[0] = "maczuga" 				#zmiana wartości w pierwszym elemencie listy (miecz na maczuga)
+lista1[3:5]=["kokos"]				#zamiana dwóch elementów na jeden (kokos), jeden element zostaje skasowany
+del lista1[:2]						#usunięcie dwóch pierwszych elementów z listy, pozostałe elementy mają index od 0
+lista1.append("róg")				#dodawanie do końca listy nowego elementu
+lista1.extend(listaB)				#rozszerzenie listy	lista1 o listaB (dodanie dwóch list)
+lista1.count('skarb')				#liczy ile razy występuje na liście wartość 'skarb'
+lista1.insert(5, "nowy element")	#wstawianie nowego elementu na miejsce o indeksie 5
+lista1.index('skarb')				#znajduje pierwszą pozycję listy na której występuje wartość 'skarb'
+lista1.pop(5)						#zwraca wartość z pozycji 5 listy, po czym usuwa tę pozycję
+lista1.remove(22)					#usuwa z listy pierwszą znalezioną na liście wartość 22
+lista1.reverse( ) 					#odwraca kolejność elementów listy
+lista1.sort(reverse=True)			#sortowanie objektów od największych
+
+#============USUWANIE OBJEKTU Z LISTY======================
+element = "kokos"					
+if element in lista1:			#najpierw sprawdzenie czy dany element jest na liście. To bezpieczna metoda użycia .remove()
+	lista1.remove(element)		#usunięcie na podstawie wartości, a nie index-u, usuwany jest pierwszy odnaleziony element
 else:
 	print(score, "nie ma na liście wyników.")
+	
 
-inventory.sort(reverse=True)		#sortowanie wyników od największych
-
-#	append(wartość) 	Dodaje wartość na końcu listy.
-#	sort() 				Sortuje elementy, od najmniejszego do największego. Opcjonalnie
-#						można nadać wartość typu boolean parametrowi reverse. Jeśli
-#						będzie to wartość True, lista zostanie posortowana od największej
-#						do najmniejszej wartości.
-#	reverse()			Odwraca porządek elementów listy.
-#	count(wartość) 		Zwraca liczbę wystąpień argumentu wartość.
-#	index(wartość) 		Zwraca numer pozycji pierwszego wystąpienia argumentu wartość.
-#	insert(i, wartość) 	Wstawia wartość na pozycji i.
-#	pop(i) 				Zwraca wartość zajmującą pozycję i oraz usuwa ją z listy. Przekazanie
-#						numeru pozycji i jest opcjonalne. Jeśli argument i nie zostanie
-#						podany, usuwany i zwracany jest ostatni element listy.
-#	remove(wartość) 	Usuwa z listy pierwsze wystąpienie argumentu wartość.
-
+#===============DODAWANIE DO KOŃCA NOWEGO OBJEKTU==========
 scores = [("Kasia", 440), ("Adam", 10), ("Zosia", 600)]
 print(scores[2][0])
 scores.append(("Irek", 880))
 
-#Referencje współdzielone
-dany =['kapelusz biały', 'koszula beż', 'klapki']
-molu =dany		#współdzielenie tej samej referencji, modyfikacja molu pociąga zmianę dany
-molu =dany[:]	#utworzenie klona, modyfikacja molu nie pociaga za sobą zmiany dany
+#	.append(wartość) 		Dodaje wartość na końcu listy.
+#	.sort() 				Sortuje elementy, od najmniejszego do największego. Opcjonalnie	można nadać wartość typu boolean parametrowi reverse. 
+#							Jeśli	będzie to wartość True, lista zostanie posortowana od największej do najmniejszej wartości.
+#	.reverse()				Odwraca porządek elementów listy.
+#	.count(wartość) 		Zwraca liczbę wystąpień argumentu wartość.
+#	.index(wartość) 		Zwraca numer pozycji pierwszego wystąpienia argumentu wartość.
+#	.insert(index, wartość) Wstawia wartość na pozycji index.
+#	.pop(i) 				Zwraca wartość zajmującą pozycję i oraz usuwa ją z listy. Przekazanie numeru pozycji i jest opcjonalne. 
+#							Jeśli argument i nie zostanie podany, usuwany i zwracany jest ostatni element listy.
+#	.remove(wartość) 		Usuwa z listy pierwsze wystąpienie argumentu wartość.
+#	.join()					Łączy listę elementów w słowo
+#	.copy()					Kopiuje listy. Samo przypisanie (lista1=lista2) powoduje tylko utworzenie skrótu do tej samej listy.
 
-#Słowniki - klucz : wartość klucza
+#==============REFERENCJE WSPÓŁDZIELONE===================
+dan = ['kapelusz biały', 'koszula beż', 'klapki']
+molu = dan		#współdzielenie tej samej referencji, modyfikacja molu pociąga zmianę dan (tworzy nowy skrót do tych samych danych)
+molu = dan[:]	#utworzenie klona, modyfikacja molu nie pociaga za sobą zmiany dan
+
+#===================================================================
+#SŁOWNIKI - klucz : wartość klucza, dict
+#===================================================================
 slownik ={'god':'dobry', 'god dag':'dzień dobry', 'ikke':'nie', 'hvite hus':'biały dom'}
 if 'god' in slownik:			#sprawdzanie czy istnieje taki klucz w słowniku, inaczej przy pobieraniu może wyskoczyć błąd
     print(slownik['god'])		#sprawdzać można tylko klucze, wyszukiwać można tylko po kluczach
@@ -163,19 +271,81 @@ else:
 
 print(slownik.get("Klucz", "Nie mam pojęcia."))	#Inny sposób pobierania wartości ze słownika, jeżeli nie ma klucza, wyświetli wartość domyślną.
 												#Jeżeli nie podasz wartości domyślnej, przyjmie wartość None
-słownik[klucz] = definicja						#Dodanie nowego elementu do słownika klucz:definicja, sprawdzaj czy nie zostanie nadpisany
+słownik[klucz] = "definicja"					#Dodanie nowego elementu do słownika klucz:definicja, sprawdzaj czy nie zostanie nadpisany
 
-#		get(klucz, [wartość_domyślna])	Zwraca wartość klucza. Jeśli klucz nie istnieje, zwracana jest
-#										opcjonalna wartość_domyślna. Jeśli klucz nie istnieje i wartość_
-#										domyślna nie została określona, zwracana jest wartość None.
+for k in sorted(slownik):				#przykład wypisania słownika w alfabetycznym porządku
+	print(k,slownik[k])
+
+for k, v in sorted(slownik.items()):	#przykład wypisania słownika przy pomocy funkcji items() - najlepszy sposób
+	print(k, v)
+
+slownik.setdefault('apples', 0)			#Jeżeli klucz: apples nie znajduje sie w slownik-u zostaje utworzony (inicjowany) i przypisano mu wartość 0
+slownik['apples']+=1					#Powiekszenie o wartości 1
+
+if letter in vowels :					#Przykład użycia setdefault, zlicznie liter (samogłosek), jeżeli litera nie występowała wcześniej,
+	found.setdefault(letter, 0)			#jest dodawana do słownika i zwiększana o jeden
+	found[letter]+=1
+
+vars()									#funkcja zwraca słownik z wszystkimi aktualnie dostępnymi zmiennymi
+len(slownik)							#funkcja podaje ilość kluczy w słowniku np.19
+tel2 = tel								#taki zapis nie skopiuje słownika tel do tel2, tylko stworzy drugie odwołanie do tych wartości
+tel2=tel.copy()							#aby skopiować użyj .copy()
+del telefony['taxi']					#usunięcie klucza i wartości ze slownika telefony
+telefony.clear()						#wyczyszczenie całego słownika
+tel.update(tel2)						#zaktualizowanie słownika w oparciu o inny słownik (używamy update)
+tel.pop('policja')						#aby odczytać i od razu usunąć określoną wartość ze słownika używamy pop()
+str(tel2)								#konwersja słownika na napis
+
+#		get(klucz, [wartość_domyślna])	Zwraca wartość klucza. Jeśli klucz nie istnieje, zwracana jest opcjonalna wartość_domyślna. 
+#										Jeśli klucz nie istnieje i wartość_domyślna nie została określona, zwracana jest wartość None.
 #		keys() 							Zwraca widok wszystkich kluczy występujących w słowniku.
 #		values() 						Zwraca widok wszystkich wartości występujących w słowniku.
 #		items() 						Zwraca widok wszystkich elementów słownika. Każdy element to dwuskładnikowa krotka, 
 #										której pierwszym składnikiem jest klucz, a drugim wartość klucza.
+#		popitem()						odczytuje i od razu usuwa dowolną wartość w słowniku np. tel.popitem()
+#		in								sprawdzanie czy istnieje dana wartość klucza np. 'taxi' in tel (można też has_key())
+#		keys							wyświetla wszystkie klucze w słowniku
+#		values							wyświetlanie wszystkich wartości w słowniku
+#		del								usunięcie słownika np. del telefony
 
 
+#Mnożestwa set()
+abe={'a','a','m','k','k','l','o','l','j','o'}	#mnożestwa tworzą spis unikalnych imion, nazw
+>>>abe 											#wyswietli {'j', 'k', 'l', 'o', 'a', 'm'}, można sortować przez sorted 
+abe=set('aamkkloljo')							#krótki sposób utworzenia mnożestwa
+word="kokos"						
+u=abe.union(set(word))				#połączenie (union) dwóch mnożestw, w rezultacie: u = {'j','k','l','o','a','m','s'}
+list_u=sorted(list(u))				#zamiana u na posortowaną listę
+d=abe.difference(set(word))			#Tworzy mnożestwo d, w którym są wszystkie objekty z abe, minus te z set(word), d={'j', 'l', 'm', 'a'}
+i=abe.intersection(set(word))		#Tworzy mnożestwo i, w którym są wspólne objekty i={'o', 'k'}				
 
-#Funkcje
+#Złożone struktury danych np. słownik-słowników
+people={}							#utworzono pusty słownik
+people['Ford']={					#każdemu kluczowi przypisujemy wartość w postaci słownika
+	'Name':'Ford Wielki',
+	'Gender':'mezczyzna',
+	'Planeta':'Ziemia'}
+people['Astor']={
+	'Name':'Astor Buko',
+	'Gender':'mezczyzna',
+	'Planeta':'Jowisz'}
+import pprint						#import biblioteki pretty print, dla wyświetlenia złożonych struktur danych w lepszym do czytania formacie
+pprint.pprint(people)
+#Dostęp do objektów słownika słowników
+>>>people['Astor']['Planeta']		#Jowisz
+
+#================================================================
+# PUSTE STRUKTURY DANYCH
+#================================================================
+>>>list() 		#interpretator przedstawi jako []		różne typy objektów, z zachowaniem kolejności
+>>>dict() 		#interpretator przedstawi jako {}		klucz:wartość_klucza, bez zachowania kolejności
+>>>set() 		#interpretator przedstawi jako set()	unikalne imiona, bez zachowania kolejności
+>>>tuple() 		#interpretator przedstawi jako ()		różne typy objektów, ale niezmienialne, zachowują kolejność
+
+
+#================================================================
+#FUNKCJE
+#================================================================
 def instrukcja():					#definiowanie funkcji
 """ Wyświetla instrukcję gry """	#dokumentacja docstring
 return()							#zwracanie wyników w funkcji
@@ -183,10 +353,173 @@ global value						#całkowity dostęp do zmiennych globalnych w funkcji, lepiej 
 
 instrukcja()						#wywołanie funkcji w programie
 
-def monkey_around(bananas = 100, barrel_of = "tak", uncle = "małpi"): 	#przypisanie argumentów domyślnych w funkcji
+def monkey_around(bananas=100, barrel_of="tak", uncle="małpi"): 	#przypisanie argumentów domyślnych w funkcji
 
-#----------------------------------------------------------
-#Odczytywanie z plików
+def search4letters(phrase:str, letters:str='aeoiu') ->set:				#przypisanie komentarzy opisujących typy wejścia i wyjścia dla funkcji
+	""" Zwraca litery wspólne w frazie, domyślnie samogłoski"""
+	return set(letters).intersection(set(phrase))
+
+import vsearch							#import modułu (ustaw bierzący katalog na moduł, interpretator najpierw przeszukuje bierzący katalog)
+vsearch.search4letters('Ala ma kota')	#wywołanie funkcji z jednym argumentem
+
+del serch4letters					#usuwanie funkcji
+
+def suma(a, b):
+	return a+b, a-b					#funkcja zwraca sumę i różnicę: rs(1, 3) zwraca (4, -2)
+lista = [2, 3]						#takiej listy nie można użyc jako argumentów zdefiniowanej funkcji rs, najpierw rozpakuj za pomocą '*'
+suma(*lista)						#teraz zwrówci: (5, -1)
+
+def suma(*arg):						#jeżeli nie znamy ilości argumentów, teraz funkcja może przyjąć dowolna ilosc argumentów
+	s=0
+	for a in arg:
+		s+=a
+	return s
+
+#----------------------- Mapowanie, map ----------------------------
+def work(value):
+    return value * 2
+t = [1, 2, 10]
+m = map(work, t)			#Do każdego elementu listy zastosuj funkcję. Ogólnie: map(function, iterable, ...) 
+print(list(m))				#wyswietli:[2,4,20]
+#----------------------- Dekoratory --------------------------------
+id('Objekt')						#zwraca unikalny identyfikator obiektu np. 8974366322
+type('hello')						#zwraca typ objektu np. <class 'str'>
+#-----------------------------
+def apply(func: object, value: object) ->object:	
+	return func(value)				#funkcja może wyzwalać, uruchamiać funkcję w sobie
+#-----------------------------	
+def outer(): 						#funkcje można definiować wewnątrz funkcji
+    def inner(): 					#Tutaj najpierw zostanie wyświetlony napis: This is outer, invoking inner.
+       print('This is inner.') 		#a później uruchomiona funkcja inner(), napis: This is inner.
+    print('This is outer, invoking inner.') 
+    inner()
+#----------------------------
+def outer(): 						#Tutaj funkcja nie wyzwala tylko zwraca (return) funkcję inner
+    def inner(): 					#>>>i=outer() 	zwróci: This is outer.
+       print('This is inner.') 		#>>>type(i)		zwróci: <class: 'function'>
+    print('This is outer.') 		#>>>i()			zwróci: This is inner.
+    return inner
+#----------------------------
+def myfunc(*args):					#funkcja przyjmuje dowolna ilość argumentów a także listy
+	for a in args:					#>>>values =[1,3,5,6,13]
+		print(a, end=' ')			#myfunc(values)		zwróci: [1,3,5,6,13]
+	if args:						#myfunc(*values)	zwróci: 1 3 5 6 13 interpretator przekstałci w oddzielne argumenty
+		print()
+#----------------------------
+def myfunc2(**kwargs):				#Funkcja przyjmuje dowolną ilość słownikowych argumentów
+	for k, v in kwargs.items():		#wybrać każdą parę: klucz, wartość i wyświetlić na ekranie
+		print(k, v, sep='->', end=' ') 
+	if kwargs():					#>>>myfunc2(a=10, b=20)  wyświetli: a->10 b->20
+		print()						#myfunc2 przekazano dwa argumenty słownika a:10 i b:20
+		
+dbconfig = { 'host': '127.0.0.1', 	#Inny przykład wykorzystania **kwargs
+             'user': 'vsearch', 
+             'password': 'vsearchpasswd', 
+             'database': 'vsearchlogDB', }
+conn = mysql.connector.connect(**dbconfig) #Tutaj wykorzystano słownik dbconfig
+#---------------------------
+def myfunc3(*args, **kwargs):		#funkcja z dowolnymi danymi: argumentami i słownikami
+	if args:
+		for a in args:
+			print(a, end=' ')
+		print()
+	if kwargs:
+		for k, v in kwargs.items():
+			print (k,v, sep='->', end=' ')
+		print()
+#---------------------------
+# Ogólny szablon dekoratora	
+
+from functools import wraps
+def decorator_name(func):
+	@wraps(func)
+	def wrapper(*args, **kwargs):
+		# 1. kod do wykonania PRZED wywołaniem dekoracyjnej funkcji
+		
+		# 2. Wyzwanie dekoracyjnej funkcji i zwrócenie otrzymanych argumentów
+		return func(*args, **kwargs)
+		
+		# 3. Kod wykonania ZAMIAST wywołania dekoracyjnej funkcji
+	return wrapper
+	
+#--------------------------------------------------------
+# Przykład funkcji dekoracyjnej (do logowania na stronie)
+
+from flask import session 
+from functools import wraps 
+def check_logged_in(func): 			#funkcję używamy za pomocą: @check_logged_in
+    @wraps(func) 
+    def wrapper(*args, **kwargs): 
+        if 'logged_in' in session: 
+            return func(*args, **kwargs) 
+        return 'You are NOT logged in.' 
+    return wrapper
+		
+#===================================================================
+# MODUŁY 
+#===================================================================
+import random			# FUNKCJE LOSOWE dostęp przez random.
+random.seed()			# Inicjalizuje generator liczb pseudolosowych. Użycie tej funkcji powinno zawsze poprzedzać losowanie jakiejkolwiek liczby. 
+random.randint(od, do) 	# Losuje liczbę całkowitą z zakresu od..do. Zauważmy, że nazwę funkcji poprzedzamy nazwą modułu i kropką.
+from random import randint	# Dostęp do funkcji bez potrzeby podawania modułu z kropką
+from random import *		# Dostęp do wszystkich funkcji modułu random. (Nie działa dla wszystkich metod)
+choice(fraza.split())		# Funkcja choise() wybiera losowy element z sekwencji fraza.split()
+shufle(liczby)				# Wykonuje losową permutację sekwencji
+random()					# zwraca losową liczbę rzeczywistą z przedziału (0.0, 1.0) np. 0.1964729982262956
+uniform(a,b) 				# zwraca losową liczbę rzeczywistą z przedziału (a, b)
+
+from math import *		#FUNKCJE MATEMATYCZNE
+ceil(2.7)				#3.0 zwraca sufit liczby rzeczywistej x (najmniejszą liczbę całkowitą nie mniejszą niż 2.7)
+fabs(-3) 				#3.0 zwraca wartość absolutną liczby rzeczywistej -3
+floor(2.7) 				#2.0 zwraca podłogę liczby rzeczywistej x (największą liczbę całkowitą nie większą niż 2.7) 
+modf(2.5) 				#(0.5, 2.0) zwraca krotkę zawierającą część ułamkową i całkowitą liczby rzeczywistej x 
+exp(x) 					#zwraca e do potęgi x np. exp(1) wyswietli: 2.7182818284590451
+log(x) 					#zwraca logarytm naturalny z x 
+log(256,2)				#By zmienić podstawę logarytmu podajemy drugi parametr funkcji math.log
+sqrt(x) 				#zwraca pierwiastek kwadratowy z x
+acos(x) 				#zwraca w radianach arcus cosinus kąta x
+sin(x) 					#zwraca sinus kąta x podanego w radianach
+hypot(x, y) 			#zwraca odległość punktu o współrzędnych (x, y) od początku układu (0, 0) 
+						#(długość przeciwprostokątnej dla przyprostokątnych o długościach x i y) 
+degrees(x) 				#zamienia miarę kąta x wyrażoną w radianach na stopnie degrees(pi) daje 180.0
+radians(x) 				#zamienia miarę kąta x wyrażoną w stopniach na radiany, radians(180) daje 3.1415926535897931
+
+from time import sleep
+sleep(15)				#wstrzymanie, pauza 15sekund
+
+#===================================================================
+# TWORZENIE WŁASNYCH MODUŁÓW 
+#===================================================================
+# Trzy kroki aby utworzyć własny moduł:
+# 1. Utwórz twoj program, funkcje np. moje_moduly.py
+# 2. Utwórz plik readme.txt - pusty lub dowolna treść
+# 3. Utwórz plik setup.py, (wszystkie pliki mają byc w tym samym katalogu)
+# Zawartość pliku setup.py:
+from setuptools import setup
+setup(
+    name='tryg',
+    version='1.0',
+    description='Displays the trigonometric functions of the angle given in degrees',
+    author='100pa',
+    author_email='100pa.com@gmail.com',
+    url='100pa.com',
+    py_modules=['tryg']
+)
+# Uruchom w katalogu poleceniem: 
+python setup.py sdist
+# Powstanie katalog dist z spakowanym archiwum (np. tryg-1.0.tar.gz)
+# Za pomocą pip w katalogu /dist zainstaluj pakiet z prawami administratora:
+sudo python3 -m pip install tryg-1.0.tar.gz	# linux
+py -3 -m pip install tryg-1.0.zip 			# windows
+# Teraz moduł można zaimportować np. import tryg
+# Udostępnianie oficjalne modułu na PyPI: https://pypi.python.org/pypi
+# opis http://itscreen.tk/blog/30-registraciya-paketa-na-pypi/ 
+
+#================================================================
+# DOSTEP DO PLIKÓW
+#================================================================
+
+#====== Odczytywanie zawartości pliku ====================
 print("\nPobieranie zawartości pliku wiersz po wierszu przy użyciu pętli.")
 text_file = open("odczytaj_to.txt", "r")	#najpierw trzeba otworzyć plik z trybem dostępu "r"
 for line in text_file:
@@ -213,6 +546,8 @@ text_file.close()							#zamknięcie pliku
 #	"a+" 	Dopisywanie i odczyt danych do (z) pliku tekstowego. Jeśli plik istnieje, nowe
 #			dane są dopisywane na jego końcu. Jeśli plik nie istnieje, zostanie utworzony.
 
+
+#================= Zapisywanie do pliku =====================
 print("Utworzenie pliku tekstowego za pomocą metody write().")
 text_file = open("zapisz_to.txt", "w")		#otwarcie pliku do zapisu
 text_file.write("Wiersz 1\n")				#metoda write nie wstawia znaku końca wiersza, musisz sam wstawić \n
@@ -233,8 +568,8 @@ text_file = open("zapisz_to.txt", "r")		#odczyt dokładnie taki sam jak zapisano
 print(text_file.read())
 text_file.close()
 
-#-----------------------------------------------------
-#Zapisywanie bardziej złożonych struktur danych
+
+#===== Zapisywanie bardziej złożonych struktur danych ========
 import pickle, shelve 						#import do marynowania, przechowywania i magazynowania ze swobodnym dostępem
 print("Marynowanie list.")
 variety = ["łagodny", "pikantny", "kwaszony"]
@@ -289,8 +624,30 @@ print("kształt -", s["kształt"])
 print("odmiana -", s["odmiana"])
 s.close()
 
-#-----------------------------------------------
-#Obsługa wyjątków try, except
+#=================== Praca z plikami i katalogami ==================
+import os 					#biblioteka do pracy z plikami dyskowymi
+os.chdir("c:\\")			#zmień aktualny katalog na główny
+os.getcwd()					#podaj aktualny katalog
+os.listdir(".")				#sprawdź zawartość aktualnego katalogu
+
+heroes={}					#Aby wczytać dane z pliku2.txt do słownika heroes:
+f2 = open("plik2.txt","r")
+l=f2.readline()
+while l:
+    m=f2.readline()
+    heroes[l[:-1]]=m[:-1] 	# usuwamy znaki końca linii
+    l=f2.readline()
+print heroes				#{'hans': 'kloss', 'james': 'bond' itd...}
+f2.close()
+
+#Większosć programistów posługuje się funkcją with do pracy z plikami
+with open('todos.txt') as tasks: #nie ma potrzeby pamietania o zamknięciu pliku funkcją: close()
+    for chore in tasks: 
+        print(chore, end='')
+
+#===================================================================
+#OBSŁUGA WYJĄTKÓW TRY, EXCEPT
+#===================================================================
 try:
 	num = float(input("Wprowadź liczbę: ")) #jeżeli użytkownik wprowadzi tekst zamiast liczby pojawi się wyjątek
 except:
@@ -325,7 +682,7 @@ for value in (None, "Hej!"):
    try:
  print("Próba konwersji:", value, "-->", end=" ")
     print(float(value))
-   except (TypeError, ValueError):	#oddziel różne typy wyjątków przecinkiem
+   except (TypeError, ValueError):	#oddziel różne typy wyjątków przecinkiem, except Exception - wyłapuje wszystkie wyjątki
  print("Wystąpił jakiś błąd!")
 
 print()
@@ -341,13 +698,35 @@ for value in (None, "Hej!"):		#inny sposób wyłapania wyjątków
 # try/except/else
 try:
     num = float(input("\nWprowadź liczbę: "))
+	print( 100/num)
 except ValueError:
     print("To nie była liczba!")
+except ZeroDivisionError:
+	print("Dzielenie przez zero!")
 else:
    print("Wprowadziłeś liczbę", num)
-
    
-#Wyjście z programu
+# sys.exc_info
+import sys
+try:
+	1/0		#bład dzielenia przez zero
+except:
+	err = sys.exc_info() 	#exc_info zwraca listę z: 1.typ wyjątku, 2.jaki wyjątek, 3.adress wyjątku (traceback object at 0x00A0BA88)
+	for e in err:			#wypisanie błędów<class 'ZeroDivisionError'>, division by zero, <traceback object at 0x00A0BA88>
+		print(e)
+		
+# except Exception as err
+try:
+	1/0
+except Exception as err:	#except Exception - wszystkie wyjątki, except ArithmeticError - wyjątki arytmetyczne, patrz docs.python.org
+	print('Inny błąd:', str(err))
+	
+# inne instrukcje związane z try
+raise TypeError('Some message')	#interpretator utworzy błąd podanego typu i wyświetli 'Some message'
+finally:						#blok finally zawsze będzie wykonany, niezależnie czy wystąpił błąd czy nie
+pass							#nigdy nie używaj pass w except
+
+#==============Wyjście z programu===================
 import sys		#wcześniej trzeba zaimportować moduł
 sys.exit()		#polecenie wyjścia stosuj jako środka ostatecznego
 
@@ -362,12 +741,14 @@ except IOError as e:
     sys.exit()
 else:
 	return the_file
-# ---------------------------------------------------
-	
+
+
+#====================================================================	
 #TWORZENIE KLAS, METOD I OBIEKTÓW
+#====================================================================
 class Critter(object):		#utworzenie klassy
 	"""Wirtualny pupil"""
-	def __init__(self):		#utworzenie konstruktora
+	def __init__(self):		#utworzenie konstruktora, inicjacja danych
 		print("Urodził się nowy zwierzak!")
 		
 	def talk(self):			#utworzenie metody w klasie Critter
@@ -466,25 +847,342 @@ class Critter(object):
 # Dziedziczenie po klasie bazowej
 class Deck(Hand):			#Klasa Hand nazywa się klasą bazową, ponieważ klasa Deck jest na niej oparta.
 							#Klasa Deck dziedziczy __init__ , __str__ i inne metody z klasy Hand dlatego nie ma konstruktora
+
+#--------------------------------------------------------
+# Magiczne metody __repr__
+class CountFromBy:
+    def __init__(self, v:int=0, i:int=1) -> None: #inicjalizacja danych
+        self.val = v
+        self.inc = i
+	def __repr__(self) -> str: 	#dzięki przedefiniowaniu funkcji __repr__ wyświetli się wartość val, zamiast
+        return str(self.val)	#<__main__.CountFromBy object at 0x105a13da0> danego objektu
+    def increment(self) -> None:
+        self.val += self.inc
+
 							
+#=======================================================================
+# OKNA GUI ZA POMOCĄ TKINKER
+#=======================================================================
+# Prosty interfejs GUI
+# Demonstruje tworzenie okna z labelem w środku
+from tkinter import *
+
+root = Tk()                         # utwórz okno główne
+root.title("Metkownica")  # zmodyfikuj okno
+root.geometry("500x300")            # wymiary okna
+
+app = Frame(root)                           # utwórz w oknie ramkę jako pojemnik na inne widżety
+app.grid()                                  # wywołuję metodę grid()
+lbl = Label(app, text = "Jestem etykietą!") # utwórz w ramce etykietę
+lbl.grid()                                  # sprawia ze etykieta jest widoczna
+
+root.mainloop()                     # uruchom pętlę zdarzeń
+#----------------------------------------------------------
+
+# Prosty interfejs GUI
+# Demonstruje tworzenie okna z przyciskami
+from tkinter import *
+
+root = Tk()                         # utwórz okno główne
+root.title("Leniwe przyciski")      # zmodyfikuj napis na pasku
+root.geometry("500x300")            # wymiary okna
+
+app = Frame(root)                           # utwórz w oknie ramkę jako pojemnik na inne widżety
+app.grid()                                  # wywołuję metodę grid()
+lbl = Label(app, text = "Jestem etykietą!") # utwórz w ramce etykietę
+lbl.grid()                                  # sprawia ze etykieta jest widoczna
+
+bttn1 = Button(app, text = " Nie robię! ")  # utwórz w ramce przycisk
+bttn1.grid()
+
+bttn2 = Button(app)                         # utwórz w ramce drugi przycisk
+bttn2.grid()
+bttn2.configure(text = "Ja również!")       # modyfikacja widżetu za pomocą configure
+
+bttn3 = Button(app)                         # utwórz w ramce trzeci przycisk
+bttn3.grid()
+bttn3["text"]= "To samo mnie dotyczy!"      # ustawienie napisu
+
+root.mainloop()                     # uruchom pętlę zdarzeń
+#----------------------------------------------------------------
+
+# Demonstruje tworzenie okna z przyciskami wersja 2
+from tkinter import *
+
+class Application(Frame):
+    """ Aplikacja oparta na GUI z trzema przyciskami. """
+
+    def __init__(self, master):
+        """ Inicjalizuj ramkę. """
+        super(Application, self).__init__(master)
+        self.grid()
+        self.create_widgets()
+
+    def create_widgets(self):
+        """ Utwórz trzy przyciski, które nic nie robią. """
+        self.bttn1 = Button(self, text="Nic nie robię!")    # utwórz pierwszy przycisk
+        self.bttn1.grid()
+        self.bttn2 = Button(self)                           # utwórz drugi przycisk
+        self.bttn2.grid()
+        self.bttn2.configure(text="Ja również!")
+        self.bttn3 = Button(self)                           # utwórz trzeci przycisk
+        self.bttn3.grid()
+        self.bttn3["text"] = "To samo mnie dotyczy!"
+
+
+# część główna
+root = Tk()
+root.title("Leniwe przyciski 2")
+root.geometry("300x185")
+app = Application(root)             # konkretyzuję obiekt Application i wywołuję metodę tworzącą trzy przyciski
+root.mainloop()                     # uruchom pętlę zdarzeń
+
+
+
+#=======================================================================
+# OKNA GUI ZA Qt 4
+#=======================================================================
+# 
+import sys
+from PyQt4 import QtGui
+app = QtGui.QApplication(sys.argv)
+
+window = QtGui.QWidget()
+window.setGeometry(50, 50, 500, 300)	#rozmiary okna
+window.setWindowTitle("PyQt Tutorial!")	#zmiana tytułu okna
+window.show()
+
+
+#=======================================================================
+# FRAMEWORK FLASK
+#=======================================================================
+from flask import Flask, render_template, request, escape	#import funkcji w Flask
+from vsearch import search4letters							#import własnej funkcji
+
+app = Flask(__name__)								#utworzenie obiektu z klasy Flask
+
+def log_request(req: 'flask_request', res: str)->'None':	#funkcja zapisująca logi do pliku vsearch.log
+    with open('vsearch.log', 'a') as log:					# 'a' oznacza dopisywanie do pliku
+        print(req.form, req.remote_addr, req.user_agent, res, file=log, sep='|') #zapisywanie z separatorem |
+
+@app.route('/')										#definiowanie adresu strony głównej (dwa adresy przypisane do jednej strony)
+@app.route('/entry')								#definiowanie adresu strony	do wprowadzania danych
+def entry_page():									#render_template ma dwa parametry wejściowe: entry.html musi być w katalogu templates
+    return render_template('entry.html', 
+                            the_title = 'Welcome to search4letters on the web! ')
+
+@app.route('/search4', methods= ['POST'])			#definiowanie strony /search
+def do_search()->'html':
+    phrase = request.form['phrase']					#przekazanie danych z pól form w html-u
+    letters = request.form['letters']				#przekazanie danych nr2 z pól form
+    title = 'Here are yor results: '
+    results = str(search4letters(phrase, letters)) 	#logika funkcji
+    log_request(request, results)					#zapis logu w pliku
+    return render_template('results.html',			#wyrenderowanie strony na podstawie pliku results.html
+                            the_title = title,
+                            the_phrase = phrase,
+                            the_letters = letters,
+                            the_results = results,)
+							
+@app.route('/viewlog')								#strona z logami
+def view_the_log()->'html':
+    contents = []
+    with open('vsearch.log') as log:				#otwarcie pliku do odczytu danych
+        for line in log:							#tworzenie listy list w pętlach for
+            contents.append([])
+            for item in line.split('|'):
+                contents[-1].append(escape(item))	#funkcja escape zastępuje znaki html kodami
+    titles = ('Form Data', 'Remote_addr', 'User_agent', 'Results')
+    return render_template('viewlog.html',
+                            the_title='Viewlog',
+                            the_row_titles=titles,
+                            the_data=contents,)
+
+if __name__=='__main__':		# sprawdzenie gdzie jest uruchamiana aplikacja. Jeżeli na lokalnym komputerze to __name__=='__main__'
+    app.run(debug=True)			# uruchumienie aplikacji na lokalnym komputerze (krok automatyczny na zdalnym serwerze)
 	
 
+#============== przykład szablonów html =============
+#============== szablon base.html w Jinjia2
+<!doctype html>		#Główny szablon
+<html>
+    <head>
+        <title>{{ the_title }}</title>
+        <link rel="stylesheet" href="static/hf.css" />
+    </head>
+    <body>
+        {% block body %}
+
+        {% endblock %}
+    </body>
+</html>
+
+#============== szablon result.html
+{% extends 'base.html' %}		#odwołanie się do szablonu głównego
+
+{% block body %}
+<h2>{{ the_title }}</h2>
+<p>You submitted the following data:</p>
+<table>
+	<tr><td>Phrase:</td><td>{{ the_phrase }}</td></tr>
+	<tr><td>Letters:</td><td>{{ the_letters }}</td></tr>
+</table>
+<p>When "{{the_phrase }}" is searched for "{{ the_letters }}", the following results are returned:</p>
+<h3>{{ the_results }}</h3>
+{% endblock %}
+
+#=============== szablon viewlog.html
+{% extends 'base.html' %}		#odwołanie sie do szablonu głównego
+
+{% block body %}
+<h2>{{ the_title }}</h2>
+<table>
+    <tr>
+        {% for row_title in the_row_titles %} 	#utworzenie pętli dla nagłówku tabeli
+            <th>{{row_title}}</th>
+        {% endfor %}							#koniec pętli
+    </tr>
+    {% for log_row in the_data %}				#utworzenie pętli dla logów wpisywanych do tabeli
+        <tr>
+            {% for item in log_row %}			#pętla pojedynczego loga
+                <td>{{item}}</td>				#poszczególne komórki wiersza
+            {% endfor %}						#koniec wiersza loga
+        </tr>
+    {% endfor %}								#koniec logów
+</table>
+{% endblock %}
 
 
+#============== escape Markup =======================
+from flask import escape		#biblioteka służąca do obsługi tagów HTML.
+escape('This is a <Request>') 	#Funkcja tworzy obiekt: Markup('This is a &lt;Request&gt;'), zastępuje znaki kodami
+	
 
+#=======================================================================
+# FLASK WSPÓŁPRACA Z BAZAMI DANYCH
+#=======================================================================
 
+#===================== Instalacja i konfiguracja Bazy ==================
+#Krok 1
+#Zainstaluj bazę danych np.MySQL lub MariaDB
+http://dev.mysql.com/downloads/mysql/
+https://mariadb.org/download/
+#W linuksie wystarczy apt, aptitude mysql-server lub mariadb-server
 
+#Krok 2
+#Instalacja drivera  MySQL–Connector/Python
+https://dev.mysql.com/downloads/connector/python/
+#Wybierz Platform Independent. Po rozpakowaniu zipa, przejdź w terminalu do utworzonego katalogu mysql-connector-python-X.X.X
+#i wykonaj polecenie: dla windows: py -3 setup install, dla linux: sudo -H python3 setup.py install (prawa administratora)
 
+#Krok3
+#Utworzenie bazy danych
+mysql>create database nazwaBazyDB;												#utworzenie bazy nazwaBazyDB
+mysql> grant all on vsearchlogDB.* to 'vsearch' identified by 'vsearchpasswd'; 	#utworzenie użytkownika 'vsearch', z hasłem 'vsearchpasswd'
+mysql> create table logi ( 														#utworzenie tabeli z kluczami
+    -> id int auto_increment primary key, 
+    -> ts timestamp default current_timestamp, 
+    -> phrase varchar(128) not null, 
+    -> letters varchar(32) not null, 
+    -> ip varchar(16) not null, 
+    -> browser_string varchar(256) not null, 
+    -> results varchar(64) not null );
+describe logi									#sprawdzenie czy tabela istnieje
+insert into log (phrase, letters, ip, browser_string, results) values ('Krakow zbudowano', 'aoi', '545.234.54.122', 'Safari', 'ioa'); #wstawianie
+select * from log;	#wypisanie danych z tabeli
 
+#=================== WSPÓŁPRACA Z BAZĄ I DB-API ==============================================
+# ========== KROK 1. POŁĄCZENIE Z BAZĄ =======================================================
+dbconfig = { 'host': '127.0.0.1', 				#IP adres komputera na którym jest baza danych
+                 'user': 'vsearch', 			#nazwa użytkownika
+                 'password': 'vsearchpasswd', 	#hasło
+                 'database': 'vsearchlogDB', }	#nazwa bazy danych
+				 
+# ========== KROK 2. IMPORT DRIVERA BAZY DANYCH ==============================================
+import mysql.connector							#Teraz driver MySQL jest dostępny dla DB-API
 
+# ========== KROK 3. POŁĄCZENIE Z SERWEREM ===================================================
+conn = mysql.connector.connect(**dbconfig)		#funkcja connect służy do połączenia z serwerem
+												#dwie gwiazdki ** wskazują że argumenty przekazuje jako słownik
+												
+# ========== KROK 4. OTWARCIE KURSORA ========================================================
+cursor = conn.cursor() 							#jest to metoda cursor dla objektu połaczenia (conn)
 
+# ========== KROK 5. PRACA Z SQL =============================================================
+_SQL = """show tables"""		#SQL zapytania najlepiej wstawiać w potrójnych cudzysłowach, bo często maja kilka lini
+cursor.execute(_SQL)			#wypełnienie zapytania do bazy danych
+#Aby jednak zobaczyć wypełnienie zapytania trzeba użyć jednej z trzech metod:
+res = cursor.fetchall()			#zwraca wszystkie dane w postaci listy
+res = cursor.fetchone()			#zwraca dane z rezultatu po jednym
+res = cursor.fetchmany()		#zwraca określoną liczbę danych
 
+# ========== KROK  6. ZAMKNIĘCIE CURSORA I POŁĄCZENIA =========================================
+cursor.close() 					#zamknięcie cursor-a, potwierdza wartością True
+conn.close()					#zamknięcie połaczenia, nie ma żadnego potwierdzenia
+								#zawsze otwieraj bazę, tylko kiedy to jest niezbędne
+#==============================================================================================
 
+#Inne przykłady realizacji zapytania SQL
+_SQL = """describe log"""		#SQL zapytanie o tablicę (informacja o tablicy)
+cursor.execute(_SQL)			#wykonanie zapytania
+res = cursor.fetchall()			#przypisanie rezultatu do res (lista danych)
+for row in res:
+	print(row)					#wypisanie listy po wierszach (poszczególnych komórkach tablicy)
+#Dodawanie danych do tablicy
+_SQL = """insert into log  
+        (phrase, letters, ip, browser_string, results) 
+        values 
+		(%s, %s, %s, %s, %s)"""
+cursor.execute(_SQL, ('Jakies slowa', 'aei', '127.0.0.1', 'Safari', 'set()'))	#execute przyjmuje tylko dwa argumenty, zapytanie SQL i listę argumentów
+conn.commit()					#zmuszenie do zapisu, gdyż dane mogą być keszowane w pamieci podręcznej bazy
+_SQL = """select * from log""" 	#teraz można odczytać
+cursor.execute(_SQL) 
+for row in cursor.fetchall(): 	#i wypisać na ekranie
+	print(row) 
 
+#Dodawanie danych w pętli with
+dbconfig = { 'host': '127.0.0.1', 			#dane do połaczenia z bazą danych
+             'user': 'vsearch', 
+             'password': 'vsearchpasswd', 
+             'database': 'vsearchlogDB', } 
+ 
+with UseDatabase(dbconfig) as cursor: 		#skorzystanie z pętli, automatycznie zakrywającej kursor i połączenie
+    _SQL = """insert into log  
+			(phrase, letters, ip, browser_string, results) 
+            values 
+            (%s, %s, %s, %s, %s)""" 
+    cursor.execute(_SQL, (req.form['phrase'],  #te dane zostaną podstawione w miejsca %s
+                          req.form['letters'], 
+                          req.remote_addr, 
+                          req.user_agent.browser, 
+                          res, ))
+						  
+						  
+#=======================================================================
+# FLASK SESSION dla logowania
+#=======================================================================
+from flask import Flask, session			#import session
+app = Flask(__name__)
+app.secret_key = 'JakisKluczDoSzyfrowania'	#ustalenie unikalnego klucza
 
+@app.route('/login') 
+def do_login() -> str: 
+    session['logged_in'] = True 
+    return 'You are now logged in.'
+@app.route('/logout') 
+def do_logout() -> str: 
+    if 'logged_in' in session:
+        session.pop('logged_in')
+    return 'You are loged out'
+@app.route('/status')
+def check_status() -> str:
+    if 'logged_in' in session:
+        return 'You are currently logged in'
+    return 'You are NOT logged in'
 
-
-
+if __name__ == '__main__': 
+    app.run(debug=True)
+ 
 
 
 
