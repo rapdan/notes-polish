@@ -7,6 +7,8 @@ GIT
 4.	git add . lub git add -A										//-A dodaje wszystkie pliki do stadge area, schowka który można zapisać commitem
 5.	git commit -m 'Komentarz pomagający rozpoznać dodane zmiany' 	//zapisuje zmiany w repozytorium
 6. 	git log lub git status 											//możesz sprawdzić czy zostały zapisane zmiany
+7.	git pull														//uaktualnienie projrktu (ściągnięcie z github-a aktualnej wersji)
+8.	git push														//zapisanie na githab-ie nowych zmian
 
 Kroki 4 i 5 można zastąpić jednym poleceniem:
 git commit -a -m 'Tekst komentarza np. Initial commit'

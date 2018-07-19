@@ -260,6 +260,11 @@ dan = ['kapelusz biały', 'koszula beż', 'klapki']
 molu = dan		#współdzielenie tej samej referencji, modyfikacja molu pociąga zmianę dan (tworzy nowy skrót do tych samych danych)
 molu = dan[:]	#utworzenie klona, modyfikacja molu nie pociaga za sobą zmiany dan
 
+#================ZAMIANA STRINGA NA LISTE=================
+s = [i for i in 'drek']		#['d', 'r', 'e', 'k'] "syntaktyczny cukier"
+s = [w for i in range(1,9) if w % 2 == 0]	#['2', '4', '6', '8'] parzyste
+
+
 #===================================================================
 #SŁOWNIKI - klucz : wartość klucza, dict
 #===================================================================
@@ -379,8 +384,20 @@ def suma(*arg):						#jeżeli nie znamy ilości argumentów, teraz funkcja może
 def work(value):
     return value * 2
 t = [1, 2, 10]
-m = map(work, t)			#Do każdego elementu listy zastosuj funkcję. Ogólnie: map(function, iterable, ...) 
-print(list(m))				#wyswietli:[2,4,20]
+m = map(work, t)					#Do każdego elementu listy zastosuj funkcję. Ogólnie: map(function, iterable, ...) 
+print(list(m))						#wyswietli:[2,4,20]
+s = map(lambda x: x*x, [2, 3, 4, 5])#list(s) daje [4, 9, 16, 25]
+#-------------------------- Lambda ---------------------------------
+x = lambda x, y: x + y + 2			#Lambda to krótka funkcja, różni się od funkcji tylko tym że nie ma nazwy
+x(2, 5)								#wyswietli 9, w lambda nie ma słowa return
+
+#-------------------------- Filter ---------------------------------
+f = filter(lambda x: x>3, [1, 2, 3, 4, 5] 	#list(f) daje [4, 5]
+
+#-------------------------- Reduce ---------------------------------
+from functools import reduce
+result = reduce(lambda x , y: x + y, [1, 2, 3, 4, 5])	#reduce łączy elementy z listy, wynik: 15
+
 #----------------------- Dekoratory --------------------------------
 id('Objekt')						#zwraca unikalny identyfikator obiektu np. 8974366322
 type('hello')						#zwraca typ objektu np. <class 'str'>
@@ -782,6 +799,16 @@ print("Wyświetlenie obiektu crit1:")
 print(crit1)
 print("Bezpośrednie wyświetlenie wartości atrybutu crit1.name:")
 print(crit1.name)
+
+#---------------------------------------------------
+class Car():
+	engine = 'CS Turbo Hdi'					#engine nie można zmieniać
+	def __init__(self, color = 'white'):	#kolor można zmieniać, domyślnie white
+		self.color = color
+
+volvo = Car('Black')						#tworzenie instancji klasy Car
+vw = Car('Red')
+print(volvo.color)							#wypisze Black
 
 # --------------------------------------------------
 # Metoda statyczna
