@@ -1,17 +1,20 @@
-#Python 3
+#==============================================================================
+#		PYTHON 3
+#==============================================================================
+
 
 
 tekst, s = "Your text", "Inny dowolny tekst"
-print(tekst.upper())	#Wypisanie dużymi literami
-print(tekst.lower())	#Wypisanie małymi literami
-print(tekst.title())	#Wypisanie każdego wyrazu z dużej litery
-print s.capitalize()	#Służy do nadania napisowi formatu jak w zdaniu, to jest zmiany pierwszej litery na dużą, a pozostałych na małe
-print s.center(32,'*')	#Wyśrodkowanie napisu w polu o podanej długości. Domyślnie pole dopełniane jest znakiem spacji
-print s.count('t')		#Oblicza ile razy określony ciąg znaków występuje w napisie
-print find('ka')		#Odnajduje pierwsze wystąpienie określonego ciąg znaków w napisie. 
-						#Jeżeli szukanego ciągu w napisie nie ma, zwracana jest wartość –1
-rfind('napis')			#Odnajduje ostatnie wystąpienie określonego ciąg znaków w napisie
-print s.isdigit()		#Sprawdza, czy napis zawiera tylko cyfry. Np. '18.9'.isdigit() zwraca False, bo jest kropka
+print(tekst.upper())			#Wypisanie dużymi literami
+print(tekst.lower())			#Wypisanie małymi literami
+print(tekst.title())			#Wypisanie każdego wyrazu z dużej litery
+print s.capitalize()			#Służy do nadania napisowi formatu jak w zdaniu, to jest zmiany pierwszej litery na dużą, a pozostałych na małe
+print s.center(32,'*')			#Wyśrodkowanie napisu w polu o podanej długości. Domyślnie pole dopełniane jest znakiem spacji
+print s.count('t')				#Oblicza ile razy określony ciąg znaków występuje w napisie
+print find('ka')				#Odnajduje pierwsze wystąpienie określonego ciąg znaków w napisie. 
+								#Jeżeli szukanego ciągu w napisie nie ma, zwracana jest wartość –1
+rfind('napis')					#Odnajduje ostatnie wystąpienie określonego ciąg znaków w napisie
+print s.isdigit()				#Sprawdza, czy napis zawiera tylko cyfry. Np. '18.9'.isdigit() zwraca False, bo jest kropka
 print ' '.join(['ala','ma','kota'])		#Łączy wszystkie elementy sekwencji podanej jako parametr w pojedynczy napis, 
 										#wstawiając pomiędzy nie napis dla którego wywołujemy metodę tutaj:'ala ma kota'
 print s.lower()							#Zamienia wszystkie duże litery w napisie na małe
@@ -78,14 +81,31 @@ print("Wylosowano kostka1:", kostka1, ", kostka2:", kostka2, ". Razem:", razem )
 
 
 #===================================================================
-#INSTRUKCJA LEN (długość wyrażenia)
+#	GENERATORY, YIELD, NEXT
+#===================================================================
+def fib():			#liczby Fibonaciego 0, 1, 1, 2, 3, 5, 8, 13, 21 ...
+    a, b = 0, 1
+    while True:
+        yield a		#yield zwraca podobnie do return
+        a, b = b, a + b
+x = fib()
+next(x)				#wygeneruj zminenną z generatora fib()
+next(x)				#wygeneruj następna zmienną (dopóki nie nastąpi StopIteration)
+#--------------------------------------------
+x = iter([1, 2, 3, 4])	#iterator listy
+next(x)					# 1
+next(x)					# 2 ...
+		
+
+#===================================================================
+#	INSTRUKCJA LEN (długość wyrażenia)
 #===================================================================
 word = input("Wprowadź słowo ")
 print("długość słowa", len(word))
 
 
 #===================================================================
-#INSTRUKCJE WARUNKOWE
+#	INSTRUKCJE WARUNKOWE
 #===================================================================
 haslo = input("Podaj hasło: ")
 if haslo=="sekret":
@@ -151,7 +171,7 @@ for i in range(22, 0, -1):	#przykład pętli do tyłu od 22 do 1, skok -1
 # Program, który wyliczy i wyświetli pierwiastek kwadratowy, dla każdej nieujemnej liczby
 liczby = input("Podaj kilka liczb:")
 for x in liczby:
-    if x&<0: continue		#Pomijanie instrukcji w pętli (dla liczb ujemnych)
+    if x &< 0: continue		#Pomijanie instrukcji w pętli (dla liczb ujemnych)
     print "Pierwiastkiem %2i jest %5.3f" % (x,x**0.5)
 	
 #===================================================================
@@ -399,6 +419,49 @@ from functools import reduce
 result = reduce(lambda x , y: x + y, [1, 2, 3, 4, 5])	#reduce łączy elementy z listy, wynik: 15
 
 #----------------------- Dekoratory --------------------------------
+
+def logger(function):				#w argumencie przekazujemy funkcję
+	def inner(x,y):					#definujemy funkcję wewnętrzną
+		result = function(x, y)		#wyzwanie funkcji dekoracyjnej
+		print('Result is ', result)
+		return result				#zwrot wyników
+	return inner					#zwrot funkcji wewnetrznej
+
+def sum(x, y):
+	return x + y
+	
+s = logger(sum)		
+res = s(30, 22)
+print(res)
+
+#-------------------------------------------------------------------
+# Ogólny szablon dekoratora	
+from functools import wraps
+def decorator_name(func):
+	@wraps(func)
+	def wrapper(*args, **kwargs):
+		# 1. kod do wykonania PRZED wywołaniem dekoracyjnej funkcji
+		
+		# 2. Wyzwanie dekoracyjnej funkcji i zwrócenie otrzymanych argumentów
+		return func(*args, **kwargs)
+		
+		# 3. Kod wykonania ZAMIAST wywołania dekoracyjnej funkcji
+	return wrapper
+	
+#--------------------------------------------------------
+# Przykład funkcji dekoracyjnej (do logowania na stronie)
+
+from flask import session 
+from functools import wraps 
+def check_logged_in(func): 			#funkcję używamy za pomocą: @check_logged_in
+    @wraps(func) 
+    def wrapper(*args, **kwargs): 
+        if 'logged_in' in session: 
+            return func(*args, **kwargs) 
+        return 'You are NOT logged in.' 
+    return wrapper
+	
+#----------------------------------------------------------
 id('Objekt')						#zwraca unikalny identyfikator obiektu np. 8974366322
 type('hello')						#zwraca typ objektu np. <class 'str'>
 #-----------------------------
@@ -444,33 +507,7 @@ def myfunc3(*args, **kwargs):		#funkcja z dowolnymi danymi: argumentami i słown
 		for k, v in kwargs.items():
 			print (k,v, sep='->', end=' ')
 		print()
-#---------------------------
-# Ogólny szablon dekoratora	
 
-from functools import wraps
-def decorator_name(func):
-	@wraps(func)
-	def wrapper(*args, **kwargs):
-		# 1. kod do wykonania PRZED wywołaniem dekoracyjnej funkcji
-		
-		# 2. Wyzwanie dekoracyjnej funkcji i zwrócenie otrzymanych argumentów
-		return func(*args, **kwargs)
-		
-		# 3. Kod wykonania ZAMIAST wywołania dekoracyjnej funkcji
-	return wrapper
-	
-#--------------------------------------------------------
-# Przykład funkcji dekoracyjnej (do logowania na stronie)
-
-from flask import session 
-from functools import wraps 
-def check_logged_in(func): 			#funkcję używamy za pomocą: @check_logged_in
-    @wraps(func) 
-    def wrapper(*args, **kwargs): 
-        if 'logged_in' in session: 
-            return func(*args, **kwargs) 
-        return 'You are NOT logged in.' 
-    return wrapper
 		
 #===================================================================
 # MODUŁY 
@@ -503,6 +540,9 @@ radians(x) 				#zamienia miarę kąta x wyrażoną w stopniach na radiany, radia
 
 from time import sleep
 sleep(15)				#wstrzymanie, pauza 15sekund
+
+import sys
+sys.getsizeof([1, 20, 'ab'])	#zwraca wielkość zajmowanej pamięci przez dane
 
 #===================================================================
 # TWORZENIE WŁASNYCH MODUŁÓW 
@@ -1210,6 +1250,33 @@ def check_status() -> str:
 if __name__ == '__main__': 
     app.run(debug=True)
  
+
+
+#=======================================================================
+# 	PISANIE KODU POD PYTHON 2 i PYTHON 3
+#=======================================================================
+
+# python-future.org/compantible_idioms.html
+import future 			#pip install future
+import builtins			#pip install future
+import past				#pip install future
+import six				#pip install six
+
+
+#=======================================================================
+#	Wirtualizacja, zależności, virtualenv.pypa.io
+#=======================================================================
+
+pip --version					#wersja pip-a
+pip3 --version
+
+pip3 freeze						#Pokaże wszystkie zainstalowane zależności. Powinno byc tylko: virtualenv==16.0.0
+								#W systemowym Pythonie nie nalezy instalowac innych zależności
+pip uninstall program			#deinstalacja zależności w głównym, systemowym Pythonie
+pip3 install virtualenv			#instalacja virtualenv (virtualne środowisko Pythona dla instalowanych programów)
+virtualenv -p python mytest		#Utworzenie wiltualnego środowiska w katalogu: mytest (katalog jest tworzony w bieżącym katalogu)
+source mytest/bin/activate		#Aktywowanie wirtualnego środowiska
+
 
 
 
