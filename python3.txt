@@ -833,7 +833,7 @@ else:
 #	OBSŁUGA REQUEST, zapytania internetowe
 #===================================================================
 
-import requests
+import requests		#zainstaluj requests: pip install requests
 
 def get_req():
 	r = requests.get('http://blabla.pl')
