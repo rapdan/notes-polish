@@ -225,9 +225,9 @@ lista1 = list(krotka)		#konwersja krotki na listę (polecenie: list())
 krotka2 = tuple(lista2)		#konwersja listy na krotkę (polecenie: tuple())
 str(krotka2)				#konwersja krotki na string lub krócej `krotka2` (za pomocą odwróconych apostrofów)
 
-#=============================================================================		
-#LISTY, listy można edytować, sortować, modyfikować (są sekwencjami zmiennymi)
-#=============================================================================
+#===================================================================================		
+#	LISTY, listy można edytować, sortować, modyfikować (są sekwencjami zmiennymi)
+#===================================================================================
 lista1 = ["miecz", "zbroja", "hełm", "skarb", "moc", "siodło"]
 print("Elementy wyposażenia:")
 for item in lista1:
@@ -286,7 +286,7 @@ s = [w for i in range(1,9) if w % 2 == 0]	#['2', '4', '6', '8'] parzyste
 
 
 #===================================================================
-#SŁOWNIKI - klucz : wartość klucza, dict
+#	SŁOWNIKI - klucz : wartość klucza, dict
 #===================================================================
 slownik ={'god':'dobry', 'god dag':'dzień dobry', 'ikke':'nie', 'hvite hus':'biały dom'}
 if 'god' in slownik:			#sprawdzanie czy istnieje taki klucz w słowniku, inaczej przy pobieraniu może wyskoczyć błąd
@@ -369,7 +369,7 @@ pprint.pprint(people)
 
 
 #================================================================
-#FUNKCJE
+#	FUNKCJE
 #================================================================
 def instrukcja():					#definiowanie funkcji
 """ Wyświetla instrukcję gry """	#dokumentacja docstring
@@ -545,7 +545,7 @@ import sys
 sys.getsizeof([1, 20, 'ab'])	#zwraca wielkość zajmowanej pamięci przez dane
 
 #===================================================================
-# TWORZENIE WŁASNYCH MODUŁÓW 
+#	TWORZENIE WŁASNYCH MODUŁÓW 
 #===================================================================
 # Trzy kroki aby utworzyć własny moduł:
 # 1. Utwórz twoj program, funkcje np. moje_moduly.py
@@ -697,13 +697,43 @@ while l:
 print heroes				#{'hans': 'kloss', 'james': 'bond' itd...}
 f2.close()
 
+	
 #Większosć programistów posługuje się funkcją with do pracy z plikami
 with open('todos.txt') as tasks: #nie ma potrzeby pamietania o zamknięciu pliku funkcją: close()
     for chore in tasks: 
         print(chore, end='')
 
+#W skrócie odczyt danych z pliku
+def better_read(filename):
+	print('reading file by better method')
+	with open(filename) as f:		#Kontekstowy menadżer
+		return f.read()				#return zwraca odczytany plik
+
+#W skrócie zapis danych do pliku
+def write_file(filename, content, mode='w'):
+	with open(filename, mode=mode) as f:		#Kontekstowy menadżer
+		return f.write(content)				#return zwraca odczytany plik
+
+		
 #===================================================================
-#OBSŁUGA WYJĄTKÓW TRY, EXCEPT
+#	OBSŁUGA JSON
+#===================================================================
+import json						#import modułu do obsługi json
+def better_read(filename):		#definicja odczytu danych z pliku
+	print('reading file by better method')
+	with open(filename) as f:		
+		return f.read()	
+		
+data = better_read('data.json')	#odczyt pliku w formacie json
+obj = json.loads(data)			#zamiana z json formatu na python-owski obiekt
+print(obj)
+
+obj['klucz'] = 'wartosc'		#dodanie do słownika nowego klucza z wartością
+print(json.dumps(obj, sort_keys=True, indent=4))	#konwersja na format json (sort_keys i indent dla ładnego wyświetlenia)
+
+
+#===================================================================
+#	OBSŁUGA WYJĄTKÓW TRY, EXCEPT
 #===================================================================
 try:
 	num = float(input("Wprowadź liczbę: ")) #jeżeli użytkownik wprowadzi tekst zamiast liczby pojawi się wyjątek
@@ -798,10 +828,21 @@ except IOError as e:
     sys.exit()
 else:
 	return the_file
+	
+#===================================================================
+#	OBSŁUGA REQUEST, zapytania internetowe
+#===================================================================
 
+import requests
 
+def get_req():
+	r = requests.get('http://blabla.pl')
+	print(r.status_code)	#status - odpowiedź servera np. 404 (nie znaleziono strony)
+	print(r.headers)		#header
+	print(r.content)		#body
+	
 #====================================================================	
-#TWORZENIE KLAS, METOD I OBIEKTÓW
+#	TWORZENIE KLAS, METOD I OBIEKTÓW
 #====================================================================
 class Critter(object):		#utworzenie klassy
 	"""Wirtualny pupil"""
@@ -1275,8 +1316,31 @@ pip3 freeze						#Pokaże wszystkie zainstalowane zależności. Powinno byc tylk
 pip uninstall program			#deinstalacja zależności w głównym, systemowym Pythonie
 pip3 install virtualenv			#instalacja virtualenv (virtualne środowisko Pythona dla instalowanych programów)
 virtualenv -p python mytest		#Utworzenie wiltualnego środowiska w katalogu: mytest (katalog jest tworzony w bieżącym katalogu)
-source mytest/bin/activate		#Aktywowanie wirtualnego środowiska
+source mytest/bin/activate		#Aktywowanie wirtualnego środowiska (dla Windows \path\to\env\Scripts\activate)
+								#Od aktywacji wszystkie pakiety będą instalowane w mytest\lib\python3.6\site-packages
+								
+pip install pycodestyle			#dla sprawdznia poprawności stylu kodu, PEP8
+pip install six					#dla zgodności pythona w wersji 2 i 3
+
+pip freeze > requirements.txt	#zapisanie zależności do pliku requirements.txt
+
+pip install -r requirements.txt	#ściąganie paczek z zależnościami w projekcie
+
+pip install --user pipenv		#zainstaluj pipenv pipenv.org, to alternatywa dla virtualenv
+$ cd myproject
+$ pipenv install requests		#instalacja za pomocą pipenv, requirements.txt zastąpiono Pipfile
+
+joe g python					#funkcja w python dla stworzenia pliku .gitignore dla git
 
 
+#=======================================================================
+#	Regularne wyrażenia, regex101.com, pythex.org
+#=======================================================================
+import re		#biblioteka regularnych wyrażeń
 
+patern = r'My\nname\nis.*\.'	#symbol r informuje że tekst jest bez formatowania, czyli np. przejscia do następnej lini(\n).
+								#Chodzi o ciag znaków. Pomaga to w regularnych wyrażeniach. Nie trzeba ekranować specjalnych znaków.
+is_name = re.match(patern, 'My name is Kojak')	#metoda re.match sprawdza czy jakiś wiersz zgadza się z wzorcem, paternem
+patern2 = r'My name is (.*)\.'	#tutaj użyto nawiasów, one pokazują że chodzi nam tylko o tą część wiersza.
+name = re.findall(patern2, 'My name is Norek')	# w name będzie 'Norek'
 
