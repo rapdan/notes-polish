@@ -201,6 +201,27 @@ for letter in message:
 print("\nNowy wyraz bez samogłosek to:", new_message)
 input("\n\nAby zakończyć program, naciśnij klawisz Enter.")
 
+#=====================================================================
+# CSV, plik danych oddzielony przecinkiem
+#=====================================================================
+import csv								#import modułu csv			['TIME', 'DESTINATION']
+with open(buzers.csv) as data:			#otwarcie pliku .csv		['8:00', 'WARSZAWA']
+	for line in csv.reader(data):		#pętla dla stringów			['9:30', 'WROCLAW']
+		print (line)					#wypisanie każdej lini		['2:45', 'GDANSK']
+#----------------------------------------
+import csv								#import modułu csv			{'DESTINATION': 'WARSZAWA', 'TIME': '8:00'}
+with open(buzers.csv) as data:			#otwarcie pliku .csv		{'DESTINATION': 'WROCLAW', 'TIME': '9:30'}
+	for line in csv.DictReader(data):	#pętla dla słownika			{'DESTINATION': 'GDANSK', 'TIME': '2:45'}
+		print (line)					#wypisanie każdej lini (pierwsza linia pliku .csv musi zawierać klucze)
+#----------------------------------------
+with open(buzers.csv) as data:			#otwarcie pliku										{	'8:00': 'WARSZAWA',
+	ignore = data.readline()			#ignorujemy pierwsza linię (tytuły)						'9:30', 'WROCLAW'
+	flights = {}						#utworzenie pustego słownika lotów						'2:45', 'GDANSK'	}
+	for line in data:					#utworzony zostanie jeden słownik z parami klucz, wartość
+		k, v = line.strip().split(',')	#rozbicie lini na dwie wartości: klucz, wartość (strip obcina białe znaki, split rozdziela)
+		flights[k] = v					#związanie TIME z DESTINATON
+import pprint
+pprint.pprint(flights)					#wypisanie w ładnym formacie
 
 #=====================================================================
 # KROTKI (tuple) mogą zawierać elementy różnych typów i są niezmienne
@@ -1305,8 +1326,17 @@ import six				#pip install six
 
 
 #=======================================================================
-#	Wirtualizacja, zależności, virtualenv.pypa.io
+#	Wirtualizacja, zależności (dla Python w wersji >3.4 virtualenv.pypa.io)
 #=======================================================================
+
+#--------------------------------
+mkdir blog						#utwórz katalog dla projektu Flaska
+cd blog							#przejdź do środka utworzonego katalogu
+python -m venv venv				#utworzenie wirtualnego środowiska w bieżącym katalogu pod nazwą venv
+venv\Scripts\activate			#aktywowanie wirtualnego środowiska w Windows (venv)
+(venv) $ pip install flask		#instalacja flask-a
+FLASK_APP=application.py FLASK_DEBUG=1 DATABASE_URL=postgres://someurl flask run
+#--------------------------------
 
 pip --version					#wersja pip-a
 pip3 --version
@@ -1314,11 +1344,13 @@ pip3 --version
 pip3 freeze						#Pokaże wszystkie zainstalowane zależności. Powinno byc tylko: virtualenv==16.0.0
 								#W systemowym Pythonie nie nalezy instalowac innych zależności
 pip uninstall program			#deinstalacja zależności w głównym, systemowym Pythonie
-pip3 install virtualenv			#instalacja virtualenv (virtualne środowisko Pythona dla instalowanych programów)
+
+pip3 install virtualenv			#instalacja virtualenv dla Pythona niższego od 3.4
 virtualenv -p python mytest		#Utworzenie wiltualnego środowiska w katalogu: mytest (katalog jest tworzony w bieżącym katalogu)
 source mytest/bin/activate		#Aktywowanie wirtualnego środowiska (dla Windows \path\to\env\Scripts\activate)
 								#Od aktywacji wszystkie pakiety będą instalowane w mytest\lib\python3.6\site-packages
 								
+python -m pip install --upgrade pip	#aktualizacja pip-a
 pip install pycodestyle			#dla sprawdznia poprawności stylu kodu, PEP8
 pip install six					#dla zgodności pythona w wersji 2 i 3
 
