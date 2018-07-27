@@ -1,0 +1,107 @@
+#=======================================
+#	Przykładowy, prosty plik Flask
+#=======================================
+#	http://flask.pocoo.org/
+
+from flask import Flask
+app = Flask(__name__)
+app.config['DEBUG'] = True	#automatyczny restart serwera po wykryciu zmian w pliku
+app.config['SECRET_KEY'] = os.environ['SECRET_KEY']	#nie podawaj w sposób jawny SECRET_KEY
+													#zamiast tego przy uruchamianiu python-a przed można ustalić ten key
+													#poleceniem: SECRET_KEY='...' python, ale czemuś u mnie nie działa
+app.config.update(									#drugi sposub wczytywania danych configuracyjnych
+	DEBUG=True,										#można tez stworzyć oddzielne pliki konfiguracyjne i wczytywac je przy starcie pythona
+	SECRET_KEY='This key must be secret',
+	WTF_CSRF_ENABLED=False,							#zmienia ochronę dla form, wysyłka, nie wolno tak robić! Musi być True!
+)
+@app.route('/')
+def home():
+	return 'hello world'
+
+if __name__ == '__main__':	
+	app.run()
+
+#========================================
+#	Werkzeug - serwer flaska
+#========================================
+
+from werkzeug.wrappers import Request, Response
+
+@Request.application
+def application(request):
+    return Response('Hello World!')
+
+if __name__ == '__main__':
+    from werkzeug.serving import run_simple
+    run_simple('127.0.0.1', 4000, application)
+	
+
+#========================================
+#	Flask - route
+#========================================
+# -*- coding: utf-8 -*-
+
+#pip install flask
+from flask import Flask
+app = Flask(__name__)
+
+@app.route('/hello/<user>')	#w adresie można przekazać wartość, którą można przekazac do funkcji
+def home(user):				#funkcja przyjmuje parametr o tej samej nazwie
+	return 'hello user: ' + user
+
+#app.run(debug=True)
+if __name__=='__main__':
+    app.run(debug=True)		#debug=True powoduje automatyczne odświeżenie kodu na serwerze
+	
+#========================================
+#	Flask - forms (wysyłanie danych)
+#========================================
+
+from flask import Flask, request
+
+from threading import Lock
+# pip install flask-WTF
+from flask_wtf import FlaskForm
+from wtforms import StringField, validators
+
+
+class ContactForm(FlaskForm):					#dziedziczy od FlaskForm
+    name = StringField(label='Name', validators=[
+        validators.Length(min=4, max=25)		#wtforms.readthedocs.io opis walidatorów 
+    ])
+    email = StringField(label='E-mail', validators=[
+        validators.Length(min=6, max=35),
+        validators.Email()
+    ])
+    job = StringField(label='JOB', validators=[
+        validators.Length(min=1, max=35),
+        validators.Optional()
+    ])
+
+
+app = Flask(__name__)
+app.config.update(
+    DEBUG=True,
+    SECRET_KEY='This key must be secret!',
+    WTF_CSRF_ENABLED=False,
+)
+
+
+@app.route('/', methods=['GET', 'POST'])
+def home():
+    if request.method == 'POST':
+        print(request.form)			#funkcja print wypisuje na konsoli
+        form = ContactForm(request.form)
+        print(form.validate())
+
+        if form.validate():
+            return ('valid', 200)	#return zwraca do przeglądarki
+        else:
+            return ('invalid', 400)
+
+    if request.method == 'GET':
+        return 'hello world!', 200
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
