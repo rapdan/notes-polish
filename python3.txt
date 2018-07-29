@@ -2,12 +2,15 @@
 #		PYTHON 3
 #==============================================================================
 
+dir(funkcja)					#wypisuje wszystkie metody danej funkcji np. dir(str)
+help(funkcja)					#pomoc dla danej funkcji np.help(print) Tekst pomocy znajduje się w __doc__
+s.								#dwa razy naciśnij "Tab", utworzona zostanie lista metod danego objektu
 
 
 tekst, s = "Your text", "Inny dowolny tekst"
 print(tekst.upper())			#Wypisanie dużymi literami
 print(tekst.lower())			#Wypisanie małymi literami
-print(tekst.title())			#Wypisanie każdego wyrazu z dużej litery
+print(tekst.title())			#Każdy wyraz z dużej litery  s="I DID NOT MEAN TO SHOUT." s.title() wypisze: I Did Not Mean To Shout. 
 print s.capitalize()			#Służy do nadania napisowi formatu jak w zdaniu, to jest zmiany pierwszej litery na dużą, a pozostałych na małe
 print s.center(32,'*')			#Wyśrodkowanie napisu w polu o podanej długości. Domyślnie pole dopełniane jest znakiem spacji
 print s.count('t')				#Oblicza ile razy określony ciąg znaków występuje w napisie
@@ -69,7 +72,9 @@ z_napiwkiem_20 = rachunek * 1.20
 print("Z napiwkiem 15%: {}".format(z_napiwkiem_15))
 print("Z napiwkiem 20%: {}".format(z_napiwkiem_20))
 
-
+from datetime import datetime 			#konwersja stringu na format time i zamiana z 24 na 12 AM, PM
+def convert2ampm(time24: str) -> str: 
+    return datetime.strptime(time24, '%H:%M').strftime('%I:%M%p')
 #===================================================================
 #	GENEROWANIE LICZB LOSOWYCH
 #===================================================================
@@ -611,7 +616,12 @@ print(text_file.readline())					#odczyt całej lini z pliku. Następna instrukcj
 											#powrót do początku pliku też przez .close()
 print(text_file.readline())					#odczyt wszystkich lini z pliku
 text_file.close()							#zamknięcie pliku
-
+text_file.tell()							#bieżąca pozycja kursora po odczytaniu danych z pliku
+text_file.seek(14)							#ustawienie pozycji kursora
+text_file.flush()							#zapisanie danych po text_file.write('Some data')
+d = {'a': 1, 'b': 2, 'c': 3}				#jak zapisywać złożone struktury danych. np. słowniki
+repr(d)										#funkcja zamieniająca słownik na string, później można zapisać jako string
+eval(s)										#funkcja odwrotna do repr(), zamienia stringa na słownik
 
 #	"r" 	Odczyt danych z pliku tekstowego. Jeśli plik nie istnieje, Python zasygnalizuje błąd.
 #	"w" 	Zapis danych do pliku tekstowego. Jeśli plik już istnieje, jego zawartość zostaje zastąpiona przez nowe dane. 
@@ -733,24 +743,35 @@ def better_read(filename):
 #W skrócie zapis danych do pliku
 def write_file(filename, content, mode='w'):
 	with open(filename, mode=mode) as f:		#Kontekstowy menadżer
-		return f.write(content)				#return zwraca odczytany plik
+		return f.write(content)					#return zwraca odczytany plik
 
 		
 #===================================================================
 #	OBSŁUGA JSON
 #===================================================================
-import json						#import modułu do obsługi json
-def better_read(filename):		#definicja odczytu danych z pliku
+import json											#import modułu do obsługi json
+def better_read(filename):							#definicja odczytu danych z pliku
 	print('reading file by better method')
 	with open(filename) as f:		
 		return f.read()	
 		
-data = better_read('data.json')	#odczyt pliku w formacie json
-obj = json.loads(data)			#zamiana z json formatu na python-owski obiekt
+data = better_read('data.json')						#odczyt pliku w formacie json
+obj = json.loads(data)								#zamiana z json formatu na python-owski obiekt
 print(obj)
 
-obj['klucz'] = 'wartosc'		#dodanie do słownika nowego klucza z wartością
+obj['klucz'] = 'wartosc'							#dodanie do słownika nowego klucza z wartością
 print(json.dumps(obj, sort_keys=True, indent=4))	#konwersja na format json (sort_keys i indent dla ładnego wyświetlenia)
+#----------------------------------------------------
+s = json.dumps(dict_data)							#zamiana złożonej struktury danych na format stringa, ale takiego że javaScript rozumie go jako json
+fp = open('some/data.json', 'w')					#otwarcie do zapisu w pliku: data.json w katalogu some/
+fp.write(s)											#zapis stringa jako data.json
+fp.close()											#zapisanie pliku i zamknięcie
+fp = open('some/data.json', 'r')					#otwarcie pliku dla czytania
+s = fp.read()										#odczyt pliku i zapis do s (jako string)
+dict_data = json.loads(s)							#zamiana danych spowrotem na słownik
+#----------------------------------------------------
+json.dump(d, fp)			#funkcja zapisująca bezpośrednio w formacie json jakiś słownik 
+d = json.load(fp)			#funkcja odczytująca bezpośrednio z pliku i przekształcająca w słownik d
 
 
 #===================================================================
@@ -997,7 +1018,7 @@ class CountFromBy:
 from tkinter import *
 
 root = Tk()                         # utwórz okno główne
-root.title("Metkownica")  # zmodyfikuj okno
+root.title("Metkownica")  			# Tytuł na pasku tytułu
 root.geometry("500x300")            # wymiary okna
 
 app = Frame(root)                           # utwórz w oknie ramkę jako pojemnik na inne widżety
@@ -1330,6 +1351,7 @@ import six				#pip install six
 #=======================================================================
 
 #--------------------------------
+pip3 install virtualenv			#instalacja virtualenv dla Pythona niższego od 3.4
 mkdir blog						#utwórz katalog dla projektu Flaska
 cd blog							#przejdź do środka utworzonego katalogu
 python -m venv venv				#utworzenie wirtualnego środowiska w bieżącym katalogu pod nazwą venv
@@ -1338,8 +1360,18 @@ venv\Scripts\activate			#aktywowanie wirtualnego środowiska w Windows (venv)
 FLASK_APP=application.py FLASK_DEBUG=1 DATABASE_URL=postgres://someurl flask run
 #--------------------------------
 
-pip --version					#wersja pip-a
-pip3 --version
+#Dla linuxa
+pip3 install virtualenv					#instalacja virtualenv dla Pythona niższego od 3.4
+mkdir test								#utwórz katalog dla projektu 
+cd test									#przejdź do środka utworzonego katalogu
+python -m venv venv						#utworzenie wirtualnego środowiska w bieżącym katalogu pod nazwą venv
+source test/venv/Scripts/activate		#aktywowanie wirtualnego środowiska w Windows (venv)
+pip3 install ipython					#instalacja ipython (alternatywa dla systemowego pythona)
+ipython									#wywołanie ipython-a
+#--------------------------------
+
+pip --version					#wersja pip-a lub pip -V (domyślnie w ubuntu v.2.7)
+pip3 --version					#sudo apt install python3-pip (instalacja nowszej wersji pip-a)
 
 pip3 freeze						#Pokaże wszystkie zainstalowane zależności. Powinno byc tylko: virtualenv==16.0.0
 								#W systemowym Pythonie nie nalezy instalowac innych zależności
@@ -1352,7 +1384,8 @@ source mytest/bin/activate		#Aktywowanie wirtualnego środowiska (dla Windows \p
 								
 python -m pip install --upgrade pip	#aktualizacja pip-a
 pip install pycodestyle			#dla sprawdznia poprawności stylu kodu, PEP8
-pip install six					#dla zgodności pythona w wersji 2 i 3
+pip install six					#dla zgodności pythona (pomaga pisać kod dla dwóch wersji pythona 2 i 3)
+pip3 install flask == 0.10		#instalacja modułów określonej wersji
 
 pip freeze > requirements.txt	#zapisanie zależności do pliku requirements.txt
 
@@ -1363,6 +1396,19 @@ $ cd myproject
 $ pipenv install requests		#instalacja za pomocą pipenv, requirements.txt zastąpiono Pipfile
 
 joe g python					#funkcja w python dla stworzenia pliku .gitignore dla git
+
+import sys						#Import modułu systemowego
+sys.path						#ścieżki systemowe
+
+#--------------------------------
+pip3 install virtualenvwrapper	#Instalacja virtualnego środowiska
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3	#zapisz te dwie komendy w pliku .bashrc katalogu home, aby automatycznie były uruchamiane
+source virtualenvwrapper.sh		#aktywacja zmiennych środowiska itp...
+mkvirtualenv pybursa			#Po aktywacji powinna być dostępna ta komenda (mkvirtualenv), która tworzy wirtualne środowisko
+(pybursa) ... pip3 freeze		#pokazuje zainstalowane moduły w wirtualnym środowisku
+deactivate						#wyjście z wirtualnego środowiska
+workon pybursa					#ponowne uruchomienie wirtualnego środowiska
+#--------------------------------
 
 
 #=======================================================================
