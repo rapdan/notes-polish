@@ -27,7 +27,8 @@ print s.rjust(50, '*')					#Służy do wyrównania napisu do prawej w polu o pod
 '  hd tra   '.strip()					#Usuwa spacje przed i po wyrazie lub wyrazach. Tutaj: 'hd tra'
 wiersze.splitlines() 					#Tworzy listę linii występujących w napisie
 s.swapcase() 							#Odwraca wielkość liter w napisie
-print("Możesz podać {}", tekst)			#W miejscu {} zostanie przekazana zmienna
+print('Możesz podać {}'.format(tekst))	#W miejscu {} zostanie przekazana zmienna
+print('Możesz podać {} i {}'.format(tekst, tekst2))
 print "Pierwsza zmienna {}".format(a)	#Dla wersji Python 2.7
 print("\n Przeskok do następnej lini.")	#\n znak przeskoku do następnej lini
 print(liczba, end = " ")				#bez przeskoku do następnej lini
@@ -39,15 +40,16 @@ print("""
 #==================================================================
 #	FORMATOWANIE LICZB
 #==================================================================
-print "%s" % 1			#Litera s oznacza napis (konwertuje każdy typ danych na tekst)
-print "%s" % range(6)	#wyswietli: [0, 1, 2, 3, 4, 5]
-print "%c" % "A"		#Litera c oznacza pojedynczy znak w kodzie ASCII
-print "%c" % 077		#wyświetli: ?
-print "%i" % 0xff		#Litera i oznacza dziesiętną liczbę całkowitą (konwertuje na liczbę całkowitą, tutaj 255)
-print "%i" % 2.2		#wyświetli 2
-print "%x" % 22			#Litera x oznacza szesnastkową liczbę całkowitą. Tutaj wyświetla: 16
-print "%e" % 123		#Litera e oznacza liczbę zmiennopozycyjną w postaci wykładniczej. Tutaj wyświetli: 1.230000e+002
-print "%f" % 123		#Litera f oznacza liczbę zmiennopozycyjną w postaci ułamka dziesiętnego: 123.000000
+print "%s" % 1				#Litera s oznacza napis (konwertuje każdy typ danych na tekst)
+print "%s" % range(6)		#wyswietli: [0, 1, 2, 3, 4, 5]
+print "%c" % "A"			#Litera c oznacza pojedynczy znak w kodzie ASCII
+print "%c" % 077			#wyświetli: ?
+print "%i" % 0xff			#Litera i oznacza dziesiętną liczbę całkowitą (konwertuje na liczbę całkowitą, tutaj 255)
+print "%i" % 2.2			#wyświetli 2
+print "%x" % 22				#Litera x oznacza szesnastkową liczbę całkowitą. Tutaj wyświetla: 16
+print "%e" % 123			#Litera e oznacza liczbę zmiennopozycyjną w postaci wykładniczej. Tutaj wyświetli: 1.230000e+002
+print "%f" % 123			#Litera f oznacza liczbę zmiennopozycyjną w postaci ułamka dziesiętnego: 123.000000
+print ("%8.2f" % 5123.123) 	#Wyświetli 5123.12
 
 for x in range(5,100,10):
 	print "Pierwiastkiem %2i jest %5.3f" % (x,x**0.5) # %5.3f oznacza: 5-całkowita długość, 3-ilość miejsc po przecinku
@@ -324,8 +326,11 @@ print(slownik.get("Klucz", "Nie mam pojęcia."))	#Inny sposób pobierania warto�
 												#Jeżeli nie podasz wartości domyślnej, przyjmie wartość None
 słownik[klucz] = "definicja"					#Dodanie nowego elementu do słownika klucz:definicja, sprawdzaj czy nie zostanie nadpisany
 
-for k in sorted(slownik):				#przykład wypisania słownika w alfabetycznym porządku
+for k in sorted(slownik):									#przykład wypisania słownika w alfabetycznym porządku wg klucza
 	print(k,slownik[k])
+
+for k in sorted(slownik, key=slownik.get, reverse=True):	#dodatkowy argument key pozwala sortować wg wartości (a nie klucza)
+	print(k, '->', slownik[k])								#a reverse=True zmienia porządek sortowania na odwrotny
 
 for k, v in sorted(slownik.items()):	#przykład wypisania słownika przy pomocy funkcji items() - najlepszy sposób
 	print(k, v)
